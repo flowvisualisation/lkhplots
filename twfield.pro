@@ -60,7 +60,7 @@ veyinit=reform(f.v[*,slice,*,1,0]/f.d[*,slice,*,0])
 vezinit=reform(f.v[*,slice,*,2,0]/f.d[*,slice,*,0])
 
 ;filter= butterworth(size(vixinit, /dimensions), order=2, cutoff=10)
-filter= butterworth(size(vixinit, /dimensions), order=3, cutoff=1)
+filter= butterworth(size(vixinit, /dimensions), order=9, cutoff=9)
 qsm=100
 ;vixsm=smooth(vixinit,qsm,/edge_wrap)
 ;vizsm=smooth(vizinit,qsm,/edge_wrap)
