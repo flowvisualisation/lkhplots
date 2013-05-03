@@ -1,3 +1,7 @@
+;
+; uses cgimage to plot photonplasma datafiles
+; for comparison with the Pessah 2010 paper
+;
 pro tw15p, background
 little_endian = getendian()
 ;background=0
