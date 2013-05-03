@@ -27,7 +27,7 @@ qtag='with_background_'
 if ( background eq 1) then begin
 qtag='background_subtracted_'
 endif
-onefile=1
+onefile=0
 if ( onefile eq 1 ) then begin
 qnumq=0
 nend=30
@@ -247,44 +247,16 @@ jx=getvort(bysm,bzsm,xx,yy,nx,nz)-exsm
 jy=getvort(bxsm,bzsm,xx,yy,nx,nz)-eysm
 curlB=getvort(bxsm,bzsm,xx,yy,nx,nz)
 jz=getvort(bxsm,bysm,xx,yy,nx,nz)-ezsm
-if (background eq 1 ) then var(0)=ptr_new(vixsm-vixsm0)
-if (background eq 1 ) then var(1)=ptr_new(vizsm-vizsm0)
-;var(0,*,*)=smooth(var(0,*,*), qsm, /edge_wrap)
-;var(1,*,*)=smooth(var(1,*,*), qsm, /edge_wrap)
-var(0)=ptr_new( vixsm)
-var(1)=ptr_new( vizsm)
-;vixsm=vix
-;vizsm=viz
 vortion=getvort(vixsm,vizsm,xx,yy,nx,nz)
-;vortion=getvort(bx,bz,xx,yy,nx,nz)
-if (background eq 1 ) then begin
-;var(2) =ptr_new( vortion-initionvort)
-var(2)=ptr_new(getvort(vixsm-vixsm0,vizsm-vizsm0,xx,yy,nx,nz) )
-endif else begin
-        var(2)=ptr_new( vortion)
-endelse
-
-var(3)=ptr_new( vexsm)
-if (background eq 1 ) then var(3)=ptr_new(vexsm-vexsm0)
-var(4)=ptr_new( vezsm)
-if (background eq 1 ) then var(4)=ptr_new(vezsm-vezsm0)
 vortelec=getvort(vexsm,vezsm,xx,yy,nx,nz)
+
 if (background eq 1 ) then begin
-;var(5)=ptr_new( vortelec-initelecvort)
+ var(0)=ptr_new(vixsm-vixsm0)
+var(1)=ptr_new(vizsm-vizsm0)
+var(2)=ptr_new(getvort(vixsm-vixsm0,vizsm-vizsm0,xx,yy,nx,nz) )
+var(3)=ptr_new(vexsm-vexsm0)
+var(4)=ptr_new(vezsm-vezsm0)
 var(5)=ptr_new(getvort(vexsm-vexsm0,vezsm-vezsm0,xx,yy,nx,nz) )
-endif else begin
-var(5)=ptr_new( vortelec)
-endelse
-var(6)=ptr_new(ex)
-var(7)=ptr_new(eysm)
-var(8)=ptr_new(curlB)
-var(9)=ptr_new(bxsm)
-var(10)=ptr_new(by)
-var(11)=ptr_new(bzsm)
-var(12)=ptr_new(jx)
-var(13)=ptr_new(jy)
-var(14)=ptr_new(jz)
-if (background eq 1 ) then begin
 var(6)=ptr_new(ex-ex0)
 var(7)=ptr_new(eysm-eysm0)
 var(8)=ptr_new(curlB-curlB0)
@@ -294,7 +266,25 @@ var(11)=ptr_new(bzsm-bzsm0)
 var(12)=ptr_new(jx-jx0)
 var(13)=ptr_new(jy-jy0)
 var(14)=ptr_new(jz-jz0)
-endif
+endif else begin
+var(0)=ptr_new( vixsm)
+var(1)=ptr_new( vizsm)
+var(2)=ptr_new( vortion)
+var(3)=ptr_new( vexsm)
+var(4)=ptr_new( vezsm)
+var(5)=ptr_new( vortelec)
+var(6)=ptr_new(ex)
+var(7)=ptr_new(eysm)
+var(8)=ptr_new(curlB)
+var(9)=ptr_new(bxsm)
+var(10)=ptr_new(by)
+var(11)=ptr_new(bzsm)
+var(12)=ptr_new(jx)
+var(13)=ptr_new(jy)
+var(14)=ptr_new(jz)
+endelse
+
+
 
 titlstr=strarr(15,30)
 titlstr(0,*)="V!Dion, X!N"
