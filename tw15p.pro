@@ -2,8 +2,9 @@
 ; uses cgimage to plot photonplasma datafiles
 ; for comparison with the Pessah 2010 paper
 ;
-pro tw15p, background
-little_endian = getendian()
+pro tw15p, background, little_endian
+;little_endian = getendian()
+;little_endian = 0
 ;background=0
 hires=1
 doxwin=1
@@ -26,10 +27,10 @@ qtag='with_background_'
 if ( background eq 1) then begin
 qtag='background_subtracted_'
 endif
-onefile=0
+onefile=1
 if ( onefile eq 1 ) then begin
 qnumq=0
-nend=5
+nend=30
 nstart=nend
 nstep=1
 endif else begin
@@ -58,12 +59,12 @@ nz=f.s.gn[2]/downsample
 xx=findgen(nx)
 yy=findgen(nz)
 
-vixinit=congrid(reform(f.v[*,slice,*,0,1]/f.d[*,slice,*,1]),nx,nz)
-viyinit=congrid(reform(f.v[*,slice,*,1,1]/f.d[*,slice,*,1]),nx,nz)
-vizinit=congrid(reform(f.v[*,slice,*,2,1]/f.d[*,slice,*,1]),nx,nz)
-vexinit=congrid(reform(f.v[*,slice,*,0,0]/f.d[*,slice,*,0]),nx,nz)
-veyinit=congrid(reform(f.v[*,slice,*,1,0]/f.d[*,slice,*,0]),nx,nz)
-vezinit=congrid(reform(f.v[*,slice,*,2,0]/f.d[*,slice,*,0]),nx,nz)
+vix0=congrid(reform(f.v[*,slice,*,0,1]/f.d[*,slice,*,1]),nx,nz)
+viy0=congrid(reform(f.v[*,slice,*,1,1]/f.d[*,slice,*,1]),nx,nz)
+viz0=congrid(reform(f.v[*,slice,*,2,1]/f.d[*,slice,*,1]),nx,nz)
+vex0=congrid(reform(f.v[*,slice,*,0,0]/f.d[*,slice,*,0]),nx,nz)
+vey0=congrid(reform(f.v[*,slice,*,1,0]/f.d[*,slice,*,0]),nx,nz)
+vez0=congrid(reform(f.v[*,slice,*,2,0]/f.d[*,slice,*,0]),nx,nz)
 bx0=congrid(reform(f.bx[*,slice,*]),nx,nz)
 by0=congrid(reform(f.by[*,slice,*]),nx,nz)
 bz0=congrid(reform(f.bz[*,slice,*]),nx,nz)
@@ -71,13 +72,14 @@ ex0=congrid(reform(f.ex[*,slice,*]),nx,nz)
 ey0=congrid(reform(f.ey[*,slice,*]),nx,nz)
 ez0=congrid(reform(f.ez[*,slice,*]),nx,nz)
 
-;filter= butterworth(size(vixinit, /dimensions), order=2, cutoff=10)
-filter= butterworth(size(vixinit, /dimensions), order=3, cutoff=1)
+f=0
+;filter= butterworth(size(vix0, /dimensions), order=2, cutoff=10)
+filter= butterworth(size(vix0, /dimensions), order=3, cutoff=2)
 qsm=100
-;vixsm=smooth(vixinit,qsm,/edge_wrap)
-;vizsm=smooth(vizinit,qsm,/edge_wrap)
-vixsm=real_part(FFT( FFT(vixinit, -1) * filter, 1 ) )
-vizsm=real_part(FFT( FFT(vizinit, -1) * filter, 1 ) )
+vexsm=real_part(FFT( FFT(vex0, -1) * filter, 1 ) )
+vezsm=real_part(FFT( FFT(vez0, -1) * filter, 1 ) )
+vixsm=real_part(FFT( FFT(vix0, -1) * filter, 1 ) )
+vizsm=real_part(FFT( FFT(viz0, -1) * filter, 1 ) )
 bxsm0=real_part(FFT( FFT(bx0, -1) * filter, 1 ) )
 bysm0=real_part(FFT( FFT(by0, -1) * filter, 1 ) )
 bzsm0=real_part(FFT( FFT(bz0, -1) * filter, 1 ) )
@@ -86,35 +88,20 @@ eysm0=real_part(FFT( FFT(ey0, -1) * filter, 1 ) )
 ezsm0=real_part(FFT( FFT(ez0, -1) * filter, 1 ) )
 
 
-;initionvort = 0.5*(shift(vixsm,0,-1)-shift(vixsm,0,1) ) - 0.5*(shift(vizsm,-1,0) - shift(vizsm,1,0))
 initionvort=getvort(vixsm,vizsm,xx,yy,nx,nz)
-ux0=vixinit
-uy0=viyinit
-uz0=vizinit
-jx0=ex0+uy0*bz0-uz0*by0
-;jy0=ey0+uz0*bx0-ux0*bz0
-;jy0=-uz0*bx0+ux0*bz0
 jx0=getvort(bysm0,bzsm0,xx,yy,nx,nz) -ex0
-jy0=getvort(bxsm0,bzsm0,xx,yy,nx,nz) -ey0
 curlB0=getvort(bxsm0,bzsm0,xx,yy,nx,nz) 
+jy0=curlB0 -ey0
 jz0=getvort(bxsm0,bysm0,xx,yy,nx,nz) -ez0
-;jz0=ez0+ux0*by0-uy0*bx0
 vixsm0=vixsm
 vizsm0=vizsm
 
-;vexsm=smooth(vexinit,qsm,/edge_wrap)
-;vezsm=smooth(vezinit,qsm,/edge_wrap)
-vexsm=real_part(FFT( FFT(vexinit, -1) * filter, 1 ) )
-vezsm=real_part(FFT( FFT(vezinit, -1) * filter, 1 ) )
-;initelecvort= 0.5*(shift(vexsm,0,-1)-shift(vexsm,0,1) ) - 0.5*(shift(vezsm,-1,0) - shift(vezsm,1,0))
 initelecvort=getvort(vexsm,vezsm,xx,yy,nx,nz)
-;vex0=vex
-;vez0=vez
 vexsm0=vexsm
 vezsm0=vezsm
 
-totalelecke0=total(vexinit^2+vezinit^2)
-totalionke0=total(vixinit^2+vizinit^2)
+totalelecke0=total(vex0^2+vez0^2)
+totalionke0=total(vix0^2+viz0^2)
 gamma=fltarr(1)
 tvx2=fltarr(1)
 tvx2(*)=1
@@ -165,6 +152,14 @@ viz=congrid(reform(f.v[*,slice,*,2,1]/f.d[*,slice,*,1]),nx,nz)
 vex=congrid(reform(f.v[*,slice,*,0,0]/f.d[*,slice,*,0]),nx,nz)
 vey=congrid(reform(f.v[*,slice,*,1,0]/f.d[*,slice,*,0]),nx,nz)
 vez=congrid(reform(f.v[*,slice,*,2,0]/f.d[*,slice,*,0]),nx,nz)
+
+
+qqtag=" backgr included"
+if (background eq 1) then begin
+qqtag=" backgr. subtracted"
+endif
+mesg='t='+string(f.s.time,format='(F12.5)')+' , '+qqtag+' ncellsx '+string(f.s.gn[0])+' '+string(f.s.ds(0))
+f=0
 
 a=total(vex^2)/totalelecke0
 b=total(vix^2)/totalionke0
@@ -237,10 +232,8 @@ uz=viz
 
 var=ptrarr(15)
 ;help,var, vex,vey,vez
-var(0)=ptr_new(vix)
-var(1)=ptr_new(viz)
-;vixsm=smooth(vix,qsm,/edge_wrap)
-;vizsm=smooth(viz,qsm,/edge_wrap)
+vexsm=real_part(FFT( FFT(vex, -1) * filter, 1 ) )
+vezsm=real_part(FFT( FFT(vez, -1) * filter, 1 ) )
 vixsm=real_part(FFT( FFT(vix, -1) * filter, 1 ) )
 vizsm=real_part(FFT( FFT(viz, -1) * filter, 1 ) )
 bxsm=real_part(FFT( FFT(bx, -1) * filter, 1 ) )
@@ -258,39 +251,32 @@ if (background eq 1 ) then var(0)=ptr_new(vixsm-vixsm0)
 if (background eq 1 ) then var(1)=ptr_new(vizsm-vizsm0)
 ;var(0,*,*)=smooth(var(0,*,*), qsm, /edge_wrap)
 ;var(1,*,*)=smooth(var(1,*,*), qsm, /edge_wrap)
-var(0)=ptr_new( real_part(FFT( FFT( vix , -1) * filter, 1 ) ))
-var(1)=ptr_new( real_part(FFT( FFT( viz , -1) * filter, 1 ) ))
+var(0)=ptr_new( vixsm)
+var(1)=ptr_new( vizsm)
 ;vixsm=vix
 ;vizsm=viz
-vortion= 0.5*(shift(vixsm,0,-1)-shift(vixsm,0,1) ) - 0.5*(shift(vizsm,-1,0) - shift(vizsm,1,0))
-;vortion=getvort(vixsm,vizsm,xx,yy,nx,nz)
+vortion=getvort(vixsm,vizsm,xx,yy,nx,nz)
 ;vortion=getvort(bx,bz,xx,yy,nx,nz)
 if (background eq 1 ) then begin
-var(2) =ptr_new( vortion-initionvort)
+;var(2) =ptr_new( vortion-initionvort)
 var(2)=ptr_new(getvort(vixsm-vixsm0,vizsm-vizsm0,xx,yy,nx,nz) )
 endif else begin
         var(2)=ptr_new( vortion)
 endelse
 
-vexsm=real_part(FFT( FFT(vex, -1) * filter, 1 ) )
-vezsm=real_part(FFT( FFT(vez, -1) * filter, 1 ) )
-var(3)=ptr_new(vex)
-if (background eq 1 ) then var(3)=ptr_new(vexsm-vexsm0)
-;var(3,*,*)=smooth(var(3,*,*), qsm, /edge_wrap)
 var(3)=ptr_new( vexsm)
-var(4)=ptr_new(vez)
-if (background eq 1 ) then var(4)=ptr_new(vezsm-vezsm0)
-;var(4,*,*)=smooth(var(4,*,*), qsm, /edge_wrap)
+if (background eq 1 ) then var(3)=ptr_new(vexsm-vexsm0)
 var(4)=ptr_new( vezsm)
+if (background eq 1 ) then var(4)=ptr_new(vezsm-vezsm0)
 vortelec=getvort(vexsm,vezsm,xx,yy,nx,nz)
 if (background eq 1 ) then begin
-var(5)=ptr_new( vortelec-initelecvort)
+;var(5)=ptr_new( vortelec-initelecvort)
 var(5)=ptr_new(getvort(vexsm-vexsm0,vezsm-vezsm0,xx,yy,nx,nz) )
 endif else begin
 var(5)=ptr_new( vortelec)
 endelse
 var(6)=ptr_new(ex)
-var(7)=ptr_new(ey)
+var(7)=ptr_new(eysm)
 var(8)=ptr_new(curlB)
 var(9)=ptr_new(bxsm)
 var(10)=ptr_new(by)
@@ -300,7 +286,7 @@ var(13)=ptr_new(jy)
 var(14)=ptr_new(jz)
 if (background eq 1 ) then begin
 var(6)=ptr_new(ex-ex0)
-var(7)=ptr_new(ey-ey0)
+var(7)=ptr_new(eysm-eysm0)
 var(8)=ptr_new(curlB-curlB0)
 var(9)=ptr_new(bxsm-bxsm0)
 var(10)=ptr_new(by-by0)
@@ -399,13 +385,8 @@ endfor
 ;cgplot,  gamma, title='Total x-kinetic energy',color='black' ;, /xlog, /ylog
 ;cgplot,  tvx2, /overplot, color='black'
 
-qqtag=" backgr included"
-if (background eq 1) then begin
-qqtag=" backgr. subtracted"
-endif
 xyouts, 0.01,0.01,$
-   't='+string(f.s.time,format='(F12.5)')+' , '+qqtag+' ncellsx '+string(f.s.gn[0])+' '+string(f.s.ds(0)),$
-   /normal, charsize=3
+   mesg, /normal, charsize=3
 
 !p.position=0
 !p.multi=0

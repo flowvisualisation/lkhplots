@@ -46,17 +46,15 @@ vizinit=reform(f.v[*,slice,*,2,1])
 vexinit=reform(f.v[*,slice,*,0,0])
 veyinit=reform(f.v[*,slice,*,1,0])
 vezinit=reform(f.v[*,slice,*,2,0])
-qsm=200
+qsm=1
 vixsm=smooth(vixinit,qsm,/edge_wrap)
 vizsm=smooth(vizinit,qsm,/edge_wrap)
-initionvort = 0.5*(shift(vixsm,0,-1)-shift(vixsm,0,1) ) - 0.5*(shift(vizsm,-1,0) - shift(vizsm,1,0))
 initionvort=getvort(vixsm,vizsm,xx,yy,nx,nz)
 vixsm0=vixsm
 vizsm0=vizsm
 
 vexsm=smooth(vexinit,qsm,/edge_wrap)
 vezsm=smooth(vezinit,qsm,/edge_wrap)
-initelecvort= 0.5*(shift(vexsm,0,-1)-shift(vexsm,0,1) ) - 0.5*(shift(vezsm,-1,0) - shift(vezsm,1,0))
 initelecvort=getvort(vexsm,vezsm,xx,yy,nx,nz)
 vexsm0=vexsm
 vezsm0=vezsm
@@ -231,7 +229,6 @@ vixsm=smooth(vix,qsm,/edge_wrap)
 vizsm=smooth(viz,qsm,/edge_wrap)
 ;vixsm=vix
 ;vizsm=viz
-vortion= 0.5*(shift(vixsm,0,-1)-shift(vixsm,0,1) ) - 0.5*(shift(vizsm,-1,0) - shift(vizsm,1,0))
 vortion=getvort(vixsm,vizsm,xx,yy,nx,nz)
 if (background eq 1 ) then begin
 var(2,*,*) = vortion-initionvort
@@ -246,7 +243,6 @@ vexsm=smooth(vex,qsm,/edge_wrap)
 vezsm=smooth(vez,qsm,/edge_wrap)
 ;vexsm=vex
 ;vezsm=vez
-vortelec= 0.5*(shift(vexsm,0,-1)-shift(vexsm,0,1) ) - 0.5*(shift(vezsm,-1,0) - shift(vezsm,1,0)) 
 vortelec=getvort(vexsm,vezsm,xx,yy,nx,nz)
 if (background eq 1 ) then begin
 var(6,*,*)= vortelec-initelecvort
