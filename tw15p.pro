@@ -96,6 +96,8 @@ ezsm0=real_part(FFT( FFT(ez0, -1) * filter, 1 ) )
 
 
 initionvort=getvort(vixsm,vizsm,xx,yy,nx,nz)
+
+initionvort=applyfilt(initionvort,filter)
 jx0=getvort(bysm0,bzsm0,xx,yy,nx,nz) -ex0
 curlB0=getvort(bxsm0,bzsm0,xx,yy,nx,nz) 
 jy0=curlB0 -ey0
