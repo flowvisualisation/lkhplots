@@ -2,7 +2,7 @@
 ; uses cgimage to plot photonplasma datafiles
 ; for comparison with the Pessah 2010 paper
 ;
-pro tw15p, nobackground=nobackground, big_endian=big_endian
+pro tw15p, nobackground=nobackground, big_endian=big_endian, lowres=lowres
 background=0
 if (keyword_set(nobackground) )then begin
 background=1
@@ -15,12 +15,12 @@ endif
 ;little_endian = 0
 hires=1
 doxwin=1
-if ( hires eq 1) then begin
-xs=1300
-ys=1300
-endif else begin
+if ( keyword_set(lowres)) then begin
 xs=800
 ys=800
+endif else begin
+xs=1300
+ys=1300
 endelse 
 if ( doxwin eq 1 ) then begin
 set_plot, 'x'
@@ -106,6 +106,7 @@ vixsm0=vixsm
 vizsm0=vizsm
 
 initelecvort=getvort(vexsm,vezsm,xx,yy,nx,nz)
+initelecvort=applyfilt(initelecvort,filter)
 vexsm0=vexsm
 vezsm0=vezsm
 
@@ -258,6 +259,8 @@ curlB=getvort(bxsm,bzsm,xx,yy,nx,nz)
 jz=getvort(bxsm,bysm,xx,yy,nx,nz)-ezsm
 vortion=getvort(vixsm,vizsm,xx,yy,nx,nz)
 vortelec=getvort(vexsm,vezsm,xx,yy,nx,nz)
+vortion=applyfilt(vortion,filter)
+vortelec=applyfilt(vortelec,filter)
 
 if (background eq 1 ) then begin
  var(0)=ptr_new(vixsm-vixsm0)
@@ -316,7 +319,7 @@ for  qgmq = 0,14 do begin
 a=*var(qgmq)
 mx=max(a)
 mn=min(a)
-titlstr(qgmq,*) = titlstr(qgmq,*)+' , ' +string(mn, format='(F8.5)')+string(mx , format='(F8.5)')
+titlstr(qgmq,*) = titlstr(qgmq,*)+' , ' +string(mn, format='(G8.2)')+string(mx , format='(G8.2)')
 
 endfor
 
