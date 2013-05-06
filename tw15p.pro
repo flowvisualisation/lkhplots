@@ -2,10 +2,17 @@
 ; uses cgimage to plot photonplasma datafiles
 ; for comparison with the Pessah 2010 paper
 ;
-pro tw15p, background, little_endian
+pro tw15p, nobackground=nobackground, big_endian=big_endian
+background=0
+if (keyword_set(nobackground) )then begin
+background=1
+endif
+little_endian=1
+if (keyword_set(big_endian) ) then begin
+little_endian=0
+endif
 ;little_endian = getendian()
 ;little_endian = 0
-;background=0
 hires=1
 doxwin=1
 if ( hires eq 1) then begin
@@ -74,7 +81,7 @@ ez0=congrid(reform(f.ez[*,slice,*]),nx,nz)
 
 f=0
 ;filter= butterworth(size(vix0, /dimensions), order=2, cutoff=10)
-filter= butterworth(size(vix0, /dimensions), order=3, cutoff=2)
+filter= butterworth(size(vix0, /dimensions), order=3, cutoff=1)
 qsm=100
 vexsm=real_part(FFT( FFT(vex0, -1) * filter, 1 ) )
 vezsm=real_part(FFT( FFT(vez0, -1) * filter, 1 ) )
