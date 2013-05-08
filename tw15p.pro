@@ -81,18 +81,19 @@ ez0=congrid(reform(f.ez[*,slice,*]),nx,nz)
 
 f=0
 ;filter= butterworth(size(vix0, /dimensions), order=2, cutoff=10)
-filter= butterworth(size(vix0, /dimensions), order=3, cutoff=1)
+;filter= butterworth(size(vix0, /dimensions), order=3, cutoff=1)
+filter= butterworth(size(vix0, /dimensions), order=6, cutoff=2)
 qsm=100
-vexsm=real_part(FFT( FFT(vex0, -1) * filter, 1 ) )
-vezsm=real_part(FFT( FFT(vez0, -1) * filter, 1 ) )
-vixsm=real_part(FFT( FFT(vix0, -1) * filter, 1 ) )
-vizsm=real_part(FFT( FFT(viz0, -1) * filter, 1 ) )
-bxsm0=real_part(FFT( FFT(bx0, -1) * filter, 1 ) )
-bysm0=real_part(FFT( FFT(by0, -1) * filter, 1 ) )
-bzsm0=real_part(FFT( FFT(bz0, -1) * filter, 1 ) )
-exsm0=real_part(FFT( FFT(ex0, -1) * filter, 1 ) )
-eysm0=real_part(FFT( FFT(ey0, -1) * filter, 1 ) )
-ezsm0=real_part(FFT( FFT(ez0, -1) * filter, 1 ) )
+vexsm=applyfilt(vex0, filter)
+vezsm=applyfilt(vez0, filter)
+vixsm=applyfilt(vix0, filter)
+vizsm=applyfilt(viz0, filter)
+bxsm0=applyfilt(bx0, filter)
+bysm0=applyfilt(by0, filter)
+bzsm0=applyfilt(bz0, filter)
+exsm0=applyfilt(ex0, filter)
+eysm0=applyfilt(ey0, filter)
+ezsm0=applyfilt(ez0, filter)
 
 
 initionvort=getvort(vixsm,vizsm,xx,yy,nx,nz)
@@ -100,7 +101,8 @@ initionvort=getvort(vixsm,vizsm,xx,yy,nx,nz)
 initionvort=applyfilt(initionvort,filter)
 jx0=getvort(bysm0,bzsm0,xx,yy,nx,nz) -ex0
 curlB0=getvort(bxsm0,bzsm0,xx,yy,nx,nz) 
-jy0=curlB0 -ey0
+curlB0=applyfilt(curlB0, filter)
+jy0=curlB0 -eysm0
 jz0=getvort(bxsm0,bysm0,xx,yy,nx,nz) -ez0
 vixsm0=vixsm
 vizsm0=vizsm
@@ -242,16 +244,16 @@ uz=viz
 
 var=ptrarr(15)
 ;help,var, vex,vey,vez
-vexsm=real_part(FFT( FFT(vex, -1) * filter, 1 ) )
-vezsm=real_part(FFT( FFT(vez, -1) * filter, 1 ) )
-vixsm=real_part(FFT( FFT(vix, -1) * filter, 1 ) )
-vizsm=real_part(FFT( FFT(viz, -1) * filter, 1 ) )
-bxsm=real_part(FFT( FFT(bx, -1) * filter, 1 ) )
-bysm=real_part(FFT( FFT(by, -1) * filter, 1 ) )
-bzsm=real_part(FFT( FFT(bz, -1) * filter, 1 ) )
-exsm=real_part(FFT( FFT(ex, -1) * filter, 1 ) )
-eysm=real_part(FFT( FFT(ey, -1) * filter, 1 ) )
-ezsm=real_part(FFT( FFT(ez, -1) * filter, 1 ) )
+vexsm=applyfilt(vex, filter )
+vezsm=applyfilt(vez, filter )
+vixsm=applyfilt(vix, filter )
+vizsm=applyfilt(viz, filter )
+bxsm =applyfilt(bx , filter )
+bysm =applyfilt(by , filter )
+bzsm =applyfilt(bz , filter )
+exsm =applyfilt(ex , filter )
+eysm =applyfilt(ey , filter )
+ezsm =applyfilt(ez , filter )
 
 jx=getvort(bysm,bzsm,xx,yy,nx,nz)-exsm
 jy=getvort(bxsm,bzsm,xx,yy,nx,nz)-eysm
