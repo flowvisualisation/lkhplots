@@ -2,7 +2,7 @@
 ; uses cgimage to plot photonplasma datafiles
 ; for comparison with the Pessah 2010 paper
 ;
-pro tw15p, nobackground=nobackground, big_endian=big_endian, lowres=lowres
+pro tw15p, nobackground=nobackground, big_endian=big_endian, lowres=lowres, zbuf=zbuf
 background=0
 if (keyword_set(nobackground) )then begin
 background=1
@@ -22,12 +22,12 @@ endif else begin
 xs=1300
 ys=1300
 endelse 
-if ( doxwin eq 1 ) then begin
+if ( keyword_set(zbuf) ) then begin
+set_plot, 'z'
+device, set_resolution=[1300,1100], Decomposed=1, Set_Pixel_Depth=24
+endif else begin
 set_plot, 'x'
 window, xs=xs, ys=ys
-endif else begin
-set_plot, 'z'
-device, set_resolution=[1300,1100]
 endelse
 
 qtag='with_background_'
@@ -82,7 +82,8 @@ ez0=congrid(reform(f.ez[*,slice,*]),nx,nz)
 f=0
 ;filter= butterworth(size(vix0, /dimensions), order=2, cutoff=10)
 ;filter= butterworth(size(vix0, /dimensions), order=3, cutoff=1)
-filter= butterworth(size(vix0, /dimensions), order=6, cutoff=2)
+;filter= butterworth(size(vix0, /dimensions), order=6, cutoff=2)
+filter= chebyfil(size(vix0, /dimensions), order=6, cutoff=2)
 qsm=100
 vexsm=applyfilt(vex0, filter)
 vezsm=applyfilt(vez0, filter)
@@ -193,7 +194,6 @@ ys=12
 !p.charsize=1.8
 DEVICE, XSIZE=xs, YSIZE=ys, /INCHES
 endif else begin
-set_plot,'x'
 !p.font=-1
 !p.color=0
 !p.background=255
@@ -403,7 +403,7 @@ xyouts, 0.01,0.01,$
 
 if ( usingps ) then begin
 device,/close
-set_plot,'x'
+;set_plot,'x'
 endif else begin
 ;set_plot,'x'
 fname2=fname
@@ -411,7 +411,7 @@ im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
 endelse
 
 endfor
-set_plot,'x'
+;set_plot,'x'
 
 
 print, MEMORY(/CURRENT)/1024./1024.,  'MB'

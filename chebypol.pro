@@ -18,7 +18,7 @@ for i=2,n do begin
 tn[i,*,*]=2*x*tn[i-1,*,*] - tn[i-2,*,*] 
 
 endfor
-cheby=tn[n,*,*]
+cheby=reform(tn[n,*,*])
 endelse
 
 return, cheby
