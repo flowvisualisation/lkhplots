@@ -181,7 +181,7 @@ tvx2=[tvx2, b]
 ;print, size(gamma)
 
 
-for usingps=0,1 do begin
+for usingps=0,0 do begin
 
 if ( usingps ) then begin
 set_plot,'ps'
