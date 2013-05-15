@@ -292,15 +292,15 @@ var(2)=ptr_new( vortion)
 var(3)=ptr_new( vexsm)
 var(4)=ptr_new( vezsm)
 var(5)=ptr_new( vortelec)
-var(6)=ptr_new(ex)
-var(7)=ptr_new(eysm)
-var(8)=ptr_new(curlB)
+var(6)=ptr_new(jx)
+var(7)=ptr_new(jy)
+var(8)=ptr_new(jz)
 var(9)=ptr_new(bxsm)
 var(10)=ptr_new(by)
 var(11)=ptr_new(bzsm)
-var(12)=ptr_new(jx)
-var(13)=ptr_new(jy)
-var(14)=ptr_new(jz)
+var(12)=ptr_new(curlB)
+var(13)=ptr_new(eysm)
+var(14)=ptr_new(ex)
 endelse
 
 
@@ -312,17 +312,17 @@ titlstr(2,*)="Ion Vorticity"
 titlstr(3,*)="V!Delec, X!N"
 titlstr(4,*)="V!Delec, Z!N"
 titlstr(5,*)="Electron Vorticity"
-titlstr(6,*)="E!DX!N"
-titlstr(7,*)="E!DY!N"
-titlstr(8,*)="(Curl B)!DY!N"
+titlstr(6,*)="J!DX!N"
+titlstr(7,*)="J!DY!N"
+titlstr(8,*)="J!DZ!N"
 titlstr(9,*)="B!DX!N"
 titlstr(10,*)="B!DY!N"
 titlstr(11,*)="B!DZ!N"
-titlstr(12,*)="J!DX!N"
-titlstr(13,*)="J!DY!N"
-titlstr(14,*)="J!DZ!N"
+titlstr(12,*)="(Curl B)!DY!N"
+titlstr(13,*)="E!DY!N"
+titlstr(14,*)="E!DX!N"
 
-for  qgmq = 0,14 do begin
+for  qgmq = 0,13 do begin
 a=*var(qgmq)
 mx=max(a)
 mn=min(a)
@@ -337,7 +337,7 @@ endfor
 
  cgLoadCT, 33, CLIP=[5, 245]
 
-for i=0,14 do begin
+for i=0,13 do begin
    pos = [0.02, 0.35, 0.98, 0.91]
 localimagecopy=reform(*var(i))
  cgIMAGE, localimagecopy, POSITION=pos, /KEEP_ASPECT_RATIO ,background='white', scale=1
@@ -391,7 +391,7 @@ endfor
 
 !x.range=0
 !y.range=0
-;cgplot,  gamma, title='Total x-kinetic energy',color='black' ;, /xlog, /ylog
+cgplot,  gamma, title='Total x-kinetic energy',color='black' ;, /xlog, /ylog
 ;cgplot,  tvx2, /overplot, color='black'
 
 xyouts, 0.01,0.01,$
