@@ -115,8 +115,12 @@ vezsm0=vezsm
 
 totalelecke0=total(vex0^2+vez0^2)
 totalionke0=total(vix0^2+viz0^2)
+totalb0=total(bx0^2+bz0^2)
+totalen=totalb0+totalelecke0+totalionke0
 gamma=fltarr(1)
 tvx2=fltarr(1)
+tbx2=fltarr(1)
+tbz2=fltarr(1)
 tvx2(*)=1
 
 for nfile=nstart,nend,nstep do begin
@@ -174,11 +178,15 @@ endif
 mesg='t='+string(f.s.time,format='(F12.5)')+' , '+qqtag+' ncellsx '+string(f.s.gn[0])+' '+string(f.s.ds(0))
 f=0
 
-a=total(vex^2)/totalelecke0
-b=total(vix^2)/totalionke0
+a=total(vex^2)/totalen
+b=total(vix^2)/totalen
+c=total(bx^2)/totalen
+d=total(bz^2)/totalen
 gamma=[gamma, a]
 tvx2=[tvx2, b]
-;print, size(gamma)
+tbx2=[tbx2, c]
+tbz2=[tbz2, d]
+print, a,b,c,d
 
 
 for usingps=0,0 do begin
@@ -392,7 +400,9 @@ endfor
 !x.range=0
 !y.range=0
 cgplot,  gamma, title='Total x-kinetic energy',color='black' ;, /xlog, /ylog
-;cgplot,  tvx2, /overplot, color='black'
+cgplot,  tvx2, /overplot, color='blue'
+cgplot,  tbx2, /overplot, color='green'
+cgplot,  tbz2, /overplot, color='red'
 
 xyouts, 0.01,0.01,$
    mesg, /normal, charsize=3
