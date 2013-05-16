@@ -404,6 +404,9 @@ cgplot,  tvx2, /overplot, color='blue'
 cgplot,  tbx2, /overplot, color='green'
 cgplot,  tbz2, /overplot, color='red'
 
+al_legend, ['vz!U2!N','vx!U2!N', 'bx!U2!N','bz!U2!N'], PSym=[-14,-15,-16,-17], $
+      LineStyle=[0,2,3,4], Color=['black','red','dodger blue','green'], charsize=legchar, /left
+
 xyouts, 0.01,0.01,$
    mesg, /normal, charsize=2
 
