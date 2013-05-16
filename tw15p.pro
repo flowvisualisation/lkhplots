@@ -170,12 +170,12 @@ vex=congrid(reform(f.v[*,slice,*,0,0]/f.d[*,slice,*,0]),nx,nz)
 vey=congrid(reform(f.v[*,slice,*,1,0]/f.d[*,slice,*,0]),nx,nz)
 vez=congrid(reform(f.v[*,slice,*,2,0]/f.d[*,slice,*,0]),nx,nz)
 
-
-qqtag=" backgr included"
+spawn, "echo ${PWD##*/}" , dir
+qqtag=" backgr incl"
 if (background eq 1) then begin
-qqtag=" backgr. subtracted"
+qqtag=" backgr. subtr"
 endif
-mesg='t='+string(f.s.time,format='(F12.5)')+' , '+qqtag+' ncellsx '+string(f.s.gn[0])+' '+string(f.s.ds(0))
+mesg=dir+' t='+string(f.s.time,format='(F12.5)')+' , '+qqtag+' ncellsx '+string(f.s.gn[0])+' '+string(f.s.ds(0))
 f=0
 
 a=total(vex^2)/totalen
@@ -405,7 +405,7 @@ cgplot,  tbx2, /overplot, color='green'
 cgplot,  tbz2, /overplot, color='red'
 
 xyouts, 0.01,0.01,$
-   mesg, /normal, charsize=3
+   mesg, /normal, charsize=2
 
 !p.position=0
 !p.multi=0
