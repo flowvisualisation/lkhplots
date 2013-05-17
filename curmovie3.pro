@@ -93,26 +93,24 @@ var(6,*,*)=vx2-initv2
 var(7,*,*)=vort3
 tag2="(backgr subtr)"
 endif else begin
-var(1,*,*)=bx1
-var(2,*,*)=bx2
-;var(3,*,*)=vort-initvort
-;var(3,*,*)=smooth(vort-initvort, 10,/edge_wrap)
-var(3,*,*)=jy
+var(1,*,*)=vx1
+var(2,*,*)=vx2
+var(3,*,*)=vort3
 var(4,*,*)=sqrt((bx1^2+bx2^2)/rho)
-var(5,*,*)=vx1
-var(6,*,*)=vx2
-var(7,*,*)=vort3
+var(5,*,*)=bx1
+var(6,*,*)=bx2
+var(7,*,*)=jy
 tag2="(backgr incl)"
 endelse
 str=strarr(9,20)
 str(0,*)="prs"
-str(1,*)="B!DX!N"
-str(2,*)="B!DZ!N"
-str(3,*)="Current"
+str(1,*)="vx"
+str(2,*)="vz"
+str(3,*)="vort"
 str(4,*)="Alfven speed"
-str(5,*)="vx"
-str(6,*)="vz"
-str(7,*)="vort"
+str(5,*)="B!DX!N"
+str(6,*)="B!DZ!N"
+str(7,*)="Current"
 
 for usingps=0,1 do begin
 
