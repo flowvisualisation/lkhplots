@@ -189,7 +189,7 @@ tbz2=[tbz2, d]
 print, a,b,c,d
 
 
-for usingps=0,0 do begin
+for usingps=0,1 do begin
 
 if ( usingps ) then begin
 set_plot,'ps'
@@ -208,6 +208,13 @@ endif else begin
 !p.charsize=1.8
 ;window, xs=1100,ys=800
 ;device, Set_Resolution=[1100,800]
+if ( keyword_set(zbuf) ) then begin
+set_plot, 'z'
+device, set_resolution=[1300,1100], Decomposed=1, Set_Pixel_Depth=24
+endif else begin
+set_plot, 'x'
+window, xs=xs, ys=ys
+endelse
 endelse
 
 ;window, xs=1100,ys=800
