@@ -7,8 +7,8 @@ cgwindow, xs=1500,ys=1100
 cgSet
 endif else  begin
 if (hires eq 1) then begin
-xs=800
-window,xs=xs,ys=1.6*xs
+xs=900
+window,xs=xs,ys=0.9*xs
 endif else begin
 window,xs=1000,ys=500
 endelse
@@ -35,8 +35,8 @@ nstart=1
 nend=nlast
 nstep=1
 pload,0
-totalb20=total(bx1^2+bx2^2)
-gamma=fltarr(1)
+totalb20=total(sqrt(bx1^2+bx2^2))
+tbz2=fltarr(1)
 tbx2=fltarr(1)
 tbx2(*)=1
 totvel1=fltarr(1)
@@ -44,7 +44,7 @@ totvel2=fltarr(1)
 totprs=fltarr(1)
 
 for nfile=nstart,nend,nstep do begin
-print, nfile
+print,'nfile= ', nfile
 
 ll=6
 zero=''
@@ -61,15 +61,15 @@ nz = nx2
 slice= 0
 
 
-a=total(bx2^2)/totalb20 ; total by^2
-b=total(bx1^2)/totalb20 ; total bx^2
-qv1=total(vx2^2)/totalb20 ; total by^2
-qv2=total(vx1^2)/totalb20 ; total bx^2
-gamma=[gamma, a]
+a=total(abs(bx2))/totalb20 ; total by^2
+b=total(abs(bx1))/totalb20 ; total bx^2
+qv1=total(abs(vx2))/totalb20 ; total by^2
+qv2=total(abs(vx1))/totalb20 ; total bx^2
+tbz2=[tbz2, a]
 tbx2=[tbx2, b]
 totvel1=[totvel1, qv1]
 totvel2=[totvel2, qv2]
-print, size(gamma)
+print, 'size tbz2', size(tbz2)
 
 vort=getvort(bx1,bx2,x1,x2,nx1,nx2)
 vort2=getvort(bx1-initb1,bx2-initb2,x1,x2,nx1,nx2)
@@ -81,11 +81,11 @@ var(0,*,*)=alog(prs)
 if ( background eq 1 ) then begin 
 var(1,*,*)=bx1-initb1
 var(2,*,*)=bx2-initb2
-tag2="(backgr subtracted)"
+tag2="(backgr subtr)"
 endif else begin
 var(1,*,*)=bx1
 var(2,*,*)=bx2
-tag2="(backgr included)"
+tag2="(backgr incl)"
 endelse
 var(3,*,*)=vort-initvort
 var(3,*,*)=smooth(vort-initvort, 10,/edge_wrap)
@@ -95,9 +95,9 @@ var(5,*,*)=bx1
 str=strarr(6,20)
 str(0,*)="prs"
 ;str(0,*)="sndspd"
-str(1,*)="B!DX!N"+tag2
-str(2,*)="B!DZ!N"+tag2
-str(3,*)="PLUTO current"+tag2
+str(1,*)="B!DX!N"
+str(2,*)="B!DZ!N"
+str(3,*)="Current"
 str(4,*)="Alfven speed"
 str(5,*)="bx1"
 
@@ -109,7 +109,7 @@ device,filename=fname+'.eps',/encapsulated
 device, /color
 !p.font=0
 device, /times
-xs=6.
+xs=10.
 ys=10.
 !p.charsize=0.9
 cbarchar=0.9
@@ -120,7 +120,6 @@ endif else begin
 set_plot,'x'
 !p.font=-1
 ;!p.color=0
-;!p.background=255
 !p.charsize=1.8
 cbarchar=1.8
 xychar=1.8
@@ -129,18 +128,17 @@ legchar=1.8
 endelse
 
 ;window, xs=1100,ys=800
-!p.multi=[0,2,1]
+!p.multi=[0,2,2]
 if ( plotgrowth eq 1 ) then begin
 !p.multi=0
 endif 
 if ( plotgrowthvortex eq 1) then begin
 !p.multi=0
 endif 
-!p.multi=[0,1,2]
+!p.multi=[0,2,2]
 !x.style=1
 !y.style=1
 
-;!p.background=1
 
 xx=x1
 yy=x2
@@ -154,17 +152,14 @@ yy=x2
 
 
 
- cgLoadCT, 33, CLIP=[5, 245]
+ cgLoadCT, 33
 ;tvlct, 0,0,0,0
 ;tvlct, 255,255,255,1
-white=1
-!p.background=white
-!p.color=0
 
 
 
 if ( plotgrowthvortex eq 1 ) then begin
-for i=3,3 do begin
+for i=1,3 do begin
 
 
 ;r=scale_vector(var(i,*,*),4,255)
@@ -177,7 +172,7 @@ p = [0.08, 0.3, 0.98, 0.95]
 ;cgaxis, /xaxis, xRANGE=[0, 100], $
 ;MINOR=0, MAJOR=3
   cgcontour, r, xx,yy,POSITION=p, /NOERASE, XSTYLE=1, $
-      YSTYLE=1,  NLEVELS=10, /nodata, title=str(i)+' vort2 '+', t='+string(t[nfile],format='(F6.2)'), $
+      YSTYLE=1,  NLEVELS=10, /nodata, title=str(i)+', '+string(min(r),format='(G8.2)')+','+string(max(r),format='(G6.2)') , $
       color='white'
 imin=min(r)-1e-6
 imax=max(r)+1e-6
@@ -197,7 +192,7 @@ cx=congrid(xx,q)
 cy=congrid(yy,q)
 
 cgloadct,0
-velovect, cv1,cv2, cx,cy, /noerase,/overplot, position=p , color=255
+velovect, cv1,cv2, cx,cy, /noerase,/overplot, position=p , color=cgcolor('white')
 cgloadct,33
 endif
 
@@ -207,8 +202,8 @@ endif
 
 growth=0
 dogrowth=0
-maxgam=0.001
-if ( max(gamma) ge maxgam ) then begin 
+maxgam=0.013
+if ( max(tbz2) ge maxgam ) then begin 
 dogrowth=1
 endif
 
@@ -218,18 +213,18 @@ tnorm=t
 ;tnorm=t/tsndcr
 if (  dogrowth ) then begin 
 
-nel=n_elements(gamma)
-gam2=[0.1*maxgam, maxgam]
-tam2=interpol( tnorm(0:nel-1),gamma, gam2)
+nel=n_elements(tbz2)
+gam2=[0.01, maxgam]
+tam2=interpol( tnorm(0:nel-1),tbz2, gam2)
 
-print, tam2
-print, gam2
+print,'tam2' , tam2
+print, 'gam2 ',gam2
 growth=(gam2[1]-gam2[0])/(tam2[1]-tam2[0])
 growth=(alog10(gam2[1])-alog10(gam2[0]))/(tam2[1]-tam2[0])
 endif
 
 if (plotgrowth  ne 0) then begin
-cgplot, tnorm, alog10(gamma), title='Log (Total B!U2!N!DZ!N)' ,   xrange=[0.1,24],yrange=[-5,0], xtitle='t / t!D(VK)!N', ytitle='Log Total B!U2!N!DZ!N /B!U2!N!Dt=0!N' ,  psym=-14, Color='black',linestyle=0, background='white'
+cgplot, tnorm, alog10(tbz2), title='Log (Total |B!DZ!N|)' ,   xrange=[0.1,24],yrange=[-5,0], xtitle='t / t!D(VK)!N', ytitle='Log Total B!DZ!N /B!N!Dt=0!N' ,  psym=-14, Color='black',linestyle=0, background='white', /xlog
 cgplot, tnorm, alog10(tbx2), /overplot, PSym=-15, Color='red',linestyle=2
 cgplot, tnorm, alog10(totvel1), /overplot,PSym=-16, Color='dodger blue', linestyle=3
 cgplot, tnorm, alog10(totvel2), /overplot, PSym=-17, Color='green', linestyle=4
@@ -249,12 +244,13 @@ aspectratio=max(x2+0.5*dx2[0])/max(x1+0.5*dx1[0])
 
 if ( doannotation eq 1) then begin
 xyouts, 0.01,0.01,$
-   'Tearing Mode Instability, t='+string(t(nfile),format='(F5.1)')+ $
-     ', growth rate'+string(growth, format='(F7.4)')+$
-      ', aspect ratio '+string(aspectratio, format='(F7.4)')+$
+   'TM PLUTO, t='+string(t(nfile),format='(F5.1)')+ $
+     ', growth'+string(growth, format='(F7.4)')+$
+      ', asp. ratio '+string(aspectratio, format='(F4.2)')+$
       ' , t!DA!N'+string(talfven, format='(F8.4)')+$
       ' , t!DR!N'+string(tresis, format='(F9.1)')+$
       ' , t!DS!N'+string(tsound, format='(F7.4)'),$
+         color=cgcolor('black'), $
    /normal, charsize=xychar
 endif
 
@@ -277,6 +273,7 @@ set_plot,'x'
 
 endfor
 
+print, tbz2
 f2name='growthratemhd.dat'
 OPENW,1,f2name
 PRINTF,1, max(x2)/max(x1), growth,FORMAT='(F9.6 , F9.6)'
