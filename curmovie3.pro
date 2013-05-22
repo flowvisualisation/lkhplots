@@ -74,7 +74,7 @@ totvel2=[totvel2, qv2]
 print, 'size tbz2', size(tbz2)
 
 vort=getvort(bx1,bx2,x1,x2,nx1,nx2)
-jy=getvort(bx1-initb1,bx2-initb2,x1,x2,nx1,nx2)
+jy=-getvort(bx1-initb1,bx2-initb2,x1,x2,nx1,nx2)
 vort3=getvort(vx1-initv1,vx2-initv2,x1,x2,nx1,nx2)
 var=fltarr(9,nx1,nx2)
 rho[0,0]=rho[0,0]+1e-6
