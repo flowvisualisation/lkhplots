@@ -2,20 +2,21 @@ pro cgsix, vx1,vx2, rho, prs, t , nlast, nx1,nx2,x1,x2, background,dx1,dx2
 growth=0
 cg=0
 hires=0
+pload,0
+ar=nx2*1.0/nx1
 if (cg eq 1) then begin
 cgwindow, xs=1500,ys=1100
 ;cgWindow
 cgSet
 endif else  begin
 if (hires eq 1) then begin
-window,xs=1500,ys=1100
+;window,xs=1500,ys=1100
 endif else begin
-window,xs=1100,ys=800
+ys=600+600*ar
+xs=2400-ar*400
+window,xs=xs,ys=ys
 endelse
 endelse
-;loadct,33
-;tvlct, 0,0,0,0
-;tvlct, 255,255,255,1
 pload,0
 help, vx1
 
@@ -33,10 +34,12 @@ endif
 
 nstart=1
 nend=nlast
+nend=2
+;nend=50
 nstep=1
 pload,0
-totalke0=total(vx1^2+vx2^2)
-gamma=fltarr(1)
+totalke0=total(sqrt(vx1^2+vx2^2))
+tvz2=fltarr(1)
 tvx2=fltarr(1)
 tvx2(*)=1
 
@@ -58,11 +61,11 @@ nz = nx2
 slice= 0
 
 
-a=total(vx2^2)/totalke0 ; total vy^2
-b=total(vx1^2)/totalke0 ; total vx^2
-gamma=[gamma, a]
+a=total(abs(vx2))/totalke0 ; total vy^2
+b=total(abs(vx1))/totalke0 ; total vx^2
+tvz2=[tvz2, a]
 tvx2=[tvx2, b]
-print, size(gamma)
+print, size(tvz2)
 
 vort = getvort(vx1,vx2,x1,x2,nx1,nx2)
 var=fltarr(6,nx1,nx2)
@@ -77,14 +80,14 @@ var(2,*,*)=vx2
 endelse
 var(3,*,*)=smooth(vort-initvort, 10,/edge_wrap)
 var(3,*,*)=vort-initvort
-var(4,*,*)=sqrt(1.4*prs/rho)
-var(5,*,*)=vx1
+var(4,*,*)=(1.4*prs/rho)
+;var(4,*,*)=vx1
 str=strarr(6,20)
 str(0,*)="density)"
-str(1,*)="x-velocity"
-str(2,*)="y-velocity"
-str(3,*)="vorticity"
-str(4,*)="sndspeed"
+str(1,*)="V!DX!N"
+str(2,*)="V!DZ!N"
+str(3,*)="vort"
+str(4,*)="V!DTH!N!U2!N"
 str(5,*)="vx1"
 
 for usingps=0,1 do begin
@@ -95,8 +98,8 @@ device,filename=fname+'.eps',/encapsulated
 device, /color
 !p.font=0
 device, /times
-xs=10.
-ys=6
+xs=24.-ar*6
+ys=6+ar*4
 DEVICE, XSIZE=xs, YSIZE=ys, /INCHES
 !p.charsize=0.9
 cbarchar=0.9
@@ -104,20 +107,16 @@ xyout=0.9
 endif else begin
 set_plot,'x'
 !p.font=-1
-;!p.color=0
-;!p.background=255
 !p.charsize=1.8
 cbarchar=1.8
 xyout=1.8
 ;device, set_resolution=[1100,800]
 endelse
 
-;window, xs=1100,ys=800
-!p.multi=[0,2,2]
+!p.multi=[0,3,2]
 !x.style=1
 !y.style=1
 
-;!p.background=1
 
 xx=x1
 yy=x2
@@ -131,14 +130,9 @@ yy=x2
 
 
 
- cgLoadCT, 33, CLIP=[5, 245]
-;tvlct, 0,0,0,0
-;tvlct, 255,255,255,1
-white=1
-!p.background=white
-!p.color=0
+ cgLoadCT, 33
 
-for i=1,3 do begin
+for i=1,4 do begin
 
 
 ;r=scale_vector(var(i,*,*),4,255)
@@ -151,11 +145,11 @@ p = [0.08, 0.4, 0.98, 0.9]
 ;cgaxis, /xaxis, xRANGE=[0, 100], $
 ;MINOR=0, MAJOR=3
   cgcontour, r, xx,yy,POSITION=p, /NOERASE, XSTYLE=1, $
-      YSTYLE=1,  NLEVELS=10, /nodata, title=str(i)+string(min(r))+' '+string(max(r)), $
+      YSTYLE=1,  NLEVELS=10, /nodata, title=str(i)+string(min(r), format='(G8.2)')+' '+string(max(r), format='(G8.2)'), $
       color='white'
 imin=min(r)-1e-6
 imax=max(r)+1e-6
-cgcolorbar, Position=[p[0], p[1]-0.1, p[2], p[1]-0.05], range=[imin,imax], format='(F5.2)', charsize=cbarchar
+cgcolorbar, Position=[p[0], p[1]-0.08, p[2], p[1]-0.06], range=[imin,imax], format='(F5.2)', charsize=cbarchar
 
 
 if (i eq 3 ) then begin
@@ -170,15 +164,17 @@ endelse
 cx=congrid(xx,q)
 cy=congrid(yy,q)
 
-cgloadct,0
-velovect, cv1,cv2, cx,cy, /noerase,/overplot, position=p , color=255
+velovect, cv1,cv2, cx,cy, /noerase,/overplot, position=p , color=cgcolor('white')
+cgloadct,33
 endif
 
 endfor
 
 growth=0
 dogrowth=0
-if ( max(gamma) ge 0.5 ) then begin 
+
+maxtvz2=0.05
+if ( max(tvz2) ge maxtvz2 ) then begin 
 dogrowth=1
 endif
 
@@ -188,9 +184,9 @@ tnorm=t
 ;tnorm=t/tsndcr
 if (  dogrowth ) then begin 
 
-nel=n_elements(gamma)
-gam2=[0.01, 0.5]
-tam2=interpol( tnorm(0:nel-1),gamma, gam2)
+nel=n_elements(tvz2)
+gam2=[0.02, maxtvz2]
+tam2=interpol( tnorm(0:nel-1),tvz2, gam2)
 
 print, tam2
 print, gam2
@@ -199,20 +195,32 @@ growth=(alog10(gam2[1])-alog10(gam2[0]))/(tam2[1]-tam2[0])
 ;growth=(alog10(gam2[1])-alog10(gam2[0]))/(alog10(tam2[1])-alog10(tam2[0]))
 endif
 
-cgplot, tnorm, alog10(gamma), title='Log (Total y-kinetic energy)' ,   xrange=[0.1,120],yrange=[-5,0], xtitle='t / t!Dsound crossing!N', ytitle='Log Total y kinetic energy/KE!Dt=0!N' , /xlog
-cgplot, tnorm, alog10(tvx2), /overplot
+grtitle='(Total |V!DX,Z!N|/|V!DX!N + i V!DZ!N|)' 
+lgrtitle='Log'+grtitle
+cgplot, tnorm, alog10(tvz2), title=lgrtitle,   xrange=[0.1,120],yrange=[-2,0], xtitle='t / t!Dsound crossing!N', ytitle=lgrtitle, /xlog,  psym=-14, Color='black',linestyle=0
+cgplot, tnorm, alog10(tvx2), /overplot,  PSym=-15, Color='red',linestyle=2
+
 if ( dogrowth ) then begin 
-;oplot,t,exp(growth*t/0.1)*gam2[0]/exp(growth*tam2[0]/0.1)
-cgplot, tnorm, growth*(tnorm-tam2[0])+alog10(gam2[0]) ,  /overplot
+cgplot, tnorm, growth*(tnorm-tam2[0])+alog10(gam2[0]) ,  /overplot, PSym=-16, Color='dodger blue', linestyle=3
 cgplot, tam2, alog10(gam2), psym=4, /overplot
+al_legend, ['V!DZ!N!U2!N','V!DX!N!U2!N', 'theor','vx!U2!N'], PSym=[-14,-15,-16,-17], $
+      LineStyle=[0,2,3,4], Color=['black','red','dodger blue','green'], charsize=legchar, /left
 endif
 
+cgplot, tnorm, (tvz2), title=lgrtitle ,   xrange=[0.1,12],yrange=[0.01,1], xtitle='t / t!Dsound crossing!N', ytitle=lgrtitle,   psym=-14, Color='black',linestyle=0, /ylog
+cgplot, tnorm, (tvx2), /overplot,  PSym=-15, Color='red',linestyle=2
 
+if ( dogrowth ) then begin 
+cgplot, tnorm, 10^(growth*(tnorm))*(1e-2 - 2e-3) ,  /overplot, PSym=-16, Color='dodger blue', linestyle=3
+cgplot, tam2, (gam2), psym=4, /overplot
+al_legend, ['V!DZ!N!U2!N','V!DX!N!U2!N', 'theor'], PSym=[-14,-15,-16], $
+      LineStyle=[0,2,3], Color=['black','red','dodger blue'], charsize=legchar, /left
+endif
 xyouts, 0.01,0.01,$
    'Kelvin-Helmholtz Instability, t='+string(t(nfile),format='(F8.1)')+ $
      ', growth rate'+string(growth, format='(F8.4)')+$
       ', aspect ratio '+string(max(x2)/max(x1), format='(F8.4)'),$
-   /normal, charsize=xychar
+   /normal, charsize=xychar, color=cgcolor('black')
 
 !p.position=0
 !p.multi=0
