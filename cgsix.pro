@@ -1,8 +1,8 @@
-pro cgsix, vx1,vx2, rho, prs, t , nlast, nx1,nx2,x1,x2, background,dx1,dx2
+pro cgsix, vx1,vx2, rho, prs, t , nlast, nx1,nx2,x1,x2, background,dx1,dx2, zbuf=zbuf
 growth=0
 cg=0
 hires=0
-pload,0
+pload,0,/silent
 ar=nx2*1.0/nx1
 if (cg eq 1) then begin
 cgwindow, xs=1500,ys=1100
@@ -12,12 +12,9 @@ endif else  begin
 if (hires eq 1) then begin
 ;window,xs=1500,ys=1100
 endif else begin
-ys=600+600*ar
-xs=2400-ar*400
-window,xs=xs,ys=ys
 endelse
 endelse
-pload,0
+;pload,0,/silent
 help, vx1
 
 initvort= 0.0
@@ -34,13 +31,15 @@ endif
 
 nstart=1
 nend=nlast
-nend=2
+;nend=2
 ;nend=50
 nstep=1
-pload,0
+;pload,0,/silent
 totalke0=total(sqrt(vx1^2+vx2^2))
 tvz2=fltarr(1)
 tvx2=fltarr(1)
+maxvx=fltarr(1)
+maxvxvxinit=fltarr(1)
 tvx2(*)=1
 
 for nfile=nstart,nend,nstep do begin
@@ -53,7 +52,7 @@ lnt=strlen(nts)
 for j=1,ll-lnt do zero=zero+'0'
            fname='sixplot'+zero+nts
 
-pload,nfile
+pload,nfile, /silent
 
 !p.position=0
 nx = nx1
@@ -63,8 +62,12 @@ slice= 0
 
 a=total(abs(vx2))/totalke0 ; total vy^2
 b=total(abs(vx1))/totalke0 ; total vx^2
+c=max(vx2)
+d=max(vx2-initv2)
 tvz2=[tvz2, a]
 tvx2=[tvx2, b]
+maxvx=[maxvx, c]
+maxvxvxinit=[maxvxvxinit, d]
 print, size(tvz2)
 
 vort = getvort(vx1,vx2,x1,x2,nx1,nx2)
@@ -98,18 +101,29 @@ device,filename=fname+'.eps',/encapsulated
 device, /color
 !p.font=0
 device, /times
-xs=24.-ar*6
+xs=12.-ar*6
 ys=6+ar*4
 DEVICE, XSIZE=xs, YSIZE=ys, /INCHES
 !p.charsize=0.9
 cbarchar=0.9
 xyout=0.9
 endif else begin
+if ( keyword_set (zbuf) ) then begin
+set_plot,'z'
+ys=600+600*ar
+xs=2400-ar*400
+device, set_resolution=[1100,800]
+device, set_resolution=[xs,ys]
+endif else begin
 set_plot,'x'
+ys=600+600*ar
+xs=2400-ar*400
+window,xs=xs,ys=ys
 !p.font=-1
 !p.charsize=1.8
 cbarchar=1.8
 xyout=1.8
+endelse
 ;device, set_resolution=[1100,800]
 endelse
 
@@ -199,22 +213,26 @@ grtitle='(Total |V!DX,Z!N|/|V!DX!N + i V!DZ!N|)'
 lgrtitle='Log'+grtitle
 cgplot, tnorm, alog10(tvz2), title=lgrtitle,   xrange=[0.1,120],yrange=[-2,0], xtitle='t / t!Dsound crossing!N', ytitle=lgrtitle, /xlog,  psym=-14, Color='black',linestyle=0
 cgplot, tnorm, alog10(tvx2), /overplot,  PSym=-15, Color='red',linestyle=2
+cgplot, tnorm, alog10(maxvx), /overplot,  PSym=-17, Color='green',linestyle=4
+cgplot, tnorm, alog10(maxvxvxinit), /overplot,  PSym=-18, Color='violet',linestyle=5
 
 if ( dogrowth ) then begin 
 cgplot, tnorm, growth*(tnorm-tam2[0])+alog10(gam2[0]) ,  /overplot, PSym=-16, Color='dodger blue', linestyle=3
 cgplot, tam2, alog10(gam2), psym=4, /overplot
-al_legend, ['V!DZ!N!U2!N','V!DX!N!U2!N', 'theor','vx!U2!N'], PSym=[-14,-15,-16,-17], $
-      LineStyle=[0,2,3,4], Color=['black','red','dodger blue','green'], charsize=legchar, /left
+al_legend, ['V!DZ!N!U2!N','V!DX!N!U2!N', 'fit','max(vx!U2!N)', 'max(vx-vx0)'], PSym=[-14,-15,-16,-17,-18], $
+      LineStyle=[0,2,3,4,5], Color=['black','red','dodger blue','green', 'violet'], charsize=legchar, /left
 endif
 
 cgplot, tnorm, (tvz2), title=lgrtitle ,   xrange=[0.1,12],yrange=[0.01,1], xtitle='t / t!Dsound crossing!N', ytitle=lgrtitle,   psym=-14, Color='black',linestyle=0, /ylog
 cgplot, tnorm, (tvx2), /overplot,  PSym=-15, Color='red',linestyle=2
+cgplot, tnorm, (maxvx), /overplot,  PSym=-17, Color='green',linestyle=4
+cgplot, tnorm, (maxvxvxinit), /overplot,  PSym=-18, Color='violet',linestyle=5
 
 if ( dogrowth ) then begin 
 cgplot, tnorm, 10^(growth*(tnorm))*(1e-2 - 2e-3) ,  /overplot, PSym=-16, Color='dodger blue', linestyle=3
 cgplot, tam2, (gam2), psym=4, /overplot
-al_legend, ['V!DZ!N!U2!N','V!DX!N!U2!N', 'theor'], PSym=[-14,-15,-16], $
-      LineStyle=[0,2,3], Color=['black','red','dodger blue'], charsize=legchar, /left
+al_legend, ['V!DZ!N!U2!N','V!DX!N!U2!N', 'fit','max(vx!U2!N)', 'max(vx-vx0)'], PSym=[-14,-15,-16,-17,-18], $
+      LineStyle=[0,2,3,4,5], Color=['black','red','dodger blue','green', 'violet'], charsize=legchar, /left
 endif
 xyouts, 0.01,0.01,$
    'Kelvin-Helmholtz Instability, t='+string(t(nfile),format='(F8.1)')+ $
@@ -228,7 +246,7 @@ xyouts, 0.01,0.01,$
 
 if ( usingps ) then begin
 device,/close
-set_plot,'x'
+;set_plot,'x'
 endif else begin
 ;set_plot,'x'
 fname2=fname

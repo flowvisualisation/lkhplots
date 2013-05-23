@@ -1,14 +1,19 @@
 pro curmovie3, bx1,bx2,vx1,vx2, rho, prs, t , nlast, nx1,nx2,x1,x2, background,dx1,dx2, hires, plotgrowth, plotgrowthvortex, tag, doannotation
+pwd
 growth=0
 cg=0
+
+
+ar=nx2*1.0/nx1
 if (cg eq 1) then begin
 cgwindow, xs=1500,ys=1100
 ;cgWindow
 cgSet
 endif else  begin
 if (hires eq 1) then begin
-xs=1400
-window,xs=xs,ys=0.4*xs
+xs=2400-ar*400
+ys=600+600*ar
+window,xs=xs,ys=ys
 endif else begin
 window,xs=1000,ys=500
 endelse
@@ -82,15 +87,13 @@ var(0,*,*)=alog(prs)
 ;sndspd=sqrt(1.4*prs/rho)
 ;var(0,*,*)=sndspd
 if ( background eq 1 ) then begin 
-var(1,*,*)=bx1-initb1
-var(2,*,*)=bx2-initb2
-;var(3,*,*)=vort-initvort
-;var(3,*,*)=smooth(vort-initvort, 10,/edge_wrap)
-var(3,*,*)=jy
+var(1,*,*)=vx1-initv1
+var(2,*,*)=vx2-initv2
+var(3,*,*)=vort3
 var(4,*,*)=sqrt((bx1^2+bx2^2)/rho)
-var(5,*,*)=vx1-initv1
-var(6,*,*)=vx2-initv2
-var(7,*,*)=vort3
+var(5,*,*)=bx1-initb1
+var(6,*,*)=bx2-initb2
+var(7,*,*)=jy
 tag2="(backgr subtr)"
 endif else begin
 var(1,*,*)=vx1
@@ -182,14 +185,14 @@ p = [0.08, 0.3, 0.98, 0.95]
 ;cgaxis, /xaxis, xRANGE=[0, 100], $
 ;MINOR=0, MAJOR=3
   cgcontour, r, xx,yy,POSITION=p, /NOERASE, XSTYLE=1, $
-      YSTYLE=1,  NLEVELS=10, /nodata, title=str(i)+', '+string(min(r),format='(G8.2)')+','+string(max(r),format='(G6.2)') , $
+      YSTYLE=1,  NLEVELS=10, /nodata, title=str(i)+', '+string(min(r),format='(G8.2)')+','+string(max(r),format='(G8.2)') , $
       color='white'
 imin=min(r)-1e-6
 imax=max(r)+1e-6
 cgcolorbar, Position=[p[0], p[1]-0.07, p[2], p[1]-0.05], range=[imin,imax], format='(F7.2)', charsize=cbarchar
 
 
-if (i eq 3 ) then begin
+if (i eq 7 ) then begin
 q=25
 if (background eq 1) then begin
 cv1=congrid(bx1-initb1,q,q)
@@ -205,7 +208,7 @@ cgloadct,33
 endif
 
 
-if (i eq 7 ) then begin
+if (i eq 3 ) then begin
 q=25
 if (background eq 1) then begin
 cv1=congrid(vx1-initv1,q,q)
