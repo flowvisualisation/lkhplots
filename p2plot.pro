@@ -17,8 +17,10 @@ initv2=f0.uu[*,*,1]
 print, mx, my
 print, x
 print, y
-x1=x[3:mx-4]
-x2=y[3:my-4]
+x1=x[3:mx-4]*2*!PI
+x2=y[3:my-4]*2*!PI; *fix(x1)/x2
+aspectratio=max(x2)/max(x1)
+x1=x[3:mx-4]*2*!PI*aspectratio
 nx=mx-6
 ny=my-6
 
@@ -120,17 +122,17 @@ cgloadct,33
 
 
 for qq=2,2 do begin
-pos=[0.09,0.13,0.95,.95]
+pos=[0.2,0.2,0.98,.95]
 r=reform(var(qq,*,*))
 imin=min(r)
 imax=max(r)
-cgimage,r, position=pos, background='white', /KEEP_ASPECT_RATIO , scale=1 
+cgimage,r, position=pos, background='white',  scale=1 
 cgcontour,x1#x2,x1,x2,/nodata,/noerase, position=pos, background='white', title=str_g(qq)+string(min(r), format='(G8.2)')+' '+string(max(r), format='(G8.2)'), xtitle='x', ytitle='z', axiscolor='black'
 cgcolorbar, Position=[pos[0], pos[1]-0.08, pos[2], pos[1]-0.06], range=[imin,imax], format='(G8.2)', charsize=cbarchar,  annotatecolor='black'
 
 
 if ( qq eq 2) then begin 
-q=13
+q=23
 if (background eq 1) then begin
 cv1=congrid(v1-initv1,q,q)
 cv2=congrid(v2-initv2,q,q)
@@ -141,7 +143,7 @@ endelse
 cx=congrid(x1,q)
 cy=congrid(x2,q)
 
-velovect, cv1,cv2, cx,cy, /noerase,/overplot, position=pos , color=cgcolor('white')
+velovect, cv1,cv2, cx,cy, /noerase,/overplot, position=pos , color=cgcolor('white'), len=2.5, thick=1.25
 
 endif
 
@@ -175,7 +177,6 @@ endif
 
 
 tsound=1
-aspectratio=max(x2)/max(x1)
 
 if ( doannotation eq 1) then begin
 xyouts, 0.01,0.01,$
