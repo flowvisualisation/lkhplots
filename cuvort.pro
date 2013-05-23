@@ -1,9 +1,8 @@
-pro cuvort, bx1,bx2,vx1,vx2, rho, prs, t , nlast, nx1,nx2,x1,x2, background,dx1,dx2, hires, plotgrowth, plotgrowthvortex, tag, doannotation, pl
+pro cuvort, bx1,bx2,vx1,vx2, rho, prs, t , nlast, nx1,nx2,x1,x2, background,dx1,dx2, hires, plotgrowth, plotgrowthvortex, tag, doannotation, pl, doshift
 pwd
 growth=0
 cg=0
 
-doshift=0
 
 ar=nx2*1.0/nx1
 if (cg eq 1) then begin
