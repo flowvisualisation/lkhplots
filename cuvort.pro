@@ -3,6 +3,7 @@ pwd
 growth=0
 cg=0
 
+doshift=0
 
 ar=nx2*1.0/nx1
 if (cg eq 1) then begin
@@ -38,10 +39,18 @@ initb2=bx2
 initv1=vx1
 initv2=vx2
 
+if ( doshift eq 1) then begin
+initb1=shift(initb1,0,nx2/4)
+initb2=shift(initb2,0,nx2/4)
+initv1=shift(initv1,0,nx2/4)
+initv2=shift(initv2,0,nx2/4)
+endif
+
 endif
 
 nstart=1
 nend=nlast
+;nend=10
 nstep=1
 pload,0
 totalb20=total(sqrt(bx1^2+bx2^2))
@@ -63,6 +72,13 @@ for j=1,ll-lnt do zero=zero+'0'
            fname=tag+zero+nts
 
 pload,nfile
+
+if ( doshift eq 1) then begin
+vx1=shift(vx1,0,nx2/4)
+vx2=shift(vx2,0,nx2/4)
+bx1=shift(bx1,0,nx2/4)
+bx2=shift(bx2,0,nx2/4)
+endif
 
 !p.position=0
 nx = nx1
@@ -117,6 +133,13 @@ str(5,*)="B!DX!N"
 str(6,*)="B!DZ!N"
 str(7,*)="Current"
 
+
+;for qiq = 1,7 do begin
+;r=reform(var(qiq,*,*))
+;r=shift(r,0,nx2/4 )
+;var(qiq,*,*)=r
+;endfor
+
 for usingps=0,1 do begin
 
 if ( usingps ) then begin
@@ -125,12 +148,14 @@ device,filename=fname+'.eps',/encapsulated
 device, /color
 !p.font=0
 device, /times
-xs=7.2
-ys=8.8
-!p.charsize=0.9
-cbarchar=0.9
-xychar=0.9
-legchar=0.9
+xs=3.53
+ys=7.46
+xs=2.59
+ys=2.98
+!p.charsize=.7
+cbarchar=.7
+xychar=.7
+legchar=.7
 DEVICE, XSIZE=xs, YSIZE=ys, /INCHES
 endif else begin
 set_plot,'x'
@@ -155,8 +180,8 @@ endif
 !y.style=1
 
 
-xx=x1
-yy=x2
+xx=x1*2*!PI*ar
+yy=x2*2*!PI
 
 ;p1 = !P & x1 = !X & y1 = !Y
 
@@ -179,15 +204,18 @@ for i=pl,pl do begin
 
 ;r=scale_vector(var(i,*,*),4,255)
 r=reform(var(i,*,*))
+;r=shift(r,0,nx2/4 )
 ;contour, r, xx,yy,/nodata, title=str(i), xtitle='x', ytitle='y'
-p = [0.08, 0.1, 0.98, 0.95]
+p = [0.2, 0.13, 0.98, 0.98]
   ;cgIMAGE, r, POSITION=p, /KEEP_ASPECT_RATIO ;, MISSING_INDEX=3 , scale=4, bottom=190, top=254, background='white'
   cgimage, r, POSITION=p ,background='white', scale=1 ;, /axis, xtitle='x ', ytitle='y'
 ;cgaxis,0.5,0.1, /xaxis, /normal, xrange=[1,20]
 ;cgaxis, /xaxis, xRANGE=[0, 100], $
 ;MINOR=0, MAJOR=3
   cgcontour, r, xx,yy,POSITION=p, /NOERASE, XSTYLE=1, $
-      YSTYLE=1,  NLEVELS=10, /nodata, title=str(i)+', '+string(min(r),format='(G8.2)')+','+string(max(r),format='(G8.2)') , $
+      YSTYLE=1,  NLEVELS=10, /nodata, $
+      ;title=str(i)+', '+string(min(r),format='(G8.2)')+','+string(max(r),format='(G8.2)') , $
+      xtitle='K!DX!NX', ytitle='K!DZ!NZ',$
       color='white'
 imin=min(r)-1e-6
 imax=max(r)+1e-6
@@ -207,7 +235,7 @@ endelse
 cx=congrid(xx,q)
 cy=congrid(yy,q)
 !p.thick=pthick
-velovect, cv1,cv2, cx,cy, /noerase,/overplot, position=p , color=cgcolor('white')
+velovect, cv1,cv2, cx,cy, /noerase,/overplot, position=p , color=cgcolor('white'), len=2.5, thick=1.25
 !p.thick=1
 cgloadct,33
 endif
@@ -225,7 +253,7 @@ endelse
 cx=congrid(xx,q)
 cy=congrid(yy,q)
 !p.thick=pthick
-velovect, cv1,cv2, cx,cy, /noerase,/overplot, position=p , color=cgcolor('white')
+velovect, cv1,cv2, cx,cy, /noerase,/overplot, position=p , color=cgcolor('white'), len=2.5, thick=1.25
 !p.thick=1
 cgloadct,33
 endif
