@@ -117,11 +117,12 @@ totalelecke0=total(vex0^2+vez0^2)
 totalionke0=total(vix0^2+viz0^2)
 totalb0=total(bx0^2+bz0^2)
 totalen=totalb0+totalelecke0+totalionke0
-gamma=fltarr(1)
+tvz2=fltarr(1)
 tvx2=fltarr(1)
 tbx2=fltarr(1)
 tbz2=fltarr(1)
-tvx2(*)=1
+maxvz2=fltarr(1)
+maxvdiff=fltarr(1)
 
 for nfile=nstart,nend,nstep do begin
 print, ' nfile= ' , nfile
@@ -178,15 +179,8 @@ endif
 mesg=dir+' t='+string(f.s.time,format='(F12.5)')+' , '+qqtag+' ncellsx '+string(f.s.gn[0])+' '+string(f.s.ds(0))
 f=0
 
-a=total(vex^2)/totalen
-b=total(vix^2)/totalen
-c=total(bx^2)/totalen
-d=total(bz^2)/totalen
-gamma=[gamma, a]
-tvx2=[tvx2, b]
-tbx2=[tbx2, c]
-tbz2=[tbz2, d]
-print, a,b,c,d
+
+
 
 
 for usingps=0,1 do begin
@@ -197,10 +191,10 @@ device,filename=fname+'.eps',/encapsulated
 device, /color
 !p.font=0
 device, /times
-xs=11.
-ys=12
+pxs=11.
+pys=12
 !p.charsize=1.8
-DEVICE, XSIZE=xs, YSIZE=ys, /INCHES
+DEVICE, XSIZE=pxs, YSIZE=pys, /INCHES
 endif else begin
 !p.font=-1
 !p.color=0
@@ -279,6 +273,22 @@ vortion=getvort(vixsm,vizsm,xx,yy,nx,nz)
 vortelec=getvort(vexsm,vezsm,xx,yy,nx,nz)
 vortion=applyfilt(vortion,filter)
 vortelec=applyfilt(vortelec,filter)
+
+a=(max(vexsm-vexsm0))
+b=(max(vixsm-vixsm0))
+c=(max(bxsm-bxsm0))
+d=(max(bzsm-bzsm0))
+e=max(jy-jy0)
+f=max(vezsm-vezsm0)
+tvz2=[tvz2, a]
+tvx2=[tvx2, b]
+tbx2=[tbx2, c]
+tbz2=[tbz2, d]
+maxvz2=[maxvz2, e]
+maxvdiff=[maxvdiff, f]
+print, a,b,c,d,e,f
+
+
 
 if (background eq 1 ) then begin
  var(0)=ptr_new(vixsm-vixsm0)
@@ -406,13 +416,15 @@ endfor
 
 !x.range=0
 !y.range=0
-cgplot,  gamma, title='Total x-kinetic energy',color='black' ;, /xlog, /ylog
+cgplot,  tvz2, title='Growth vs time',color='black',  /ylog, yrange=[1e-4,1e-1]
 cgplot,  tvx2, /overplot, color='blue'
 cgplot,  tbx2, /overplot, color='green'
 cgplot,  tbz2, /overplot, color='red'
+cgplot,  maxvz2, /overplot, color='orange'
+cgplot,  maxvdiff, /overplot, color='violet'
 
-al_legend, ['vz!U2!N','vx!U2!N', 'bx!U2!N','bz!U2!N'], PSym=[-14,-15,-16,-17], $
-      LineStyle=[0,2,3,4], Color=['black','red','dodger blue','green'], charsize=legchar, /left
+al_legend, ['vix','vex', 'bx','bz','jy','vz'], PSym=[-14,-15,-16,-17,-18,-19], $
+      LineStyle=[0,2,3,4,5,1], Color=['black','red','dodger blue','green','orange','violet'], charsize=legchar, /left
 
 xyouts, 0.01,0.01,$
    mesg, /normal, charsize=2
@@ -423,11 +435,23 @@ xyouts, 0.01,0.01,$
 
 if ( usingps ) then begin
 device,/close
-;set_plot,'x'
+if ( keyword_set(zbuf) ) then begin
+set_plot, 'z'
+device, set_resolution=[1300,1100], Decomposed=1, Set_Pixel_Depth=24
 endif else begin
-;set_plot,'x'
+set_plot, 'x'
+endelse
+
+endif else begin
 fname2=fname
 im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
+if ( keyword_set(zbuf) ) then begin
+set_plot, 'z'
+device, set_resolution=[1300,1100], Decomposed=1, Set_Pixel_Depth=24
+endif else begin
+set_plot, 'x'
+endelse
+
 endelse
 
 endfor

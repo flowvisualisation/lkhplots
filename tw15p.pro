@@ -123,7 +123,6 @@ tbx2=fltarr(1)
 tbz2=fltarr(1)
 maxvz2=fltarr(1)
 maxvdiff=fltarr(1)
-tvx2(*)=1
 
 for nfile=nstart,nend,nstep do begin
 print, ' nfile= ' , nfile
@@ -263,20 +262,6 @@ eysm =applyfilt(ey , filter )
 ezsm =applyfilt(ez , filter )
 
 
-a=total(abs(vexsm))/totalen
-b=total(abs(vixsm))/totalen
-c=total(abs(bxsm))/totalen
-d=total(abs(bzsm))/totalen
-e=max(vezsm)
-f=max(vezsm-vezsm0)
-tvz2=[tvz2, a]
-tvx2=[tvx2, b]
-tbx2=[tbx2, c]
-tbz2=[tbz2, d]
-maxvz2=[maxvz2, e]
-maxvdiff=[maxvdiff, f]
-print, a,b,c,d,e,f
-
 jx=getvort(bysm,bzsm,xx,yy,nx,nz)-exsm
 jy=getvort(bxsm,bzsm,xx,yy,nx,nz)-eysm
 curlB=getvort(bxsm,bzsm,xx,yy,nx,nz)
@@ -286,6 +271,21 @@ vortion=getvort(vixsm,vizsm,xx,yy,nx,nz)
 vortelec=getvort(vexsm,vezsm,xx,yy,nx,nz)
 vortion=applyfilt(vortion,filter)
 vortelec=applyfilt(vortelec,filter)
+
+
+a=(max(vexsm-vexsm0))
+b=(max(vixsm-vixsm0))
+c=(max(bxsm-bxsm0))
+d=(max(bzsm-bzsm0))
+e=max(jy-jy0)
+f=max(vezsm-vezsm0)
+tvz2=[tvz2, a]
+tvx2=[tvx2, b]
+tbx2=[tbx2, c]
+tbz2=[tbz2, d]
+maxvz2=[maxvz2, e]
+maxvdiff=[maxvdiff, f]
+print, a,b,c,d,e,f
 
 if (background eq 1 ) then begin
  var(0)=ptr_new(vixsm-vixsm0)
@@ -413,16 +413,18 @@ endfor
 
 !x.range=0
 !y.range=0
-cgplot,  tvz2, title='Total x-kinetic energy',color='black' , axiscolor='black', /ylog, yrange=[1e-4,1e1];, /xlog, /ylog
+
+cgplot,  tvz2, title='Growth vs time',color='black',  /ylog, yrange=[1e-4,1e-1]
 cgplot,  tvx2, /overplot, color='blue'
 cgplot,  tbx2, /overplot, color='green'
 cgplot,  tbz2, /overplot, color='red'
-cgplot,  maxvz2, /overplot, color='red'
-cgplot,  maxvdiff, /overplot, color='red'
-
+cgplot,  maxvz2, /overplot, color='orange'
+cgplot,  maxvdiff, /overplot, color='violet'
 legchar=0.6
-al_legend, ['vz!U2!N','vx!U2!N', 'bx!U2!N','bz!U2!N'], PSym=[-14,-15,-16,-17], $
-      LineStyle=[0,2,3,4], Color=['black','red','dodger blue','green'], charsize=legchar, /left
+
+
+al_legend, ['vix','vex', 'bx','bz','jy','vz'], PSym=[-14,-15,-16,-17,-18,-19], $
+      LineStyle=[0,2,3,4,5,1], Color=['black','red','dodger blue','green','orange','violet'], charsize=legchar, /left
 
 xyouts, 0.01,0.01,$
    mesg, /normal, charsize=2
@@ -439,7 +441,6 @@ set_plot, 'z'
 device, set_resolution=[1300,1100], Decomposed=1, Set_Pixel_Depth=24
 endif else begin
 set_plot, 'x'
-;window, xs=xs, ys=ys
 endelse
 endif else begin
 ;set_plot,'x'
@@ -448,7 +449,6 @@ set_plot, 'z'
 device, set_resolution=[1300,1100], Decomposed=1, Set_Pixel_Depth=24
 endif else begin
 set_plot, 'x'
-;window, xs=xs, ys=ys
 endelse
 fname2=fname
 im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
