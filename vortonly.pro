@@ -109,12 +109,12 @@ device,filename=fname+'.eps',/encapsulated
 device, /color
 !p.font=0
 device, /times
-xs=8.
-ys=4
+xs=6.7
+ys=5
 DEVICE, XSIZE=xs, YSIZE=ys, /INCHES
-!p.charsize=0.9
-cbarchar=0.9
-xyout=0.9
+!p.charsize=1.9
+cbarchar=1.9
+xyout=1.9
 endif else begin
 if ( keyword_set (zbuf) ) then begin
 set_plot,'z'
@@ -137,8 +137,8 @@ endelse
 !y.style=1
 
 
-xx=x1*2*!PI*ar
-yy=x2*2*!PI
+xx=x1*!PI*ar
+yy=x2*!PI
 
 ;p1 = !P & x1 = !X & y1 = !Y
 
@@ -250,10 +250,10 @@ endif
 endif
 
 xyouts, 0.01,0.01,$
-   'Kelvin-Helmholtz Instability, t='+string(t(nfile),format='(F5.1)')+ $
-     ', growth rate'+string(growth, format='(F8.3)')+$
-     ', mach '+string(initmach, format='(F8.3)')+$
-      ', asp. ratio '+string(max(x2)/max(x1), format='(F5.2)'),$
+   'KH, t='+string(t(nfile),format='(F5.1)')+ $
+     ', mach '+string(initmach, format='(F6.2)')+$
+      ', asp. ratio '+string(max(x2)/max(x1), format='(F5.2)')+$
+     ', growth rate'+string(growth, format='(F5.3)'),$
    /normal, charsize=xychar, color=cgcolor('black')
 
 !p.position=0
