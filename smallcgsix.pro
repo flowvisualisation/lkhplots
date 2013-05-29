@@ -1,4 +1,4 @@
-pro cgsix, vx1,vx2, rho, prs, t , nlast, nx1,nx2,x1,x2, background,dx1,dx2, zbuf=zbuf
+pro smallcgsix, vx1,vx2, rho, prs, t , nlast, nx1,nx2,x1,x2, background,dx1,dx2, zbuf=zbuf
 growth=0
 cg=0
 hires=0
@@ -11,10 +11,8 @@ cgSet
 endif else  begin
 if (hires eq 1) then begin
 ;window,xs=1500,ys=1100
-;ys=600+600*ar
-;xs=2400-ar*400
-ys=1200
-xs=1800
+ys=600+600*ar
+xs=2400-ar*400
 window,xs=xs,ys=ys
 endif else begin
 endelse
@@ -106,10 +104,8 @@ device,filename=fname+'.eps',/encapsulated
 device, /color
 !p.font=0
 device, /times
-;xs=12.-ar*6
-;ys=6+ar*4
-xs=12.
-ys=6
+xs=12.-ar*6
+ys=6+ar*4
 DEVICE, XSIZE=xs, YSIZE=ys, /INCHES
 !p.charsize=0.9
 cbarchar=0.9
@@ -117,11 +113,9 @@ xyout=0.9
 endif else begin
 if ( keyword_set (zbuf) ) then begin
 set_plot,'z'
-ys=1200
-xs=1800
-!p.charsize=1.8
-cbarchar=1.8
-xyout=1.8
+ys=600+600*ar
+xs=2400-ar*400
+device, set_resolution=[1100,800]
 device, set_resolution=[xs,ys]
 endif else begin
 set_plot,'x'
@@ -138,7 +132,7 @@ endelse
 !y.style=1
 
 
-xx=x1*ar
+xx=x1
 yy=x2
 
 ;p1 = !P & x1 = !X & y1 = !Y
@@ -158,9 +152,9 @@ for i=1,4 do begin
 ;r=scale_vector(var(i,*,*),4,255)
 r=reform(var(i,*,*))
 ;contour, r, xx,yy,/nodata, title=str(i), xtitle='x', ytitle='y'
-p = [0.08, 0.2, 0.98, 0.9]
+p = [0.08, 0.4, 0.98, 0.9]
   ;cgIMAGE, r, POSITION=p, /KEEP_ASPECT_RATIO ;, MISSING_INDEX=3 , scale=4, bottom=190, top=254, background='white'
-  cgimage, r, POSITION=p, background='white', scale=1 ;, /axis, xtitle='x ', ytitle='y'
+  cgimage, r, POSITION=p, /KEEP_ASPECT_RATIO ,background='white', scale=1 ;, /axis, xtitle='x ', ytitle='y'
 ;cgaxis,0.5,0.1, /xaxis, /normal, xrange=[1,20]
 ;cgaxis, /xaxis, xRANGE=[0, 100], $
 ;MINOR=0, MAJOR=3
@@ -170,7 +164,7 @@ cgloadct,33
       color='white'
 imin=min(r)-1e-6
 imax=max(r)+1e-6
-cgcolorbar, Position=[p[0], p[1]-0.07, p[2], p[1]-0.06], range=[imin,imax], format='(F5.2)', charsize=cbarchar
+cgcolorbar, Position=[p[0], p[1]-0.08, p[2], p[1]-0.06], range=[imin,imax], format='(F5.2)', charsize=cbarchar
 
 
 if (i eq 3 ) then begin
@@ -185,8 +179,7 @@ endelse
 cx=congrid(xx,q)
 cy=congrid(yy,q)
 
-velovect, cv1,cv2, cx,cy, /noerase,/overplot, position=p , color=cgcolor('white'), len=2.5, thick=1.25
-
+velovect, cv1,cv2, cx,cy, /noerase,/overplot, position=p , color=cgcolor('white')
 cgloadct,33
 endif
 
@@ -196,7 +189,7 @@ growth=0
 dogrowth=0
 
 maxtvz2=0.05
-maxmaxvxvxinit=0.05
+maxmaxvxvxinit=0.015
 if ( max(maxvxvxinit) ge maxmaxvxvxinit ) then begin 
 dogrowth=1
 endif
@@ -208,7 +201,7 @@ tnorm=t
 if (  dogrowth ) then begin 
 
 nel=n_elements(maxvxvxinit)
-gam2=[0.02, maxmaxvxvxinit]
+gam2=[0.01, maxmaxvxvxinit]
 tam2=interpol( tnorm(0:nel-1),maxvxvxinit, gam2)
 
 print, tam2

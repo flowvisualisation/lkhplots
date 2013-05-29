@@ -137,8 +137,8 @@ endelse
 !y.style=1
 
 
-xx=x1*2*!PI*ar
-yy=x2*2*!PI
+xx=x1*ar
+yy=x2
 
 ;p1 = !P & x1 = !X & y1 = !Y
 
@@ -169,7 +169,7 @@ p = [0.2, 0.19, 0.98, 0.95]
       color='white'
 imin=min(r)-1e-6
 imax=max(r)+1e-6
-cgcolorbar, Position=[p[0], p[1]-0.08, p[2], p[1]-0.06], range=[imin,imax], format='(F5.2)', charsize=cbarchar
+cgcolorbar, Position=[p[0], p[1]-0.09, p[2], p[1]-0.08], range=[imin,imax], format='(F5.2)', charsize=cbarchar
 
 
 if (i eq 3 ) then begin
@@ -247,10 +247,11 @@ al_legend, ['V!DZ!N!U2!N','V!DX!N!U2!N', 'fit','max(vx!U2!N)', 'max(vx-vx0)'], P
       LineStyle=[0,2,3,4,5], Color=['black','red','dodger blue','green', 'violet'], charsize=legchar, /left
 endif
 xyouts, 0.01,0.01,$
-   'Kelvin-Helmholtz Instability, t='+string(t(nfile),format='(F5.1)')+ $
+   'KHI PLUTO t='+string(t(nfile),format='(F5.1)')+ $
+      ', asp. ratio '+string(max(x2)/max(x1), format='(F5.2)')+$
      ', growth rate'+string(growth, format='(F8.3)')+$
      ', mach '+string(initmach, format='(F8.3)')+$
-      ', asp. ratio '+string(max(x2)/max(x1), format='(F5.2)'),$
+        ' ',$
    /normal, charsize=xychar, color=cgcolor('black')
 
 !p.position=0
