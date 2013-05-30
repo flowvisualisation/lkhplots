@@ -44,11 +44,11 @@ totalke0=total(sqrt(vx1^2+vx2^2))
 tvz2=fltarr(1)
 tvx2=fltarr(1)
 maxvx=fltarr(1)
-maxvxvxinit=fltarr(1)
+maxdeltav=fltarr(1)
 tvx2(*)=1
 
 for nfile=nstart,nend,nstep do begin
-print, nfile
+print,'nfile = ' ,nfile
 
 ll=6
 zero=''
@@ -72,8 +72,8 @@ d=max(vx2-initv2)
 tvz2=[tvz2, a]
 tvx2=[tvx2, b]
 maxvx=[maxvx, c]
-maxvxvxinit=[maxvxvxinit, d]
-print, size(tvz2)
+maxdeltav=[maxdeltav, d]
+;print, size(tvz2)
 
 vort = getvort(vx1,vx2,x1,x2,nx1,nx2)
 var=fltarr(6,nx1,nx2)
@@ -88,8 +88,8 @@ var(2,*,*)=vx2
 endelse
 var(3,*,*)=smooth(vort-initvort, 10,/edge_wrap)
 var(3,*,*)=vort-initvort
-var(4,*,*)=(1.4*prs/rho)
-;var(4,*,*)=vx1
+;var(4,*,*)=(1.4*prs/rho)
+var(4,*,*)=vx1
 str=strarr(6,20)
 str(0,*)="density)"
 str(1,*)="V!DX!N"
@@ -170,7 +170,7 @@ cgloadct,33
       color='white'
 imin=min(r)-1e-6
 imax=max(r)+1e-6
-cgcolorbar, Position=[p[0], p[1]-0.07, p[2], p[1]-0.06], range=[imin,imax], format='(F5.2)', charsize=cbarchar
+cgcolorbar, Position=[p[0], p[1]-0.06, p[2], p[1]-0.05], range=[imin,imax], format='(F5.2)', charsize=cbarchar
 
 
 if (i eq 3 ) then begin
@@ -196,8 +196,8 @@ growth=0
 dogrowth=0
 
 maxtvz2=0.05
-maxmaxvxvxinit=0.05
-if ( max(maxvxvxinit) ge maxmaxvxvxinit ) then begin 
+maxmaxdeltav=0.05
+if ( max(maxdeltav) ge maxmaxdeltav ) then begin 
 dogrowth=1
 endif
 
@@ -207,15 +207,14 @@ tnorm=t
 ;tnorm=t/tsndcr
 if (  dogrowth ) then begin 
 
-nel=n_elements(maxvxvxinit)
-gam2=[0.02, maxmaxvxvxinit]
-tam2=interpol( tnorm(0:nel-1),maxvxvxinit, gam2)
+nel=n_elements(maxdeltav)
+velz_interp=[0.02, maxmaxdeltav]
+time_interp=interpol( tnorm(0:nel-1),maxdeltav, velz_interp)
 
-print, tam2
-print, gam2
-growth=(gam2[1]-gam2[0])/(tam2[1]-tam2[0])
-growth=(alog10(gam2[1])-alog10(gam2[0]))/(tam2[1]-tam2[0])
-;growth=(alog10(gam2[1])-alog10(gam2[0]))/(alog10(tam2[1])-alog10(tam2[0]))
+;print, time_interp
+;print, velz_interp
+growth=(velz_interp[1]-velz_interp[0])/(time_interp[1]-time_interp[0])
+growth=(alog(velz_interp[1])-alog(velz_interp[0]))/(time_interp[1]-time_interp[0])
 endif
 
 grtitle='(Total |V!DX,Z!N|/|V!DX!N + i V!DZ!N8)' 
@@ -223,11 +222,11 @@ lgrtitle='Log'+grtitle
 cgplot, tnorm, alog10(tvz2), title=lgrtitle,   xrange=[0.1,120],yrange=[-2,0], xtitle='t / t!Dsound crossing!N', ytitle=lgrtitle, /xlog,  psym=-14, Color='black',linestyle=0, axiscolor='black'
 cgplot, tnorm, alog10(tvx2), /overplot,  PSym=-15, Color='red',linestyle=2
 cgplot, tnorm, alog10(maxvx), /overplot,  PSym=-17, Color='green',linestyle=4
-cgplot, tnorm, alog10(maxvxvxinit), /overplot,  PSym=-18, Color='violet',linestyle=5
+cgplot, tnorm, alog10(maxdeltav), /overplot,  PSym=-18, Color='violet',linestyle=5
 
 if ( dogrowth ) then begin 
-cgplot, tnorm, growth*(tnorm-tam2[0])+alog10(gam2[0]) ,  /overplot, PSym=-16, Color='dodger blue', linestyle=3
-cgplot, tam2, alog10(gam2), psym=4, /overplot
+cgplot, tnorm, growth*(tnorm-time_interp[0])+alog(velz_interp[0]) ,  /overplot, PSym=-16, Color='dodger blue', linestyle=3
+cgplot, time_interp, alog10(velz_interp), psym=4, /overplot
 al_legend, ['V!DZ!N!U2!N','V!DX!N!U2!N', 'fit','max(vx!U2!N)', 'max(vx-vx0)'], PSym=[-14,-15,-16,-17,-18], $
       LineStyle=[0,2,3,4,5], Color=['black','red','dodger blue','green', 'violet'], charsize=legchar, /left
 endif
@@ -235,12 +234,11 @@ endif
 cgplot, tnorm, (tvz2), title=lgrtitle ,   xrange=[0.1,12],yrange=[0.01,1], xtitle='t / t!Dsound crossing!N', ytitle=lgrtitle,   psym=-14, Color='black',linestyle=0, /ylog
 cgplot, tnorm, (tvx2), /overplot,  PSym=-15, Color='red',linestyle=2
 cgplot, tnorm, (maxvx), /overplot,  PSym=-17, Color='green',linestyle=4
-cgplot, tnorm, (maxvxvxinit), /overplot,  PSym=-18, Color='violet',linestyle=5
+cgplot, tnorm, (maxdeltav), /overplot,  PSym=-18, Color='violet',linestyle=5
 
 if ( dogrowth ) then begin 
-cgplot, tnorm, 10^(growth*(tnorm))*(1e-2 - 2e-3) ,  /overplot, PSym=-16, Color='dodger blue', linestyle=3
-cgplot, tnorm, 10^(growth*(tnorm))*(1e-2 - 2e-3) ,  /overplot, PSym=-16, Color='dodger blue', linestyle=3
-cgplot, tam2, (gam2), psym=4, /overplot
+cgplot, tnorm, exp(growth*(tnorm))*(1e-2 -5e-3) ,  /overplot, PSym=-16, Color='dodger blue', linestyle=3
+cgplot, time_interp, (velz_interp), psym=4, /overplot
 al_legend, ['V!DZ!N!U2!N','V!DX!N!U2!N', 'fit','max(vx!U2!N)', 'max(vx-vx0)'], PSym=[-14,-15,-16,-17,-18], $
       LineStyle=[0,2,3,4,5], Color=['black','red','dodger blue','green', 'violet'], charsize=legchar, /left
 endif
@@ -265,6 +263,9 @@ im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
 endelse
 
 endfor
+if ( dogrowth ) then begin 
+PRINT,'   k_h/k', max(x2)/max(x1), ' growth ', growth, velz_interp,  time_interp
+endif
 set_plot,'x'
 
 
@@ -274,6 +275,6 @@ f2name='growthratemhd.dat'
 OPENW,1,f2name
 PRINTF,1, max(x2)/max(x1), growth,FORMAT='(F9.6 , F9.6)'
 CLOSE,1
-print, totalke0
+;print, totalke0
 PRINT, max(x2)/max(x1), ' growth ', growth
 end
