@@ -1,4 +1,4 @@
-pro curmovie3, bx1,bx2,vx1,vx2, rho, prs, t , nlast, nx1,nx2,x1,x2, background,dx1,dx2, hires, plotgrowth, plotgrowthvortex, tag, doannotation
+pro curmovie3, bx1,bx2,vx1,vx2, rho, prs, t , nlast, nx1,nx2,x1,x2, background,dx1,dx2, hires, plotgrowth, plotgrowthvortex, tag, doannotation, zbuf=zbuf
 pwd
 growth=0
 cg=0
@@ -131,6 +131,10 @@ xychar=0.9
 legchar=0.9
 DEVICE, XSIZE=xs, YSIZE=ys, /INCHES
 endif else begin
+if (keyword_Set(zbuf) ) then begin
+set_plot,'z'
+device, set_resolution=[xs,ys]
+endif else begin
 set_plot,'x'
 !p.font=-1
 ;!p.color=0
@@ -138,6 +142,7 @@ set_plot,'x'
 cbarchar=1.8
 xychar=1.8
 legchar=1.8
+endelse
 ;device, set_resolution=[1100,800]
 endelse
 
@@ -180,7 +185,7 @@ r=reform(var(i,*,*))
 ;contour, r, xx,yy,/nodata, title=str(i), xtitle='x', ytitle='y'
 p = [0.08, 0.3, 0.98, 0.95]
   ;cgIMAGE, r, POSITION=p, /KEEP_ASPECT_RATIO ;, MISSING_INDEX=3 , scale=4, bottom=190, top=254, background='white'
-  cgimage, r, POSITION=p, /KEEP_ASPECT_RATIO ,background='white', scale=1 ;, /axis, xtitle='x ', ytitle='y'
+  cgimage, r, POSITION=p, background='white', scale=1 ;, /axis, xtitle='x ', ytitle='y'
 ;cgaxis,0.5,0.1, /xaxis, /normal, xrange=[1,20]
 ;cgaxis, /xaxis, xRANGE=[0, 100], $
 ;MINOR=0, MAJOR=3
@@ -229,7 +234,7 @@ endif
 growth=0
 dogrowth=0
 maxgam=0.013
-if ( max(tbz2) ge maxgam ) then begin 
+if ( nfile ge 100 ) then begin 
 dogrowth=1
 endif
 
@@ -240,8 +245,16 @@ tnorm=t
 if (  dogrowth ) then begin 
 
 nel=n_elements(tbz2)
-gam2=[0.01, maxgam]
-tam2=interpol( tnorm(0:nel-1),tbz2, gam2)
+;gam2=[0.01, maxgam]
+;tam2=interpol( tnorm(0:nel-1),tbz2, gam2)
+gam2=fltarr(2)
+tam2=fltarr(2)
+istart=80
+iend=100
+gam2[0]=tbz2[istart]
+gam2[1]=tbz2[iend]
+tam2[0]=t[istart]
+tam2[1]=t[iend]
 
 print,'tam2' , tam2
 print, 'gam2 ',gam2
@@ -250,7 +263,7 @@ growth=(alog10(gam2[1])-alog10(gam2[0]))/(tam2[1]-tam2[0])
 endif
 
 if (plotgrowth  ne 0) then begin
-cgplot, tnorm, alog10(tbz2), title='Log (Total |B!DZ!N|)' ,   xrange=[0.1,24],yrange=[-5,0], xtitle='t / t!D(VK)!N', ytitle='Log Total B!DZ!N /B!N!Dt=0!N' ,  psym=-14, Color='black',linestyle=0, background='white', /xlog
+cgplot, tnorm, alog10(tbz2), title='Log (Total |B!DZ!N|)' ,   xrange=[0.1,24],yrange=[-2,0], xtitle='t / t!D(VK)!N', ytitle='Log Total B!DZ!N /B!N!Dt=0!N' ,  psym=-14, Color='black',linestyle=0, background='white'
 cgplot, tnorm, alog10(tbx2), /overplot, PSym=-15, Color='red',linestyle=2
 cgplot, tnorm, alog10(totvel1), /overplot,PSym=-16, Color='dodger blue', linestyle=3
 cgplot, tnorm, alog10(totvel2), /overplot, PSym=-17, Color='green', linestyle=4
@@ -286,7 +299,7 @@ endif
 
 if ( usingps ) then begin
 device,/close
-set_plot,'x'
+;set_plot,'x'
 endif else begin
 ;set_plot,'x'
 fname2=fname

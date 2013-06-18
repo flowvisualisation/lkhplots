@@ -213,7 +213,7 @@ endelse
 
 ;window, xs=1100,ys=800
 dophasespace=0
-!p.multi=[0,2,1]
+!p.multi=[0,1,1]
  if ( dophasespace eq 1) then begin
 !p.multi=[0,4,4]
 endif
@@ -352,6 +352,7 @@ a=*var(qgmq)
 mx=max(a)
 mn=min(a)
 titlstr(qgmq,*) = titlstr(qgmq,*)+' , ' +string(mn, format='(G8.2)')+string(mx , format='(G8.2)')
+titlstr(qgmq,*) = ''
 
 endfor
 
@@ -363,7 +364,7 @@ endfor
  cgLoadCT, 33, CLIP=[5, 245]
 
 for i=2,2 do begin
-   pos = [0.02, 0.35, 0.98, 0.91]
+   pos = [0.02, 0.05, 0.98, 0.91]
 localimagecopy=reform(*var(i))
  cgIMAGE, localimagecopy, POSITION=pos, /KEEP_ASPECT_RATIO ,background='white', scale=1
  cgcontour, localimagecopy, xx,yy,POSITION=pos, /NOERASE, XSTYLE=1, $
@@ -372,7 +373,7 @@ localimagecopy=reform(*var(i))
       xtitle='x ', ytitle='y'
 imin=min(localimagecopy)-1e-6
 imax=max(localimagecopy)+1e-6
-cgcolorbar, Position=[pos[0], pos[1]-0.04, pos[2], pos[1]-0.03], range=[imin,imax], format='(G12.1)', annotatecolor='black'
+;cgcolorbar, Position=[pos[0], pos[1]-0.04, pos[2], pos[1]-0.03], range=[imin,imax], format='(G12.1)', annotatecolor='black'
 
 q=25
 if ( i eq 8 or i eq 2 or i eq 5) then begin
@@ -413,6 +414,8 @@ cgloadct,33
 endif
 endfor
 
+dogrowth=0
+if ( dogrowth eq 1) then begin
 
 !x.range=0
 !y.range=0
@@ -429,6 +432,7 @@ al_legend, ['vix','vex', 'bx','bz','jy','vz'], PSym=[-14,-15,-16,-17,-18,-19], $
 xyouts, 0.01,0.01,$
    mesg, /normal, charsize=2
 
+endif
 !p.position=0
 !p.multi=0
 
