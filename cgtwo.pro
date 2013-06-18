@@ -33,7 +33,8 @@ initv2=vx2
 endif
 
 
-cs=sqrt(1.4*prs/rho)
+;cs=sqrt(1.4*prs/rho)
+cs=rho
 initcs=max(cs)
 initmach=max(vx1/cs)
 
@@ -91,8 +92,8 @@ var(2,*,*)=vx2
 endelse
 var(3,*,*)=smooth(vort-initvort, 10,/edge_wrap)
 var(3,*,*)=vort-initvort
-var(4,*,*)=(1.4*prs/rho)
-;var(4,*,*)=vx1
+;var(4,*,*)=(1.4*prs/rho)
+var(4,*,*)=vx1
 str=strarr(6,20)
 str(0,*)="density)"
 str(1,*)="V!DX!N"
@@ -193,7 +194,7 @@ endfor
 growth=0
 dogrowth=0
 
-maxtvz2=0.05
+maxtvz2=0.015
 if ( max(tvz2) ge maxtvz2 ) then begin 
 dogrowth=1
 endif
@@ -205,7 +206,7 @@ tnorm=t
 if (  dogrowth ) then begin 
 
 nel=n_elements(tvz2)
-gam2=[0.02, maxtvz2]
+gam2=[0.01, maxtvz2]
 tam2=interpol( tnorm(0:nel-1),tvz2, gam2)
 
 print, tam2
