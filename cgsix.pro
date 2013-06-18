@@ -197,7 +197,8 @@ dogrowth=0
 
 maxtvz2=0.05
 maxmaxdeltav=0.05
-if ( max(maxdeltav) ge maxmaxdeltav ) then begin 
+;if ( max(maxdeltav) ge maxmaxdeltav ) then begin 
+if ( nfile ge 100 ) then begin 
 dogrowth=1
 endif
 
@@ -208,13 +209,19 @@ tnorm=t
 if (  dogrowth ) then begin 
 
 nel=n_elements(maxdeltav)
-velz_interp=[0.02, maxmaxdeltav]
-time_interp=interpol( tnorm(0:nel-1),maxdeltav, velz_interp)
+
+time_interp=fltarr(2)
+velz_interp=fltarr(2)
+time_interp[0]=tnorm[80]
+time_interp[1]=tnorm[100]
+velz_interp[0]=tvz2[80]
+velz_interp[1]=tvz2[100]
+
 
 ;print, time_interp
 ;print, velz_interp
-growth=(velz_interp[1]-velz_interp[0])/(time_interp[1]-time_interp[0])
 growth=(alog(velz_interp[1])-alog(velz_interp[0]))/(time_interp[1]-time_interp[0])
+print, (velz_interp[1]),(velz_interp[0]),time_interp[1],time_interp[0]
 endif
 
 grtitle='(Total |V!DX,Z!N|/|V!DX!N + i V!DZ!N8)' 
@@ -270,6 +277,14 @@ set_plot,'x'
 
 
 endfor
+f2name='pluto_time_series.dat'
+OPENW,1,f2name
+printf, 1, '# tnorm tvz tvx'
+for i=1,nlast-1 do begin
+print, i size(tvz2)
+PRINTF,1, tnorm[i], tvz2[i], tvx2[i],FORMAT='(F9.6 , F9.6 , F9.6)'
+endfor
+CLOSE,1
 
 f2name='growthratemhd.dat'
 OPENW,1,f2name
