@@ -3,186 +3,1368 @@ ScriptVersion = "2.6.2"
 if ScriptVersion != Version():
     print "This script is for VisIt %s. It may not work with version %s" % (ScriptVersion, Version())
 ShowAllWindows()
-Source("gm.py")
-SetActivePlots((1, 2))
-SetActivePlots((1, 2))
+Source("/Users/gmurphy/idl/lkhplots/gm.py")
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (0.627828, 0.451296, 0.634164)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (-0.216085, 0.883784, -0.415009)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+eAtts.theta = 0
+SliceAtts.phi = 0
+SetOperatorOptions(SliceAtts, 0)
+SetActivePlots((0, 1))
 SetActivePlots(1)
-SetActivePlots((1, 2))
-SetActivePlots((1, 2))
 SetActivePlots(1)
+focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (-0.579287, 0.43443, 0.689708)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (0.589373, 0.19627, 0.783657)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (0.0399036, 0.961782, -0.270893)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (0.341465, 0.366095, 0.865665)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (-0.146237, 0.930501, -0.335831)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (0.360521, 0.301296, 0.882749)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (-0.151998, 0.95272, -0.263101)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+SetActivePlots((1, 3))
+SetActivePlots(1)
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (0.385429, 0.246255, 0.889271)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (-0.142959, 0.968031, -0.206103)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+SetActivePlots((1, 3))
+SetActivePlots(3)
+SetActivePlots(3)
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (0.385429, 0.246255, 0.889271)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (-0.142959, 0.968031, -0.206103)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (0.0586592, 0.770789, 0.634385)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (0.325909, 0.585873, -0.741982)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+StreamlineAtts = StreamlineAttributes()
+StreamlineAtts.sourceType = StreamlineAtts.SpecifiedSphere  # SpecifiedPoint, SpecifiedPointList, SpecifiedLine, SpecifiedCircle, SpecifiedPlane, SpecifiedSphere, SpecifiedBox, Selection
+StreamlineAtts.pointSource = (0, 0, 0)
+StreamlineAtts.lineStart = (-3, -3, -3)
+StreamlineAtts.lineEnd = (3, 3, 3)
+StreamlineAtts.planeOrigin = (0, 0, 0)
+StreamlineAtts.planeNormal = (0, 0, 1)
+StreamlineAtts.planeUpAxis = (0, 1, 0)
+StreamlineAtts.radius = 3
+StreamlineAtts.sphereOrigin = (0, 0, 0)
+StreamlineAtts.boxExtents = (0, 1, 0, 1, 0, 1)
+StreamlineAtts.useWholeBox = 1
+StreamlineAtts.pointList = (0, 0, 0, 1, 0, 0, 0, 1, 0)
+StreamlineAtts.sampleDensity0 = 21
+StreamlineAtts.sampleDensity1 = 2
+StreamlineAtts.sampleDensity2 = 2
+StreamlineAtts.coloringMethod = StreamlineAtts.ColorByTime  # Solid, ColorBySpeed, ColorByVorticity, ColorByLength, ColorByTime, ColorBySeedPointID, ColorByVariable, ColorByCorrelationDistance
+StreamlineAtts.colorTableName = "Default"
+StreamlineAtts.singleColor = (0, 0, 0, 255)
+StreamlineAtts.legendFlag = 1
+StreamlineAtts.lightingFlag = 1
+StreamlineAtts.streamlineDirection = StreamlineAtts.Both  # Forward, Backward, Both
+StreamlineAtts.maxSteps = 1000
+StreamlineAtts.terminateByDistance = 0
+StreamlineAtts.termDistance = 10
+StreamlineAtts.terminateByTime = 0
+StreamlineAtts.termTime = 10
+StreamlineAtts.maxStepLength = 0.1
+StreamlineAtts.limitMaximumTimestep = 0
+StreamlineAtts.maxTimeStep = 0.1
+StreamlineAtts.relTol = 0.0001
+StreamlineAtts.absTolSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.absTolAbsolute = 1e-06
+StreamlineAtts.absTolBBox = 1e-06
+StreamlineAtts.fieldType = StreamlineAtts.Default  # Default, M3DC12DField, M3DC13DField, NIMRODField, FlashField
+StreamlineAtts.fieldConstant = 1
+StreamlineAtts.velocitySource = (0, 0, 0)
+StreamlineAtts.integrationType = StreamlineAtts.DormandPrince  # Euler, Leapfrog, DormandPrince, AdamsBashforth, RK4, M3DC12DIntegrator
+StreamlineAtts.streamlineAlgorithmType = StreamlineAtts.VisItSelects  # LoadOnDemand, ParallelStaticDomains, MasterSlave, VisItSelects
+StreamlineAtts.maxStreamlineProcessCount = 10
+StreamlineAtts.maxDomainCacheSize = 3
+StreamlineAtts.workGroupSize = 32
+StreamlineAtts.pathlines = 0
+StreamlineAtts.pathlinesOverrideStartingTimeFlag = 0
+StreamlineAtts.pathlinesOverrideStartingTime = 0
+StreamlineAtts.pathlinesCMFE = StreamlineAtts.POS_CMFE  # CONN_CMFE, POS_CMFE
+StreamlineAtts.coordinateSystem = StreamlineAtts.AsIs  # AsIs, CylindricalToCartesian, CartesianToCylindrical
+StreamlineAtts.phiScalingFlag = 0
+StreamlineAtts.phiScaling = 1
+StreamlineAtts.coloringVariable = ""
+StreamlineAtts.legendMinFlag = 0
+StreamlineAtts.legendMaxFlag = 0
+StreamlineAtts.legendMin = 0
+StreamlineAtts.legendMax = 1
+StreamlineAtts.displayBegin = 0
+StreamlineAtts.displayEnd = 1
+StreamlineAtts.displayBeginFlag = 0
+StreamlineAtts.displayEndFlag = 0
+StreamlineAtts.referenceTypeForDisplay = StreamlineAtts.Distance  # Distance, Time, Step
+StreamlineAtts.displayMethod = StreamlineAtts.Lines  # Lines, Tubes, Ribbons
+StreamlineAtts.tubeSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.tubeRadiusAbsolute = 0.125
+StreamlineAtts.tubeRadiusBBox = 0.005
+StreamlineAtts.ribbonWidthSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.ribbonWidthAbsolute = 0.125
+StreamlineAtts.ribbonWidthBBox = 0.01
+StreamlineAtts.lineWidth = 2
+StreamlineAtts.showSeeds = 1
+StreamlineAtts.seedRadiusSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.seedRadiusAbsolute = 1
+StreamlineAtts.seedRadiusBBox = 0.015
+StreamlineAtts.showHeads = 1
+StreamlineAtts.headDisplayType = StreamlineAtts.Sphere  # Sphere, Cone
+StreamlineAtts.headRadiusSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.headRadiusAbsolute = 0.25
+StreamlineAtts.headRadiusBBox = 0.02
+StreamlineAtts.headHeightRatio = 2
+StreamlineAtts.opacityType = StreamlineAtts.FullyOpaque  # FullyOpaque, Constant, Ramp, VariableRange
+StreamlineAtts.opacityVariable = ""
+StreamlineAtts.opacity = 1
+StreamlineAtts.opacityVarMin = 0
+StreamlineAtts.opacityVarMax = 1
+StreamlineAtts.opacityVarMinFlag = 0
+StreamlineAtts.opacityVarMaxFlag = 0
+StreamlineAtts.tubeDisplayDensity = 10
+StreamlineAtts.geomDisplayQuality = StreamlineAtts.Medium  # Low, Medium, High, Super
+StreamlineAtts.sampleDistance0 = 10
+StreamlineAtts.sampleDistance1 = 10
+StreamlineAtts.sampleDistance2 = 10
+StreamlineAtts.fillInterior = 1
+StreamlineAtts.randomSamples = 0
+StreamlineAtts.randomSeed = 0
+StreamlineAtts.numberOfRandomSamples = 1
+StreamlineAtts.forceNodeCenteredData = 0
+StreamlineAtts.issueTerminationWarnings = 1
+StreamlineAtts.issueStiffnessWarnings = 1
+StreamlineAtts.issueCriticalPointsWarnings = 1
+StreamlineAtts.criticalPointThreshold = 0.001
+StreamlineAtts.varyTubeRadius = StreamlineAtts.None  # None, Scalar
+StreamlineAtts.varyTubeRadiusFactor = 10
+StreamlineAtts.varyTubeRadiusVariable = ""
+StreamlineAtts.correlationDistanceAngTol = 5
+StreamlineAtts.correlationDistanceMinDistAbsolute = 1
+StreamlineAtts.correlationDistanceMinDistBBox = 0.005
+StreamlineAtts.correlationDistanceMinDistType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.selection = ""
+SetPlotOptions(StreamlineAtts)
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (0.0400883, 0.0601011, 0.997387)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (0.20242, 0.977004, -0.0670087)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (0.0400883, 0.0601011, 0.997387)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (0.20242, 0.977004, -0.0670087)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+StreamlineAtts = StreamlineAttributes()
+StreamlineAtts.sourceType = StreamlineAtts.SpecifiedSphere  # SpecifiedPoint, SpecifiedPointList, SpecifiedLine, SpecifiedCircle, SpecifiedPlane, SpecifiedSphere, SpecifiedBox, Selection
+StreamlineAtts.pointSource = (0, 0, 0)
+StreamlineAtts.lineStart = (-3, -3, -3)
+StreamlineAtts.lineEnd = (3, 3, 3)
+StreamlineAtts.planeOrigin = (0, 0, 0)
+StreamlineAtts.planeNormal = (0, 0, 1)
+StreamlineAtts.planeUpAxis = (0, 1, 0)
+StreamlineAtts.radius = 3
+StreamlineAtts.sphereOrigin = (0, 0, 0)
+StreamlineAtts.boxExtents = (0, 1, 0, 1, 0, 1)
+StreamlineAtts.useWholeBox = 1
+StreamlineAtts.pointList = (0, 0, 0, 1, 0, 0, 0, 1, 0)
+StreamlineAtts.sampleDensity0 = 21
+StreamlineAtts.sampleDensity1 = 2
+StreamlineAtts.sampleDensity2 = 2
+StreamlineAtts.coloringMethod = StreamlineAtts.ColorByTime  # Solid, ColorBySpeed, ColorByVorticity, ColorByLength, ColorByTime, ColorBySeedPointID, ColorByVariable, ColorByCorrelationDistance
+StreamlineAtts.colorTableName = "Default"
+StreamlineAtts.singleColor = (0, 0, 0, 255)
+StreamlineAtts.legendFlag = 1
+StreamlineAtts.lightingFlag = 1
+StreamlineAtts.streamlineDirection = StreamlineAtts.Both  # Forward, Backward, Both
+StreamlineAtts.maxSteps = 1000
+StreamlineAtts.terminateByDistance = 0
+StreamlineAtts.termDistance = 10
+StreamlineAtts.terminateByTime = 0
+StreamlineAtts.termTime = 10
+StreamlineAtts.maxStepLength = 0.1
+StreamlineAtts.limitMaximumTimestep = 0
+StreamlineAtts.maxTimeStep = 0.1
+StreamlineAtts.relTol = 0.0001
+StreamlineAtts.absTolSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.absTolAbsolute = 1e-06
+StreamlineAtts.absTolBBox = 1e-06
+StreamlineAtts.fieldType = StreamlineAtts.Default  # Default, M3DC12DField, M3DC13DField, NIMRODField, FlashField
+StreamlineAtts.fieldConstant = 1
+StreamlineAtts.velocitySource = (0, 0, 0)
+StreamlineAtts.integrationType = StreamlineAtts.DormandPrince  # Euler, Leapfrog, DormandPrince, AdamsBashforth, RK4, M3DC12DIntegrator
+StreamlineAtts.streamlineAlgorithmType = StreamlineAtts.VisItSelects  # LoadOnDemand, ParallelStaticDomains, MasterSlave, VisItSelects
+StreamlineAtts.maxStreamlineProcessCount = 10
+StreamlineAtts.maxDomainCacheSize = 3
+StreamlineAtts.workGroupSize = 32
+StreamlineAtts.pathlines = 0
+StreamlineAtts.pathlinesOverrideStartingTimeFlag = 0
+StreamlineAtts.pathlinesOverrideStartingTime = 0
+StreamlineAtts.pathlinesCMFE = StreamlineAtts.POS_CMFE  # CONN_CMFE, POS_CMFE
+StreamlineAtts.coordinateSystem = StreamlineAtts.AsIs  # AsIs, CylindricalToCartesian, CartesianToCylindrical
+StreamlineAtts.phiScalingFlag = 0
+StreamlineAtts.phiScaling = 1
+StreamlineAtts.coloringVariable = ""
+StreamlineAtts.legendMinFlag = 0
+StreamlineAtts.legendMaxFlag = 0
+StreamlineAtts.legendMin = 0
+StreamlineAtts.legendMax = 1
+StreamlineAtts.displayBegin = 0
+StreamlineAtts.displayEnd = 1
+StreamlineAtts.displayBeginFlag = 0
+StreamlineAtts.displayEndFlag = 0
+StreamlineAtts.referenceTypeForDisplay = StreamlineAtts.Distance  # Distance, Time, Step
+StreamlineAtts.displayMethod = StreamlineAtts.Lines  # Lines, Tubes, Ribbons
+StreamlineAtts.tubeSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.tubeRadiusAbsolute = 0.125
+StreamlineAtts.tubeRadiusBBox = 0.005
+StreamlineAtts.ribbonWidthSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.ribbonWidthAbsolute = 0.125
+StreamlineAtts.ribbonWidthBBox = 0.01
+StreamlineAtts.lineWidth = 2
+StreamlineAtts.showSeeds = 1
+StreamlineAtts.seedRadiusSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.seedRadiusAbsolute = 1
+StreamlineAtts.seedRadiusBBox = 0.015
+StreamlineAtts.showHeads = 1
+StreamlineAtts.headDisplayType = StreamlineAtts.Cone  # Sphere, Cone
+StreamlineAtts.headRadiusSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.headRadiusAbsolute = 0.25
+StreamlineAtts.headRadiusBBox = 0.02
+StreamlineAtts.headHeightRatio = 2
+StreamlineAtts.opacityType = StreamlineAtts.FullyOpaque  # FullyOpaque, Constant, Ramp, VariableRange
+StreamlineAtts.opacityVariable = ""
+StreamlineAtts.opacity = 1
+StreamlineAtts.opacityVarMin = 0
+StreamlineAtts.opacityVarMax = 1
+StreamlineAtts.opacityVarMinFlag = 0
+StreamlineAtts.opacityVarMaxFlag = 0
+StreamlineAtts.tubeDisplayDensity = 10
+StreamlineAtts.geomDisplayQuality = StreamlineAtts.Medium  # Low, Medium, High, Super
+StreamlineAtts.sampleDistance0 = 10
+StreamlineAtts.sampleDistance1 = 10
+StreamlineAtts.sampleDistance2 = 10
+StreamlineAtts.fillInterior = 1
+StreamlineAtts.randomSamples = 0
+StreamlineAtts.randomSeed = 0
+StreamlineAtts.numberOfRandomSamples = 1
+StreamlineAtts.forceNodeCenteredData = 0
+StreamlineAtts.issueTerminationWarnings = 1
+StreamlineAtts.issueStiffnessWarnings = 1
+StreamlineAtts.issueCriticalPointsWarnings = 1
+StreamlineAtts.criticalPointThreshold = 0.001
+StreamlineAtts.varyTubeRadius = StreamlineAtts.None  # None, Scalar
+StreamlineAtts.varyTubeRadiusFactor = 10
+StreamlineAtts.varyTubeRadiusVariable = ""
+StreamlineAtts.correlationDistanceAngTol = 5
+StreamlineAtts.correlationDistanceMinDistAbsolute = 1
+StreamlineAtts.correlationDistanceMinDistBBox = 0.005
+StreamlineAtts.correlationDistanceMinDistType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.selection = ""
+SetPlotOptions(StreamlineAtts)
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (0.0400883, 0.0601011, 0.997387)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (0.20242, 0.977004, -0.0670087)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (0.208688, 0.130154, 0.969283)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (-0.237857, 0.9681, -0.0787845)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (0.208688, 0.130154, 0.969283)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (-0.237857, 0.9681, -0.0787845)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (-0.19488, -0.222415, 0.955276)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (-0.335989, 0.930161, 0.148025)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+StreamlineAtts = StreamlineAttributes()
+StreamlineAtts.sourceType = StreamlineAtts.SpecifiedSphere  # SpecifiedPoint, SpecifiedPointList, SpecifiedLine, SpecifiedCircle, SpecifiedPlane, SpecifiedSphere, SpecifiedBox, Selection
+StreamlineAtts.pointSource = (0, 0, 0)
+StreamlineAtts.lineStart = (-3, -3, -3)
+StreamlineAtts.lineEnd = (3, 3, 3)
+StreamlineAtts.planeOrigin = (0, 0, 0)
+StreamlineAtts.planeNormal = (0, 0, 1)
+StreamlineAtts.planeUpAxis = (0, 1, 0)
+StreamlineAtts.radius = 3
+StreamlineAtts.sphereOrigin = (0, 0, 0)
+StreamlineAtts.boxExtents = (0, 1, 0, 1, 0, 1)
+StreamlineAtts.useWholeBox = 1
+StreamlineAtts.pointList = (0, 0, 0, 1, 0, 0, 0, 1, 0)
+StreamlineAtts.sampleDensity0 = 21
+StreamlineAtts.sampleDensity1 = 2
+StreamlineAtts.sampleDensity2 = 2
+StreamlineAtts.coloringMethod = StreamlineAtts.ColorByTime  # Solid, ColorBySpeed, ColorByVorticity, ColorByLength, ColorByTime, ColorBySeedPointID, ColorByVariable, ColorByCorrelationDistance
+StreamlineAtts.colorTableName = "Default"
+StreamlineAtts.singleColor = (0, 0, 0, 255)
+StreamlineAtts.legendFlag = 1
+StreamlineAtts.lightingFlag = 1
+StreamlineAtts.streamlineDirection = StreamlineAtts.Both  # Forward, Backward, Both
+StreamlineAtts.maxSteps = 1000
+StreamlineAtts.terminateByDistance = 0
+StreamlineAtts.termDistance = 10
+StreamlineAtts.terminateByTime = 0
+StreamlineAtts.termTime = 10
+StreamlineAtts.maxStepLength = 0.1
+StreamlineAtts.limitMaximumTimestep = 1
+StreamlineAtts.maxTimeStep = 0.1
+StreamlineAtts.relTol = 0.0001
+StreamlineAtts.absTolSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.absTolAbsolute = 1e-06
+StreamlineAtts.absTolBBox = 1e-06
+StreamlineAtts.fieldType = StreamlineAtts.Default  # Default, M3DC12DField, M3DC13DField, NIMRODField, FlashField
+StreamlineAtts.fieldConstant = 1
+StreamlineAtts.velocitySource = (0, 0, 0)
+StreamlineAtts.integrationType = StreamlineAtts.DormandPrince  # Euler, Leapfrog, DormandPrince, AdamsBashforth, RK4, M3DC12DIntegrator
+StreamlineAtts.streamlineAlgorithmType = StreamlineAtts.VisItSelects  # LoadOnDemand, ParallelStaticDomains, MasterSlave, VisItSelects
+StreamlineAtts.maxStreamlineProcessCount = 10
+StreamlineAtts.maxDomainCacheSize = 3
+StreamlineAtts.workGroupSize = 32
+StreamlineAtts.pathlines = 0
+StreamlineAtts.pathlinesOverrideStartingTimeFlag = 0
+StreamlineAtts.pathlinesOverrideStartingTime = 0
+StreamlineAtts.pathlinesCMFE = StreamlineAtts.POS_CMFE  # CONN_CMFE, POS_CMFE
+StreamlineAtts.coordinateSystem = StreamlineAtts.AsIs  # AsIs, CylindricalToCartesian, CartesianToCylindrical
+StreamlineAtts.phiScalingFlag = 0
+StreamlineAtts.phiScaling = 1
+StreamlineAtts.coloringVariable = ""
+StreamlineAtts.legendMinFlag = 0
+StreamlineAtts.legendMaxFlag = 0
+StreamlineAtts.legendMin = 0
+StreamlineAtts.legendMax = 1
+StreamlineAtts.displayBegin = 0
+StreamlineAtts.displayEnd = 1
+StreamlineAtts.displayBeginFlag = 0
+StreamlineAtts.displayEndFlag = 0
+StreamlineAtts.referenceTypeForDisplay = StreamlineAtts.Distance  # Distance, Time, Step
+StreamlineAtts.displayMethod = StreamlineAtts.Lines  # Lines, Tubes, Ribbons
+StreamlineAtts.tubeSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.tubeRadiusAbsolute = 0.125
+StreamlineAtts.tubeRadiusBBox = 0.005
+StreamlineAtts.ribbonWidthSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.ribbonWidthAbsolute = 0.125
+StreamlineAtts.ribbonWidthBBox = 0.01
+StreamlineAtts.lineWidth = 2
+StreamlineAtts.showSeeds = 1
+StreamlineAtts.seedRadiusSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.seedRadiusAbsolute = 1
+StreamlineAtts.seedRadiusBBox = 0.015
+StreamlineAtts.showHeads = 0
+StreamlineAtts.headDisplayType = StreamlineAtts.Cone  # Sphere, Cone
+StreamlineAtts.headRadiusSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.headRadiusAbsolute = 0.25
+StreamlineAtts.headRadiusBBox = 0.02
+StreamlineAtts.headHeightRatio = 2
+StreamlineAtts.opacityType = StreamlineAtts.FullyOpaque  # FullyOpaque, Constant, Ramp, VariableRange
+StreamlineAtts.opacityVariable = ""
+StreamlineAtts.opacity = 1
+StreamlineAtts.opacityVarMin = 0
+StreamlineAtts.opacityVarMax = 1
+StreamlineAtts.opacityVarMinFlag = 0
+StreamlineAtts.opacityVarMaxFlag = 0
+StreamlineAtts.tubeDisplayDensity = 10
+StreamlineAtts.geomDisplayQuality = StreamlineAtts.Medium  # Low, Medium, High, Super
+StreamlineAtts.sampleDistance0 = 10
+StreamlineAtts.sampleDistance1 = 10
+StreamlineAtts.sampleDistance2 = 10
+StreamlineAtts.fillInterior = 1
+StreamlineAtts.randomSamples = 0
+StreamlineAtts.randomSeed = 0
+StreamlineAtts.numberOfRandomSamples = 1
+StreamlineAtts.forceNodeCenteredData = 0
+StreamlineAtts.issueTerminationWarnings = 1
+StreamlineAtts.issueStiffnessWarnings = 1
+StreamlineAtts.issueCriticalPointsWarnings = 1
+StreamlineAtts.criticalPointThreshold = 0.001
+StreamlineAtts.varyTubeRadius = StreamlineAtts.None  # None, Scalar
+StreamlineAtts.varyTubeRadiusFactor = 10
+StreamlineAtts.varyTubeRadiusVariable = ""
+StreamlineAtts.correlationDistanceAngTol = 5
+StreamlineAtts.correlationDistanceMinDistAbsolute = 1
+StreamlineAtts.correlationDistanceMinDistBBox = 0.005
+StreamlineAtts.correlationDistanceMinDistType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.selection = ""
+SetPlotOptions(StreamlineAtts)
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (-0.19488, -0.222415, 0.955276)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (-0.335989, 0.930161, 0.148025)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (-0.393217, 0.109886, 0.912856)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (-0.0494316, 0.98887, -0.14033)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (-0.270682, 0.23366, 0.933881)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (0.159187, 0.967605, -0.195958)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+StreamlineAtts = StreamlineAttributes()
+StreamlineAtts.sourceType = StreamlineAtts.SpecifiedSphere  # SpecifiedPoint, SpecifiedPointList, SpecifiedLine, SpecifiedCircle, SpecifiedPlane, SpecifiedSphere, SpecifiedBox, Selection
+StreamlineAtts.pointSource = (0, 0, 0)
+StreamlineAtts.lineStart = (-3, -3, -3)
+StreamlineAtts.lineEnd = (3, 3, 3)
+StreamlineAtts.planeOrigin = (0, 0, 0)
+StreamlineAtts.planeNormal = (0, 0, 1)
+StreamlineAtts.planeUpAxis = (0, 1, 0)
+StreamlineAtts.radius = 3
+StreamlineAtts.sphereOrigin = (0, 0, 0)
+StreamlineAtts.boxExtents = (0, 1, 0, 1, 0, 1)
+StreamlineAtts.useWholeBox = 1
+StreamlineAtts.pointList = (0, 0, 0, 1, 0, 0, 0, 1, 0)
+StreamlineAtts.sampleDensity0 = 21
+StreamlineAtts.sampleDensity1 = 4
+StreamlineAtts.sampleDensity2 = 2
+StreamlineAtts.coloringMethod = StreamlineAtts.ColorByTime  # Solid, ColorBySpeed, ColorByVorticity, ColorByLength, ColorByTime, ColorBySeedPointID, ColorByVariable, ColorByCorrelationDistance
+StreamlineAtts.colorTableName = "Default"
+StreamlineAtts.singleColor = (0, 0, 0, 255)
+StreamlineAtts.legendFlag = 1
+StreamlineAtts.lightingFlag = 1
+StreamlineAtts.streamlineDirection = StreamlineAtts.Both  # Forward, Backward, Both
+StreamlineAtts.maxSteps = 1000
+StreamlineAtts.terminateByDistance = 0
+StreamlineAtts.termDistance = 10
+StreamlineAtts.terminateByTime = 0
+StreamlineAtts.termTime = 10
+StreamlineAtts.maxStepLength = 0.1
+StreamlineAtts.limitMaximumTimestep = 1
+StreamlineAtts.maxTimeStep = 0.1
+StreamlineAtts.relTol = 0.0001
+StreamlineAtts.absTolSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.absTolAbsolute = 1e-06
+StreamlineAtts.absTolBBox = 1e-06
+StreamlineAtts.fieldType = StreamlineAtts.Default  # Default, M3DC12DField, M3DC13DField, NIMRODField, FlashField
+StreamlineAtts.fieldConstant = 1
+StreamlineAtts.velocitySource = (0, 0, 0)
+StreamlineAtts.integrationType = StreamlineAtts.DormandPrince  # Euler, Leapfrog, DormandPrince, AdamsBashforth, RK4, M3DC12DIntegrator
+StreamlineAtts.streamlineAlgorithmType = StreamlineAtts.VisItSelects  # LoadOnDemand, ParallelStaticDomains, MasterSlave, VisItSelects
+StreamlineAtts.maxStreamlineProcessCount = 10
+StreamlineAtts.maxDomainCacheSize = 3
+StreamlineAtts.workGroupSize = 32
+StreamlineAtts.pathlines = 0
+StreamlineAtts.pathlinesOverrideStartingTimeFlag = 0
+StreamlineAtts.pathlinesOverrideStartingTime = 0
+StreamlineAtts.pathlinesCMFE = StreamlineAtts.POS_CMFE  # CONN_CMFE, POS_CMFE
+StreamlineAtts.coordinateSystem = StreamlineAtts.AsIs  # AsIs, CylindricalToCartesian, CartesianToCylindrical
+StreamlineAtts.phiScalingFlag = 0
+StreamlineAtts.phiScaling = 1
+StreamlineAtts.coloringVariable = ""
+StreamlineAtts.legendMinFlag = 0
+StreamlineAtts.legendMaxFlag = 0
+StreamlineAtts.legendMin = 0
+StreamlineAtts.legendMax = 1
+StreamlineAtts.displayBegin = 0
+StreamlineAtts.displayEnd = 1
+StreamlineAtts.displayBeginFlag = 0
+StreamlineAtts.displayEndFlag = 0
+StreamlineAtts.referenceTypeForDisplay = StreamlineAtts.Distance  # Distance, Time, Step
+StreamlineAtts.displayMethod = StreamlineAtts.Lines  # Lines, Tubes, Ribbons
+StreamlineAtts.tubeSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.tubeRadiusAbsolute = 0.125
+StreamlineAtts.tubeRadiusBBox = 0.005
+StreamlineAtts.ribbonWidthSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.ribbonWidthAbsolute = 0.125
+StreamlineAtts.ribbonWidthBBox = 0.01
+StreamlineAtts.lineWidth = 2
+StreamlineAtts.showSeeds = 1
+StreamlineAtts.seedRadiusSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.seedRadiusAbsolute = 1
+StreamlineAtts.seedRadiusBBox = 0.015
+StreamlineAtts.showHeads = 0
+StreamlineAtts.headDisplayType = StreamlineAtts.Cone  # Sphere, Cone
+StreamlineAtts.headRadiusSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.headRadiusAbsolute = 0.25
+StreamlineAtts.headRadiusBBox = 0.02
+StreamlineAtts.headHeightRatio = 2
+StreamlineAtts.opacityType = StreamlineAtts.FullyOpaque  # FullyOpaque, Constant, Ramp, VariableRange
+StreamlineAtts.opacityVariable = ""
+StreamlineAtts.opacity = 1
+StreamlineAtts.opacityVarMin = 0
+StreamlineAtts.opacityVarMax = 1
+StreamlineAtts.opacityVarMinFlag = 0
+StreamlineAtts.opacityVarMaxFlag = 0
+StreamlineAtts.tubeDisplayDensity = 10
+StreamlineAtts.geomDisplayQuality = StreamlineAtts.Medium  # Low, Medium, High, Super
+StreamlineAtts.sampleDistance0 = 10
+StreamlineAtts.sampleDistance1 = 10
+StreamlineAtts.sampleDistance2 = 10
+StreamlineAtts.fillInterior = 1
+StreamlineAtts.randomSamples = 0
+StreamlineAtts.randomSeed = 0
+StreamlineAtts.numberOfRandomSamples = 1
+StreamlineAtts.forceNodeCenteredData = 0
+StreamlineAtts.issueTerminationWarnings = 1
+StreamlineAtts.issueStiffnessWarnings = 1
+StreamlineAtts.issueCriticalPointsWarnings = 1
+StreamlineAtts.criticalPointThreshold = 0.001
+StreamlineAtts.varyTubeRadius = StreamlineAtts.None  # None, Scalar
+StreamlineAtts.varyTubeRadiusFactor = 10
+StreamlineAtts.varyTubeRadiusVariable = ""
+StreamlineAtts.correlationDistanceAngTol = 5
+StreamlineAtts.correlationDistanceMinDistAbsolute = 1
+StreamlineAtts.correlationDistanceMinDistBBox = 0.005
+StreamlineAtts.correlationDistanceMinDistType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.selection = ""
+SetPlotOptions(StreamlineAtts)
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (-0.0373257, 0.0928426, 0.994981)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (-0.221919, 0.970043, -0.0988407)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+StreamlineAtts = StreamlineAttributes()
+StreamlineAtts.sourceType = StreamlineAtts.SpecifiedSphere  # SpecifiedPoint, SpecifiedPointList, SpecifiedLine, SpecifiedCircle, SpecifiedPlane, SpecifiedSphere, SpecifiedBox, Selection
+StreamlineAtts.pointSource = (0, 0, 0)
+StreamlineAtts.lineStart = (-3, -3, -3)
+StreamlineAtts.lineEnd = (3, 3, 3)
+StreamlineAtts.planeOrigin = (0, 0, 0)
+StreamlineAtts.planeNormal = (0, 0, 1)
+StreamlineAtts.planeUpAxis = (0, 1, 0)
+StreamlineAtts.radius = 3
+StreamlineAtts.sphereOrigin = (0, 0, 0)
+StreamlineAtts.boxExtents = (0, 1, 0, 1, 0, 1)
+StreamlineAtts.useWholeBox = 1
+StreamlineAtts.pointList = (0, 0, 0, 1, 0, 0, 0, 1, 0)
+StreamlineAtts.sampleDensity0 = 21
+StreamlineAtts.sampleDensity1 = 8
+StreamlineAtts.sampleDensity2 = 2
+StreamlineAtts.coloringMethod = StreamlineAtts.ColorByTime  # Solid, ColorBySpeed, ColorByVorticity, ColorByLength, ColorByTime, ColorBySeedPointID, ColorByVariable, ColorByCorrelationDistance
+StreamlineAtts.colorTableName = "Default"
+StreamlineAtts.singleColor = (0, 0, 0, 255)
+StreamlineAtts.legendFlag = 1
+StreamlineAtts.lightingFlag = 1
+StreamlineAtts.streamlineDirection = StreamlineAtts.Both  # Forward, Backward, Both
+StreamlineAtts.maxSteps = 1000
+StreamlineAtts.terminateByDistance = 0
+StreamlineAtts.termDistance = 10
+StreamlineAtts.terminateByTime = 0
+StreamlineAtts.termTime = 10
+StreamlineAtts.maxStepLength = 0.1
+StreamlineAtts.limitMaximumTimestep = 1
+StreamlineAtts.maxTimeStep = 0.1
+StreamlineAtts.relTol = 0.0001
+StreamlineAtts.absTolSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.absTolAbsolute = 1e-06
+StreamlineAtts.absTolBBox = 1e-06
+StreamlineAtts.fieldType = StreamlineAtts.Default  # Default, M3DC12DField, M3DC13DField, NIMRODField, FlashField
+StreamlineAtts.fieldConstant = 1
+StreamlineAtts.velocitySource = (0, 0, 0)
+StreamlineAtts.integrationType = StreamlineAtts.DormandPrince  # Euler, Leapfrog, DormandPrince, AdamsBashforth, RK4, M3DC12DIntegrator
+StreamlineAtts.streamlineAlgorithmType = StreamlineAtts.VisItSelects  # LoadOnDemand, ParallelStaticDomains, MasterSlave, VisItSelects
+StreamlineAtts.maxStreamlineProcessCount = 10
+StreamlineAtts.maxDomainCacheSize = 3
+StreamlineAtts.workGroupSize = 32
+StreamlineAtts.pathlines = 0
+StreamlineAtts.pathlinesOverrideStartingTimeFlag = 0
+StreamlineAtts.pathlinesOverrideStartingTime = 0
+StreamlineAtts.pathlinesCMFE = StreamlineAtts.POS_CMFE  # CONN_CMFE, POS_CMFE
+StreamlineAtts.coordinateSystem = StreamlineAtts.AsIs  # AsIs, CylindricalToCartesian, CartesianToCylindrical
+StreamlineAtts.phiScalingFlag = 0
+StreamlineAtts.phiScaling = 1
+StreamlineAtts.coloringVariable = ""
+StreamlineAtts.legendMinFlag = 0
+StreamlineAtts.legendMaxFlag = 0
+StreamlineAtts.legendMin = 0
+StreamlineAtts.legendMax = 1
+StreamlineAtts.displayBegin = 0
+StreamlineAtts.displayEnd = 1
+StreamlineAtts.displayBeginFlag = 0
+StreamlineAtts.displayEndFlag = 0
+StreamlineAtts.referenceTypeForDisplay = StreamlineAtts.Distance  # Distance, Time, Step
+StreamlineAtts.displayMethod = StreamlineAtts.Lines  # Lines, Tubes, Ribbons
+StreamlineAtts.tubeSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.tubeRadiusAbsolute = 0.125
+StreamlineAtts.tubeRadiusBBox = 0.005
+StreamlineAtts.ribbonWidthSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.ribbonWidthAbsolute = 0.125
+StreamlineAtts.ribbonWidthBBox = 0.01
+StreamlineAtts.lineWidth = 2
+StreamlineAtts.showSeeds = 1
+StreamlineAtts.seedRadiusSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.seedRadiusAbsolute = 1
+StreamlineAtts.seedRadiusBBox = 0.015
+StreamlineAtts.showHeads = 0
+StreamlineAtts.headDisplayType = StreamlineAtts.Cone  # Sphere, Cone
+StreamlineAtts.headRadiusSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.headRadiusAbsolute = 0.25
+StreamlineAtts.headRadiusBBox = 0.02
+StreamlineAtts.headHeightRatio = 2
+StreamlineAtts.opacityType = StreamlineAtts.FullyOpaque  # FullyOpaque, Constant, Ramp, VariableRange
+StreamlineAtts.opacityVariable = ""
+StreamlineAtts.opacity = 1
+StreamlineAtts.opacityVarMin = 0
+StreamlineAtts.opacityVarMax = 1
+StreamlineAtts.opacityVarMinFlag = 0
+StreamlineAtts.opacityVarMaxFlag = 0
+StreamlineAtts.tubeDisplayDensity = 10
+StreamlineAtts.geomDisplayQuality = StreamlineAtts.Medium  # Low, Medium, High, Super
+StreamlineAtts.sampleDistance0 = 10
+StreamlineAtts.sampleDistance1 = 10
+StreamlineAtts.sampleDistance2 = 10
+StreamlineAtts.fillInterior = 1
+StreamlineAtts.randomSamples = 0
+StreamlineAtts.randomSeed = 0
+StreamlineAtts.numberOfRandomSamples = 1
+StreamlineAtts.forceNodeCenteredData = 0
+StreamlineAtts.issueTerminationWarnings = 1
+StreamlineAtts.issueStiffnessWarnings = 1
+StreamlineAtts.issueCriticalPointsWarnings = 1
+StreamlineAtts.criticalPointThreshold = 0.001
+StreamlineAtts.varyTubeRadius = StreamlineAtts.None  # None, Scalar
+StreamlineAtts.varyTubeRadiusFactor = 10
+StreamlineAtts.varyTubeRadiusVariable = ""
+StreamlineAtts.correlationDistanceAngTol = 5
+StreamlineAtts.correlationDistanceMinDistAbsolute = 1
+StreamlineAtts.correlationDistanceMinDistBBox = 0.005
+StreamlineAtts.correlationDistanceMinDistType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.selection = ""
+SetPlotOptions(StreamlineAtts)
+StreamlineAtts = StreamlineAttributes()
+StreamlineAtts.sourceType = StreamlineAtts.SpecifiedSphere  # SpecifiedPoint, SpecifiedPointList, SpecifiedLine, SpecifiedCircle, SpecifiedPlane, SpecifiedSphere, SpecifiedBox, Selection
+StreamlineAtts.pointSource = (0, 0, 0)
+StreamlineAtts.lineStart = (-3, -3, -3)
+StreamlineAtts.lineEnd = (3, 3, 3)
+StreamlineAtts.planeOrigin = (0, 0, 0)
+StreamlineAtts.planeNormal = (0, 0, 1)
+StreamlineAtts.planeUpAxis = (0, 1, 0)
+StreamlineAtts.radius = 3
+StreamlineAtts.sphereOrigin = (0, 0, 0)
+StreamlineAtts.boxExtents = (0, 1, 0, 1, 0, 1)
+StreamlineAtts.useWholeBox = 1
+StreamlineAtts.pointList = (0, 0, 0, 1, 0, 0, 0, 1, 0)
+StreamlineAtts.sampleDensity0 = 21
+StreamlineAtts.sampleDensity1 = 7
+StreamlineAtts.sampleDensity2 = 2
+StreamlineAtts.coloringMethod = StreamlineAtts.ColorByTime  # Solid, ColorBySpeed, ColorByVorticity, ColorByLength, ColorByTime, ColorBySeedPointID, ColorByVariable, ColorByCorrelationDistance
+StreamlineAtts.colorTableName = "Default"
+StreamlineAtts.singleColor = (0, 0, 0, 255)
+StreamlineAtts.legendFlag = 1
+StreamlineAtts.lightingFlag = 1
+StreamlineAtts.streamlineDirection = StreamlineAtts.Both  # Forward, Backward, Both
+StreamlineAtts.maxSteps = 1000
+StreamlineAtts.terminateByDistance = 0
+StreamlineAtts.termDistance = 10
+StreamlineAtts.terminateByTime = 0
+StreamlineAtts.termTime = 10
+StreamlineAtts.maxStepLength = 0.1
+StreamlineAtts.limitMaximumTimestep = 1
+StreamlineAtts.maxTimeStep = 0.1
+StreamlineAtts.relTol = 0.0001
+StreamlineAtts.absTolSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.absTolAbsolute = 1e-06
+StreamlineAtts.absTolBBox = 1e-06
+StreamlineAtts.fieldType = StreamlineAtts.Default  # Default, M3DC12DField, M3DC13DField, NIMRODField, FlashField
+StreamlineAtts.fieldConstant = 1
+StreamlineAtts.velocitySource = (0, 0, 0)
+StreamlineAtts.integrationType = StreamlineAtts.DormandPrince  # Euler, Leapfrog, DormandPrince, AdamsBashforth, RK4, M3DC12DIntegrator
+StreamlineAtts.streamlineAlgorithmType = StreamlineAtts.VisItSelects  # LoadOnDemand, ParallelStaticDomains, MasterSlave, VisItSelects
+StreamlineAtts.maxStreamlineProcessCount = 10
+StreamlineAtts.maxDomainCacheSize = 3
+StreamlineAtts.workGroupSize = 32
+StreamlineAtts.pathlines = 0
+StreamlineAtts.pathlinesOverrideStartingTimeFlag = 0
+StreamlineAtts.pathlinesOverrideStartingTime = 0
+StreamlineAtts.pathlinesCMFE = StreamlineAtts.POS_CMFE  # CONN_CMFE, POS_CMFE
+StreamlineAtts.coordinateSystem = StreamlineAtts.AsIs  # AsIs, CylindricalToCartesian, CartesianToCylindrical
+StreamlineAtts.phiScalingFlag = 0
+StreamlineAtts.phiScaling = 1
+StreamlineAtts.coloringVariable = ""
+StreamlineAtts.legendMinFlag = 0
+StreamlineAtts.legendMaxFlag = 0
+StreamlineAtts.legendMin = 0
+StreamlineAtts.legendMax = 1
+StreamlineAtts.displayBegin = 0
+StreamlineAtts.displayEnd = 1
+StreamlineAtts.displayBeginFlag = 0
+StreamlineAtts.displayEndFlag = 0
+StreamlineAtts.referenceTypeForDisplay = StreamlineAtts.Distance  # Distance, Time, Step
+StreamlineAtts.displayMethod = StreamlineAtts.Lines  # Lines, Tubes, Ribbons
+StreamlineAtts.tubeSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.tubeRadiusAbsolute = 0.125
+StreamlineAtts.tubeRadiusBBox = 0.005
+StreamlineAtts.ribbonWidthSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.ribbonWidthAbsolute = 0.125
+StreamlineAtts.ribbonWidthBBox = 0.01
+StreamlineAtts.lineWidth = 2
+StreamlineAtts.showSeeds = 1
+StreamlineAtts.seedRadiusSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.seedRadiusAbsolute = 1
+StreamlineAtts.seedRadiusBBox = 0.015
+StreamlineAtts.showHeads = 0
+StreamlineAtts.headDisplayType = StreamlineAtts.Cone  # Sphere, Cone
+StreamlineAtts.headRadiusSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.headRadiusAbsolute = 0.25
+StreamlineAtts.headRadiusBBox = 0.02
+StreamlineAtts.headHeightRatio = 2
+StreamlineAtts.opacityType = StreamlineAtts.FullyOpaque  # FullyOpaque, Constant, Ramp, VariableRange
+StreamlineAtts.opacityVariable = ""
+StreamlineAtts.opacity = 1
+StreamlineAtts.opacityVarMin = 0
+StreamlineAtts.opacityVarMax = 1
+StreamlineAtts.opacityVarMinFlag = 0
+StreamlineAtts.opacityVarMaxFlag = 0
+StreamlineAtts.tubeDisplayDensity = 10
+StreamlineAtts.geomDisplayQuality = StreamlineAtts.Medium  # Low, Medium, High, Super
+StreamlineAtts.sampleDistance0 = 10
+StreamlineAtts.sampleDistance1 = 10
+StreamlineAtts.sampleDistance2 = 10
+StreamlineAtts.fillInterior = 1
+StreamlineAtts.randomSamples = 0
+StreamlineAtts.randomSeed = 0
+StreamlineAtts.numberOfRandomSamples = 1
+StreamlineAtts.forceNodeCenteredData = 0
+StreamlineAtts.issueTerminationWarnings = 1
+StreamlineAtts.issueStiffnessWarnings = 1
+StreamlineAtts.issueCriticalPointsWarnings = 1
+StreamlineAtts.criticalPointThreshold = 0.001
+StreamlineAtts.varyTubeRadius = StreamlineAtts.None  # None, Scalar
+StreamlineAtts.varyTubeRadiusFactor = 10
+StreamlineAtts.varyTubeRadiusVariable = ""
+StreamlineAtts.correlationDistanceAngTol = 5
+StreamlineAtts.correlationDistanceMinDistAbsolute = 1
+StreamlineAtts.correlationDistanceMinDistBBox = 0.005
+StreamlineAtts.correlationDistanceMinDistType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.selection = ""
+SetPlotOptions(StreamlineAtts)
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (-0.0373257, 0.0928426, 0.994981)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (-0.221919, 0.970043, -0.0988407)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (-0.203423, 0.883266, 0.422445)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (-0.421591, 0.310398, -0.852006)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (0.199961, 0.0679338, 0.977446)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (-0.122696, 0.991477, -0.0438084)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
 # MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
 SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
 # MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_recovery.session")
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-# MAINTENANCE ISSUE: SetSuppressMessagesRPC is not handled in Logging.C. Please contact a VisIt developer.
-SaveSession("/Users/gmurphy/.visit/crash_rec
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (0.208295, 0.25662, 0.943801)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (0.0306192, 0.962782, -0.268539)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (0.14461, 0.00397171, 0.989481)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (-0.0419763, 0.999116, 0.00212433)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+StreamlineAtts = StreamlineAttributes()
+StreamlineAtts.sourceType = StreamlineAtts.SpecifiedSphere  # SpecifiedPoint, SpecifiedPointList, SpecifiedLine, SpecifiedCircle, SpecifiedPlane, SpecifiedSphere, SpecifiedBox, Selection
+StreamlineAtts.pointSource = (0, 0, 0)
+StreamlineAtts.lineStart = (-3, -3, -3)
+StreamlineAtts.lineEnd = (3, 3, 3)
+StreamlineAtts.planeOrigin = (0, 0, 0)
+StreamlineAtts.planeNormal = (0, 0, 1)
+StreamlineAtts.planeUpAxis = (0, 1, 0)
+StreamlineAtts.radius = 4
+StreamlineAtts.sphereOrigin = (0, 0, 0)
+StreamlineAtts.boxExtents = (0, 1, 0, 1, 0, 1)
+StreamlineAtts.useWholeBox = 1
+StreamlineAtts.pointList = (0, 0, 0, 1, 0, 0, 0, 1, 0)
+StreamlineAtts.sampleDensity0 = 21
+StreamlineAtts.sampleDensity1 = 7
+StreamlineAtts.sampleDensity2 = 2
+StreamlineAtts.coloringMethod = StreamlineAtts.ColorByTime  # Solid, ColorBySpeed, ColorByVorticity, ColorByLength, ColorByTime, ColorBySeedPointID, ColorByVariable, ColorByCorrelationDistance
+StreamlineAtts.colorTableName = "Default"
+StreamlineAtts.singleColor = (0, 0, 0, 255)
+StreamlineAtts.legendFlag = 1
+StreamlineAtts.lightingFlag = 1
+StreamlineAtts.streamlineDirection = StreamlineAtts.Both  # Forward, Backward, Both
+StreamlineAtts.maxSteps = 1000
+StreamlineAtts.terminateByDistance = 0
+StreamlineAtts.termDistance = 10
+StreamlineAtts.terminateByTime = 0
+StreamlineAtts.termTime = 10
+StreamlineAtts.maxStepLength = 0.1
+StreamlineAtts.limitMaximumTimestep = 1
+StreamlineAtts.maxTimeStep = 0.1
+StreamlineAtts.relTol = 0.0001
+StreamlineAtts.absTolSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.absTolAbsolute = 1e-06
+StreamlineAtts.absTolBBox = 1e-06
+StreamlineAtts.fieldType = StreamlineAtts.Default  # Default, M3DC12DField, M3DC13DField, NIMRODField, FlashField
+StreamlineAtts.fieldConstant = 1
+StreamlineAtts.velocitySource = (0, 0, 0)
+StreamlineAtts.integrationType = StreamlineAtts.DormandPrince  # Euler, Leapfrog, DormandPrince, AdamsBashforth, RK4, M3DC12DIntegrator
+StreamlineAtts.streamlineAlgorithmType = StreamlineAtts.VisItSelects  # LoadOnDemand, ParallelStaticDomains, MasterSlave, VisItSelects
+StreamlineAtts.maxStreamlineProcessCount = 10
+StreamlineAtts.maxDomainCacheSize = 3
+StreamlineAtts.workGroupSize = 32
+StreamlineAtts.pathlines = 0
+StreamlineAtts.pathlinesOverrideStartingTimeFlag = 0
+StreamlineAtts.pathlinesOverrideStartingTime = 0
+StreamlineAtts.pathlinesCMFE = StreamlineAtts.POS_CMFE  # CONN_CMFE, POS_CMFE
+StreamlineAtts.coordinateSystem = StreamlineAtts.AsIs  # AsIs, CylindricalToCartesian, CartesianToCylindrical
+StreamlineAtts.phiScalingFlag = 0
+StreamlineAtts.phiScaling = 1
+StreamlineAtts.coloringVariable = ""
+StreamlineAtts.legendMinFlag = 0
+StreamlineAtts.legendMaxFlag = 0
+StreamlineAtts.legendMin = 0
+StreamlineAtts.legendMax = 1
+StreamlineAtts.displayBegin = 0
+StreamlineAtts.displayEnd = 1
+StreamlineAtts.displayBeginFlag = 0
+StreamlineAtts.displayEndFlag = 0
+StreamlineAtts.referenceTypeForDisplay = StreamlineAtts.Distance  # Distance, Time, Step
+StreamlineAtts.displayMethod = StreamlineAtts.Lines  # Lines, Tubes, Ribbons
+StreamlineAtts.tubeSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.tubeRadiusAbsolute = 0.125
+StreamlineAtts.tubeRadiusBBox = 0.005
+StreamlineAtts.ribbonWidthSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.ribbonWidthAbsolute = 0.125
+StreamlineAtts.ribbonWidthBBox = 0.01
+StreamlineAtts.lineWidth = 2
+StreamlineAtts.showSeeds = 1
+StreamlineAtts.seedRadiusSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.seedRadiusAbsolute = 1
+StreamlineAtts.seedRadiusBBox = 0.015
+StreamlineAtts.showHeads = 0
+StreamlineAtts.headDisplayType = StreamlineAtts.Cone  # Sphere, Cone
+StreamlineAtts.headRadiusSizeType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.headRadiusAbsolute = 0.25
+StreamlineAtts.headRadiusBBox = 0.02
+StreamlineAtts.headHeightRatio = 2
+StreamlineAtts.opacityType = StreamlineAtts.FullyOpaque  # FullyOpaque, Constant, Ramp, VariableRange
+StreamlineAtts.opacityVariable = ""
+StreamlineAtts.opacity = 1
+StreamlineAtts.opacityVarMin = 0
+StreamlineAtts.opacityVarMax = 1
+StreamlineAtts.opacityVarMinFlag = 0
+StreamlineAtts.opacityVarMaxFlag = 0
+StreamlineAtts.tubeDisplayDensity = 10
+StreamlineAtts.geomDisplayQuality = StreamlineAtts.Medium  # Low, Medium, High, Super
+StreamlineAtts.sampleDistance0 = 10
+StreamlineAtts.sampleDistance1 = 10
+StreamlineAtts.sampleDistance2 = 10
+StreamlineAtts.fillInterior = 1
+StreamlineAtts.randomSamples = 0
+StreamlineAtts.randomSeed = 0
+StreamlineAtts.numberOfRandomSamples = 1
+StreamlineAtts.forceNodeCenteredData = 0
+StreamlineAtts.issueTerminationWarnings = 1
+StreamlineAtts.issueStiffnessWarnings = 1
+StreamlineAtts.issueCriticalPointsWarnings = 1
+StreamlineAtts.criticalPointThreshold = 0.001
+StreamlineAtts.varyTubeRadius = StreamlineAtts.None  # None, Scalar
+StreamlineAtts.varyTubeRadiusFactor = 10
+StreamlineAtts.varyTubeRadiusVariable = ""
+StreamlineAtts.correlationDistanceAngTol = 5
+StreamlineAtts.correlationDistanceMinDistAbsolute = 1
+StreamlineAtts.correlationDistanceMinDistBBox = 0.005
+StreamlineAtts.correlationDistanceMinDistType = StreamlineAtts.FractionOfBBox  # Absolute, FractionOfBBox
+StreamlineAtts.selection = ""
+SetPlotOptions(StreamlineAtts)
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (0.14461, 0.00397171, 0.989481)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (-0.0419763, 0.999116, 0.00212433)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (0.0351846, 0.279184, 0.959593)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (-0.26682, 0.927957, -0.260197)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (0.232776, 0.28649, 0.929375)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (-0.162588, 0.953641, -0.253248)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (0.527514, 0.507535, 0.681277)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (-0.314699, 0.86162, -0.398215)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (0.527514, 0.507535, 0.681277)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (-0.314699, 0.86162, -0.398215)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axis3DScaleFlag = 0
+View3DAtts.axis3DScales = (1, 1, 1)
+View3DAtts.shear = (0, 0, 1)
+SetView3D(View3DAtts)
+# End spontaneous state
+
+# Begin spontaneous state
+View3DAtts = View3DAttributes()
+View3DAtts.viewNormal = (0.514484, 0.604421, 0.608261)
+View3DAtts.focus = (0.00134993, 0, 0.00134993)
+View3DAtts.viewUp = (-0.519853, 0.783974, -0.339319)
+View3DAtts.viewAngle = 30
+View3DAtts.parallelScale = 8.16112
+View3DAtts.nearPlane = -16.3222
+View3DAtts.farPlane = 16.3222
+View3DAtts.imagePan = (0, 0)
+View3DAtts.imageZoom = 1
+View3DAtts.perspective = 1
+View3DAtts.eyeAngle = 2
+View3DAtts.centerOfRotationSet = 0
+View3DAtts.centerOfRotation = (0.00134993, 0, 0.00134993)
+View3DAtts.axi
