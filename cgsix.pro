@@ -281,7 +281,7 @@ f2name='pluto_time_series.dat'
 OPENW,1,f2name
 printf, 1, '# tnorm tvz tvx'
 for i=1,nlast-1 do begin
-print, i size(tvz2)
+print, i, size(tvz2)
 PRINTF,1, tnorm[i], tvz2[i], tvx2[i],FORMAT='(F9.6 , F9.6 , F9.6)'
 endfor
 CLOSE,1
