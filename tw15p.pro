@@ -197,14 +197,17 @@ endif else begin
 !p.color=0
 !p.background=255
 !p.charsize=1.8
+legchar=0.6
 ;window, xs=1100,ys=800
 ;device, Set_Resolution=[1100,800]
 if ( keyword_set(zbuf) ) then begin
 set_plot, 'z'
 device, set_resolution=[1300,1100], Decomposed=1, Set_Pixel_Depth=24
 endif else begin
+legchar=0.8
 set_plot, 'x'
 window, xs=xs, ys=ys
+legchar=0.6
 endelse
 endelse
 
@@ -420,10 +423,9 @@ cgplot,     tbx2,  /overplot, color='green' , psym=-16, linestyle=3
 cgplot,     tbz2,  /overplot, color='red'   , psym=-17, linestyle=4
 cgplot,   maxvz2,  /overplot, color='orange', psym=-18, linestyle=5
 cgplot,  maxvdiff, /overplot, color='violet', psym=-19, linestyle=1
-legchar=0.6
 
 
-al_legend, ['vix','vex', 'bx','bz','jy','vz'], PSym=[-14,-15,-16,-17,-18,-19], $
+al_legend, ['vix','vex', 'bx','bz','maxvz2','maxvdiff'], PSym=[-14,-15,-16,-17,-18,-19], $
       LineStyle=[0,2,3,4,5,1], Color=['black','red','dodger blue','green','orange','violet'], charsize=legchar, /left
 
 xyouts, 0.01,0.01,$
