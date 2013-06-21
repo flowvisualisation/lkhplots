@@ -1,5 +1,6 @@
 
-OpenDatabase("localhost:/Users/gmurphy/Documents/pluto4/PLUTO/KH/3d/data.*.vtk database", 100)
+#OpenDatabase("localhost:/Users/gmurphy/Documents/pluto4/PLUTO/KH/3d/data.*.vtk database", 100)
+OpenDatabase("localhost:./data.*.vtk database", 100)
 DefineScalarExpression("gmv1", "3D_Velocity_Field[0]")
 DefineScalarExpression("gmv2", "3D_Velocity_Field[1]")
 DefineScalarExpression("gmv3", "3D_Velocity_Field[2]")
@@ -147,9 +148,9 @@ StreamlineAtts.randomSamples = 0
 StreamlineAtts.randomSeed = 0
 StreamlineAtts.numberOfRandomSamples = 1
 StreamlineAtts.forceNodeCenteredData = 0
-StreamlineAtts.issueTerminationWarnings = 1
-StreamlineAtts.issueStiffnessWarnings = 1
-StreamlineAtts.issueCriticalPointsWarnings = 1
+StreamlineAtts.issueTerminationWarnings = 0
+StreamlineAtts.issueStiffnessWarnings = 0
+StreamlineAtts.issueCriticalPointsWarnings = 0
 StreamlineAtts.criticalPointThreshold = 0.001
 StreamlineAtts.varyTubeRadius = StreamlineAtts.None  # None, Scalar
 StreamlineAtts.varyTubeRadiusFactor = 10
@@ -171,7 +172,7 @@ AnnotationAtts.axes2D.lineWidth = 0
 AnnotationAtts.axes2D.tickLocation = AnnotationAtts.axes2D.Outside  # Inside, Outside, Both
 AnnotationAtts.axes2D.tickAxes = AnnotationAtts.axes2D.BottomLeft  # Off, Bottom, Left, BottomLeft, All
 AnnotationAtts.axes2D.xAxis.title.visible = 1
-AnnotationAtts.axes2D.xAxis.title.font.font = AnnotationAtts.axes2D.xAxis.title.font.Courier  # Arial, Courier, Times
+AnnotationAtts.axes2D.xAxis.title.font.font = AnnotationAtts.axes2D.xAxis.title.font.Times  # Arial, Courier, Times
 AnnotationAtts.axes2D.xAxis.title.font.scale = 1
 AnnotationAtts.axes2D.xAxis.title.font.useForegroundColor = 1
 AnnotationAtts.axes2D.xAxis.title.font.color = (0, 0, 0, 255)
@@ -182,7 +183,7 @@ AnnotationAtts.axes2D.xAxis.title.userUnits = 0
 AnnotationAtts.axes2D.xAxis.title.title = "X-Axis"
 AnnotationAtts.axes2D.xAxis.title.units = ""
 AnnotationAtts.axes2D.xAxis.label.visible = 1
-AnnotationAtts.axes2D.xAxis.label.font.font = AnnotationAtts.axes2D.xAxis.label.font.Courier  # Arial, Courier, Times
+AnnotationAtts.axes2D.xAxis.label.font.font = AnnotationAtts.axes2D.xAxis.label.font.Times  # Arial, Courier, Times
 AnnotationAtts.axes2D.xAxis.label.font.scale = 1
 AnnotationAtts.axes2D.xAxis.label.font.useForegroundColor = 1
 AnnotationAtts.axes2D.xAxis.label.font.color = (0, 0, 0, 255)
@@ -196,7 +197,7 @@ AnnotationAtts.axes2D.xAxis.tickMarks.minorSpacing = 0.02
 AnnotationAtts.axes2D.xAxis.tickMarks.majorSpacing = 0.2
 AnnotationAtts.axes2D.xAxis.grid = 0
 AnnotationAtts.axes2D.yAxis.title.visible = 1
-AnnotationAtts.axes2D.yAxis.title.font.font = AnnotationAtts.axes2D.yAxis.title.font.Courier  # Arial, Courier, Times
+AnnotationAtts.axes2D.yAxis.title.font.font = AnnotationAtts.axes2D.yAxis.title.font.Times  # Arial, Courier, Times
 AnnotationAtts.axes2D.yAxis.title.font.scale = 1
 AnnotationAtts.axes2D.yAxis.title.font.useForegroundColor = 1
 AnnotationAtts.axes2D.yAxis.title.font.color = (0, 0, 0, 255)
@@ -207,7 +208,7 @@ AnnotationAtts.axes2D.yAxis.title.userUnits = 0
 AnnotationAtts.axes2D.yAxis.title.title = "Y-Axis"
 AnnotationAtts.axes2D.yAxis.title.units = ""
 AnnotationAtts.axes2D.yAxis.label.visible = 1
-AnnotationAtts.axes2D.yAxis.label.font.font = AnnotationAtts.axes2D.yAxis.label.font.Courier  # Arial, Courier, Times
+AnnotationAtts.axes2D.yAxis.label.font.font = AnnotationAtts.axes2D.yAxis.label.font.Times  # Arial, Courier, Times
 AnnotationAtts.axes2D.yAxis.label.font.scale = 1
 AnnotationAtts.axes2D.yAxis.label.font.useForegroundColor = 1
 AnnotationAtts.axes2D.yAxis.label.font.color = (0, 0, 0, 255)
@@ -226,10 +227,10 @@ AnnotationAtts.axes3D.autoSetScaling = 1
 AnnotationAtts.axes3D.lineWidth = 0
 AnnotationAtts.axes3D.tickLocation = AnnotationAtts.axes3D.Inside  # Inside, Outside, Both
 AnnotationAtts.axes3D.axesType = AnnotationAtts.axes3D.ClosestTriad  # ClosestTriad, FurthestTriad, OutsideEdges, StaticTriad, StaticEdges
-AnnotationAtts.axes3D.triadFlag = 0
+AnnotationAtts.axes3D.triadFlag = 1
 AnnotationAtts.axes3D.bboxFlag = 0
 AnnotationAtts.axes3D.xAxis.title.visible = 1
-AnnotationAtts.axes3D.xAxis.title.font.font = AnnotationAtts.axes3D.xAxis.title.font.Arial  # Arial, Courier, Times
+AnnotationAtts.axes3D.xAxis.title.font.font = AnnotationAtts.axes3D.xAxis.title.font.Times  # Arial, Courier, Times
 AnnotationAtts.axes3D.xAxis.title.font.scale = 1
 AnnotationAtts.axes3D.xAxis.title.font.useForegroundColor = 1
 AnnotationAtts.axes3D.xAxis.title.font.color = (0, 0, 0, 255)
@@ -240,7 +241,7 @@ AnnotationAtts.axes3D.xAxis.title.userUnits = 0
 AnnotationAtts.axes3D.xAxis.title.title = "X-Axis"
 AnnotationAtts.axes3D.xAxis.title.units = ""
 AnnotationAtts.axes3D.xAxis.label.visible = 1
-AnnotationAtts.axes3D.xAxis.label.font.font = AnnotationAtts.axes3D.xAxis.label.font.Arial  # Arial, Courier, Times
+AnnotationAtts.axes3D.xAxis.label.font.font = AnnotationAtts.axes3D.xAxis.label.font.Times  # Arial, Courier, Times
 AnnotationAtts.axes3D.xAxis.label.font.scale = 1
 AnnotationAtts.axes3D.xAxis.label.font.useForegroundColor = 1
 AnnotationAtts.axes3D.xAxis.label.font.color = (0, 0, 0, 255)
@@ -254,7 +255,7 @@ AnnotationAtts.axes3D.xAxis.tickMarks.minorSpacing = 0.02
 AnnotationAtts.axes3D.xAxis.tickMarks.majorSpacing = 0.2
 AnnotationAtts.axes3D.xAxis.grid = 0
 AnnotationAtts.axes3D.yAxis.title.visible = 1
-AnnotationAtts.axes3D.yAxis.title.font.font = AnnotationAtts.axes3D.yAxis.title.font.Arial  # Arial, Courier, Times
+AnnotationAtts.axes3D.yAxis.title.font.font = AnnotationAtts.axes3D.yAxis.title.font.Times  # Arial, Courier, Times
 AnnotationAtts.axes3D.yAxis.title.font.scale = 1
 AnnotationAtts.axes3D.yAxis.title.font.useForegroundColor = 1
 AnnotationAtts.axes3D.yAxis.title.font.color = (0, 0, 0, 255)
@@ -265,7 +266,7 @@ AnnotationAtts.axes3D.yAxis.title.userUnits = 0
 AnnotationAtts.axes3D.yAxis.title.title = "Y-Axis"
 AnnotationAtts.axes3D.yAxis.title.units = ""
 AnnotationAtts.axes3D.yAxis.label.visible = 1
-AnnotationAtts.axes3D.yAxis.label.font.font = AnnotationAtts.axes3D.yAxis.label.font.Arial  # Arial, Courier, Times
+AnnotationAtts.axes3D.yAxis.label.font.font = AnnotationAtts.axes3D.yAxis.label.font.Times  # Arial, Courier, Times
 AnnotationAtts.axes3D.yAxis.label.font.scale = 1
 AnnotationAtts.axes3D.yAxis.label.font.useForegroundColor = 1
 AnnotationAtts.axes3D.yAxis.label.font.color = (0, 0, 0, 255)
@@ -279,7 +280,7 @@ AnnotationAtts.axes3D.yAxis.tickMarks.minorSpacing = 0.02
 AnnotationAtts.axes3D.yAxis.tickMarks.majorSpacing = 0.2
 AnnotationAtts.axes3D.yAxis.grid = 0
 AnnotationAtts.axes3D.zAxis.title.visible = 1
-AnnotationAtts.axes3D.zAxis.title.font.font = AnnotationAtts.axes3D.zAxis.title.font.Arial  # Arial, Courier, Times
+AnnotationAtts.axes3D.zAxis.title.font.font = AnnotationAtts.axes3D.zAxis.title.font.Times  # Arial, Courier, Times
 AnnotationAtts.axes3D.zAxis.title.font.scale = 1
 AnnotationAtts.axes3D.zAxis.title.font.useForegroundColor = 1
 AnnotationAtts.axes3D.zAxis.title.font.color = (0, 0, 0, 255)
@@ -290,7 +291,7 @@ AnnotationAtts.axes3D.zAxis.title.userUnits = 0
 AnnotationAtts.axes3D.zAxis.title.title = "Z-Axis"
 AnnotationAtts.axes3D.zAxis.title.units = ""
 AnnotationAtts.axes3D.zAxis.label.visible = 1
-AnnotationAtts.axes3D.zAxis.label.font.font = AnnotationAtts.axes3D.zAxis.label.font.Arial  # Arial, Courier, Times
+AnnotationAtts.axes3D.zAxis.label.font.font = AnnotationAtts.axes3D.zAxis.label.font.Times  # Arial, Courier, Times
 AnnotationAtts.axes3D.zAxis.label.font.scale = 1
 AnnotationAtts.axes3D.zAxis.label.font.useForegroundColor = 1
 AnnotationAtts.axes3D.zAxis.label.font.color = (0, 0, 0, 255)
@@ -339,7 +340,7 @@ AnnotationAtts.axesArray.autoSetTicks = 1
 AnnotationAtts.axesArray.autoSetScaling = 1
 AnnotationAtts.axesArray.lineWidth = 0
 AnnotationAtts.axesArray.axes.title.visible = 1
-AnnotationAtts.axesArray.axes.title.font.font = AnnotationAtts.axesArray.axes.title.font.Arial  # Arial, Courier, Times
+AnnotationAtts.axesArray.axes.title.font.font = AnnotationAtts.axesArray.axes.title.font.Times  # Arial, Courier, Times
 AnnotationAtts.axesArray.axes.title.font.scale = 1
 AnnotationAtts.axesArray.axes.title.font.useForegroundColor = 1
 AnnotationAtts.axesArray.axes.title.font.color = (0, 0, 0, 255)
@@ -350,7 +351,7 @@ AnnotationAtts.axesArray.axes.title.userUnits = 0
 AnnotationAtts.axesArray.axes.title.title = ""
 AnnotationAtts.axesArray.axes.title.units = ""
 AnnotationAtts.axesArray.axes.label.visible = 1
-AnnotationAtts.axesArray.axes.label.font.font = AnnotationAtts.axesArray.axes.label.font.Arial  # Arial, Courier, Times
+AnnotationAtts.axesArray.axes.label.font.font = AnnotationAtts.axesArray.axes.label.font.Times  # Arial, Courier, Times
 AnnotationAtts.axesArray.axes.label.font.scale = 1
 AnnotationAtts.axesArray.axes.label.font.useForegroundColor = 1
 AnnotationAtts.axesArray.axes.label.font.color = (0, 0, 0, 255)
@@ -426,4 +427,69 @@ ViewAxisArrayAtts.viewportCoords = (0.15, 0.9, 0.1, 0.85)
 SetViewAxisArray(ViewAxisArrayAtts)
 
 
+
+slider = CreateAnnotationObject("TimeSlider")
+print slider
+slider.visible = 1
+slider.active = 1
+slider.position = (0.4, 0.01)
+slider.width = 0.4
+slider.height = 0.05
+slider.textColor = (0, 0, 0, 255)
+slider.useForegroundForTextColor = 1
+slider.startColor = (255,0,0,255)
+slider.endColor = (255,255,0,255)
+slider.text =  "Time = %g"  
+slider.timeFormatString = "%4.1f"
+#slider.timeDisplay = TimeSliderObject.AllFrames  # AllFrames, FramesForPlot, StatesForPlot, UserSpecified
+slider.percentComplete = 0
+slider.rounded = 1
+slider.shaded = 1
 DrawPlots()
+
+
+
+im= CreateAnnotationObject("Image")          
+im.visible = 1
+im.active = 1
+im.position = (0.65, 0.88)
+im.transparencyColor = (0, 0, 0, 255)
+im.useTransparencyColor = 0
+im.width = 100
+im.height = 100
+im.maintainAspectRatio = 1
+im.image = ("~/idl/lkhplots/nbia-logo-cm.jpg")
+
+text = CreateAnnotationObject("Text2D")
+text.visible = 1
+text.active = 1
+text.position = (0.2, 0.88)
+#text.width = 0.25
+text.textColor = (0, 0, 0, 255)
+text.useForegroundForTextColor = 1
+text.text = "KH 3D PLUTO kh=0.59 kz=0.59"
+text.fontFamily = text.Times  # Arial, Courier, Times
+text.fontBold = 0
+text.fontItalic = 0
+text.fontShadow = 0
+
+
+# Step 4: Animate through time and save images
+for state in range(TimeSliderGetNStates()):
+	SetTimeSliderState(state)
+        sw = SaveWindowAttributes()
+        print state
+        sw.fileName = "%s_pseudo_stream_%04d" %("curlvz",  state)
+        dt=0.1
+        slider.text =  "Time = %g" % state
+        sw.height = 768
+        sw.stereo =0
+        sw.width = 1366
+        sw.resConstraint = sw.NoConstraint
+        sw.format = sw.JPEG
+        #sw.format = sw.TIFF
+        SetSaveWindowAttributes(sw)
+        SaveWindow()
+
+
+quit()

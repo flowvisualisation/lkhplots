@@ -414,12 +414,12 @@ endfor
 !x.range=0
 !y.range=0
 
-cgplot,  tvz2, title='Growth vs time',color='black',  /ylog, yrange=[1e-4,1e-1]
-cgplot,  tvx2, /overplot, color='blue'
-cgplot,  tbx2, /overplot, color='green'
-cgplot,  tbz2, /overplot, color='red'
-cgplot,  maxvz2, /overplot, color='orange'
-cgplot,  maxvdiff, /overplot, color='violet'
+cgplot,     tvz2, title='Growth vs time',color='black',  /ylog, yrange=[1e-4,1e-1]
+cgplot,     tvx2,  /overplot, color='blue'  , psym=-15, linestyle=2
+cgplot,     tbx2,  /overplot, color='green' , psym=-16, linestyle=3
+cgplot,     tbz2,  /overplot, color='red'   , psym=-17, linestyle=4
+cgplot,   maxvz2,  /overplot, color='orange', psym=-18, linestyle=5
+cgplot,  maxvdiff, /overplot, color='violet', psym=-19, linestyle=1
 legchar=0.6
 
 
