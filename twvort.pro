@@ -24,6 +24,8 @@ ys=800
 endelse 
 if ( keyword_set(zbuf) ) then begin
 set_plot, 'z'
+zxs=1600
+yxs=800
 device, set_resolution=[1600,800], Decomposed=1, Set_Pixel_Depth=24
 endif else begin
 set_plot, 'x'
@@ -453,7 +455,7 @@ if ( usingps ) then begin
 device,/close
 if ( keyword_set(zbuf) ) then begin
 set_plot, 'z'
-device, set_resolution=[1300,1100], Decomposed=1, Set_Pixel_Depth=24
+device, set_resolution=[zxs,zys], Decomposed=1, Set_Pixel_Depth=24
 endif else begin
 set_plot, 'x'
 endelse
