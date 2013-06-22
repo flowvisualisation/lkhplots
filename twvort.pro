@@ -25,7 +25,7 @@ endelse
 if ( keyword_set(zbuf) ) then begin
 set_plot, 'z'
 zxs=1600
-yxs=800
+zys=800
 device, set_resolution=[1600,800], Decomposed=1, Set_Pixel_Depth=24
 endif else begin
 set_plot, 'x'
