@@ -16,15 +16,15 @@ endif
 hires=1
 doxwin=1
 if ( keyword_set(lowres)) then begin
-xs=800
+xs=1600
 ys=800
 endif else begin
-xs=1300
-ys=1300
+xs=1600
+ys=800
 endelse 
 if ( keyword_set(zbuf) ) then begin
 set_plot, 'z'
-device, set_resolution=[1300,1100], Decomposed=1, Set_Pixel_Depth=24
+device, set_resolution=[1600,800], Decomposed=1, Set_Pixel_Depth=24
 endif else begin
 set_plot, 'x'
 window, xs=xs, ys=ys
@@ -191,8 +191,8 @@ device,filename=fname+'.eps',/encapsulated
 device, /color
 !p.font=0
 device, /times
-pxs=11.
-pys=12
+pxs=12.
+pys=7
 !p.charsize=1.8
 DEVICE, XSIZE=pxs, YSIZE=pys, /INCHES
 endif else begin
@@ -204,16 +204,16 @@ endif else begin
 ;device, Set_Resolution=[1100,800]
 if ( keyword_set(zbuf) ) then begin
 set_plot, 'z'
-device, set_resolution=[1300,1100], Decomposed=1, Set_Pixel_Depth=24
+;device, set_resolution=[1300,1100], Decomposed=1, Set_Pixel_Depth=24
 endif else begin
 set_plot, 'x'
-window, xs=xs, ys=ys
+;window, xs=xs, ys=ys
 endelse
 endelse
 
 ;window, xs=1100,ys=800
 dophasespace=0
-!p.multi=[0,1,1]
+!p.multi=[0,2,1]
  if ( dophasespace eq 1) then begin
 !p.multi=[0,4,4]
 endif
@@ -280,6 +280,14 @@ c=(max(bxsm-bxsm0))
 d=(max(bzsm-bzsm0))
 e=max(jy-jy0)
 f=max(vezsm-vezsm0)
+
+
+a=max(vixsm)
+b=max(vizsm)
+e=max(vexsm)
+f=max(vezsm)
+
+
 tvz2=[tvz2, a]
 tvx2=[tvx2, b]
 tbx2=[tbx2, c]
@@ -414,20 +422,24 @@ cgloadct,33
 endif
 endfor
 
-dogrowth=0
+dogrowth=1
 if ( dogrowth eq 1) then begin
 
 !x.range=0
 !y.range=0
-cgplot,  tvz2, title='Growth vs time',color='black',  /ylog, yrange=[1e-4,1e-1]
-cgplot,  tvx2, /overplot, color='blue'
-cgplot,  tbx2, /overplot, color='green'
-cgplot,  tbz2, /overplot, color='red'
-cgplot,  maxvz2, /overplot, color='orange'
-cgplot,  maxvdiff, /overplot, color='violet'
 
-al_legend, ['vix','vex', 'bx','bz','jy','vz'], PSym=[-14,-15,-16,-17,-18,-19], $
-      LineStyle=[0,2,3,4,5,1], Color=['black','red','dodger blue','green','orange','violet'], charsize=legchar, /left
+
+cgplot,     tvz2, title='Growth vs time',color='black', psym=-14, /ylog, yrange=[1e-4,1e-0]
+cgplot,     tvx2,  /overplot, color='blue'  , psym=-15, linestyle=2
+cgplot,     tbx2,  /overplot, color='green' , psym=-16, linestyle=3
+cgplot,     tbz2,  /overplot, color='red'   , psym=-17, linestyle=4
+cgplot,   maxvz2,  /overplot, color='orange', psym=-18, linestyle=5
+cgplot,  maxvdiff, /overplot, color='violet', psym=-19, linestyle=1
+
+
+al_legend, ['ViX','ViZ', 'bx','bz','VeX','VeZ'], PSym=[-14,-15,-16,-17,-18,-19], $
+      LineStyle=[0,2,3,4,5,1], Color=['black','blue','green','red','orange','violet'], charsize=legchar, /left
+
 
 xyouts, 0.01,0.01,$
    mesg, /normal, charsize=2

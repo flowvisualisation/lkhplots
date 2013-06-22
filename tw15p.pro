@@ -2,7 +2,7 @@
 ; uses cgimage to plot photonplasma datafiles
 ; for comparison with the Pessah 2010 paper
 ;
-pro tw15p, nobackground=nobackground, big_endian=big_endian, lowres=lowres, zbuf=zbuf
+pro tw15p, nobackground=nobackground, big_endian=big_endian, lowres=lowres, zbuf=zbuf, maxnum=maxnum
 background=0
 if (keyword_set(nobackground) )then begin
 background=1
@@ -48,6 +48,12 @@ nstart=1
 endif
 nstep=1
 endelse
+
+if (keyword_set(maxnum) ) then begin
+nend=1
+endif
+
+
 t=findgen(1)
 if( nend gt 0) then begin
 t=findgen(nend)
@@ -204,9 +210,9 @@ if ( keyword_set(zbuf) ) then begin
 set_plot, 'z'
 device, set_resolution=[1300,1100], Decomposed=1, Set_Pixel_Depth=24
 endif else begin
-legchar=0.8
+legchar=1.1
 set_plot, 'x'
-window, xs=xs, ys=ys
+;window, xs=xs, ys=ys
 legchar=0.6
 endelse
 endelse
@@ -277,11 +283,16 @@ vortelec=applyfilt(vortelec,filter)
 
 
 a=(max(vexsm-vexsm0))
-b=(max(vixsm-vixsm0))
+b=(max(vezsm-vezsm0))
 c=(max(bxsm-bxsm0))
 d=(max(bzsm-bzsm0))
-e=max(jy-jy0)
-f=max(vezsm-vezsm0)
+;e=max(jy-jy0)
+;f=max(vezsm-vezsm0)
+a=max(vixsm)
+b=max(vizsm)
+e=max(vexsm)
+f=max(vezsm)
+print, 'maxvx', e, 'maxvz',f
 tvz2=[tvz2, a]
 tvx2=[tvx2, b]
 tbx2=[tbx2, c]
@@ -417,7 +428,7 @@ endfor
 !x.range=0
 !y.range=0
 
-cgplot,     tvz2, title='Growth vs time',color='black',  /ylog, yrange=[1e-4,1e-1]
+cgplot,     tvz2, title='Growth vs time',color='black',  /ylog, yrange=[1e-4,1e-0]
 cgplot,     tvx2,  /overplot, color='blue'  , psym=-15, linestyle=2
 cgplot,     tbx2,  /overplot, color='green' , psym=-16, linestyle=3
 cgplot,     tbz2,  /overplot, color='red'   , psym=-17, linestyle=4
@@ -425,8 +436,8 @@ cgplot,   maxvz2,  /overplot, color='orange', psym=-18, linestyle=5
 cgplot,  maxvdiff, /overplot, color='violet', psym=-19, linestyle=1
 
 
-al_legend, ['vix','vex', 'bx','bz','maxvz2','maxvdiff'], PSym=[-14,-15,-16,-17,-18,-19], $
-      LineStyle=[0,2,3,4,5,1], Color=['black','red','dodger blue','green','orange','violet'], charsize=legchar, /left
+al_legend, ['ViX','ViZ', 'bx','bz','VeX','VeZ'], PSym=[-14,-15,-16,-17,-18,-19], $
+      LineStyle=[0,2,3,4,5,1], Color=['black','blue','green','red','orange','violet'], charsize=legchar, /left
 
 xyouts, 0.01,0.01,$
    mesg, /normal, charsize=2
