@@ -1,5 +1,8 @@
 
-for nfile=1,nlast do begin
+nbeg=100
+nend=nbeg+10
+
+for nfile=nbeg,nend,10 do begin
 pload,nfile
 
 vx=vx1
@@ -62,7 +65,9 @@ pos=[0.1,0.1,0.9,0.9]
 ;cgimage, vpx,  background='white', scale=1
 ;cgimage, vpy,  background='white', scale=1
 ;cgimage, vpz,  background='white', scale=1
-cgimage, vorty[0:nx-4,0:ny-1],  background='white', scale=1, pos=pos
+data=vorty[0:nx-4,0:ny-1]
+cgimage,data, background='white', scale=1, pos=pos
+cgcontour, data, /nodata, /overplot, pos=pos
 cvx= vpx[0:nx-4,0:ny-1]
 cvy=vpz[0:nx-4,0:ny-1] 
 cvx2=congrid(vpx,13,17)
