@@ -1,5 +1,5 @@
 
-pro plot9 , ax,ay,az
+pro plot9 , ax,ay,az, tag
 nx=10
 var=ptrarr(9)
 titlstr=strarr(9,30)
@@ -15,15 +15,18 @@ var[6]=ptr_new(reform(ax[slicex,*,*]))
 var[7]=ptr_new(reform(ay[slicex,*,*]))
 var[8]=ptr_new(reform(az[slicex,*,*]))
 
-titlstr[0]="Ax(x,y)"
-titlstr[1]="Atheta(x,y)"
-titlstr[2]="Az(x,y)"
-titlstr[3]="Ax(x,z)"
-titlstr[4]="Atheta(x,z)"
-titlstr[5]="Az(x,z)"
-titlstr[6]="Ax(y,z)"
-titlstr[7]="Atheta(y,z)"
-titlstr[8]="Az(y,z)"
+
+titlstr[0]=tag+"x(x,y)"
+titlstr[1]=tag+"theta(x,y)"
+titlstr[2]=tag+"z(x,y)"
+titlstr[3]=tag+"x(x,z)"
+titlstr[4]=tag+"theta(x,z)"
+titlstr[5]=tag+"z(x,z)"
+titlstr[6]=tag+"x(y,z)"
+titlstr[7]=tag+"theta(y,z)"
+titlstr[8]=tag+"z(y,z)"
+
+
 window, xs=800,ys=800
 !p.multi=[0,3,3]
 !p.position=0
