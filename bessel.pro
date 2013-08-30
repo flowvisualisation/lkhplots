@@ -22,7 +22,7 @@ az=fltarr(nx,ny,nz)
 
 help,ar
 
-pitchangle=0.2
+pitchangle=0.01
 for i=0,nx-1 do begin
 for j=0,ny-1 do begin
 for k=0,nz-1 do begin
@@ -34,34 +34,43 @@ z=zz[i,j,k]
 thet=theta[i,j,k]  
 nka=scrh*a
 nkr=scrh*rr[i,j,k]
-phi=0.45
+phi=0.25
 if (r lt a) then begin
 KnkaInkrplus1=beselk(nka,n+1)*beseli(nkr,n+1)
-ar[i,j,k] += (beselk(nka,n+1)*beseli(nkr,n+1)-beselk(nka,n-1)*beseli(nkr,n-1))
-atheta[i,j,k] += (beselk(nka,n+1)*beseli(nkr,n+1)+beselk(nka,n-1)*beseli(nkr,n-1))
-az[i,j,k] += (beselk(nka,n)*beseli(nkr,n))
+ar[i,j,k] -= (beselk(nka,n+1)*beseli(nkr,n+1)-beselk(nka,n-1)*beseli(nkr,n-1))*sin ( n*( thet -phi - pitchangle*z) )
+atheta[i,j,k] += (beselk(nka,n+1)*beseli(nkr,n+1)+beselk(nka,n-1)*beseli(nkr,n-1))*cos ( n*( thet -phi - pitchangle*z) )
+az[i,j,k] += (beselk(nka,n)*beseli(nkr,n))*cos ( n*( thet -phi - pitchangle*z) )
 endif else begin
-ar[i,j,k] += (beseli(nka,n+1)*beselk(nkr,n+1)-beseli(nka,n-1)*beselk(nkr,n-1))
-ar[i,j,k] += (beseli(nka,n+1)*beselk(nkr,n+1)+beseli(nka,n-1)*beselk(nkr,n-1))
-az[i,j,k] += (beseli(nka,n+1)*beselk(nkr,n+1))
+ar[i,j,k] -= (beseli(nka,n+1)*beselk(nkr,n+1)-beseli(nka,n-1)*beselk(nkr,n-1))*sin ( n*( thet -phi - pitchangle*z) )
+atheta[i,j,k] += (beseli(nka,n+1)*beselk(nkr,n+1)+beseli(nka,n-1)*beselk(nkr,n-1))*cos ( n*( thet -phi - pitchangle*z) )
+az[i,j,k] += (beseli(nka,n)*beselk(nkr,n))*cos ( n*( thet -phi - pitchangle*z) )
 endelse
- ar[i,j,k]= pitchangle*n*ar[i,j,k]*sin ( n*( thet -phi - pitchangle*z) )
- az[i,j,k]= ar[i,j,k]*cos ( n*( thet -phi - pitchangle*z) )
 ;print, i,j,k
 endfor
- atheta[i,j,k] +=  rr[i,j,k]
+if (r lt a) then begin
+ ar[i,j,k]     *=  pitchangle*a
+ atheta[i,j,k] *=  pitchangle*a
+ atheta[i,j,k] +=  pitchangle*rr[i,j,k]
+ az[i,j,k]     -=  alog (a)
+endif else begin
+ ar[i,j,k]     *=  pitchangle*a
+ atheta[i,j,k] *=  pitchangle*a
+ atheta[i,j,k] +=  pitchangle/rr[i,j,k]*a*a
+ az[i,j,k]     -=  alog (r)
+endelse
 
 endfor
 endfor
 endfor
 
-plot9, ar,atheta,az
 
 ax=ar*cos(theta) -sin(theta) *atheta
 ay=ar*sin(theta) +cos(theta) *atheta
 
 curl, ax,ay,ax, bx,by,bz
 
+plot9, ar,atheta,az
+;plot9,  bx,by,bz
 j=1
 ;------------------------------------------------------------------------
 ;f = rf(j,datadir='./')      ; change directory if needed
