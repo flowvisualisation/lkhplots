@@ -1,5 +1,5 @@
 
-pro plot9 , ax,ay,az, tag
+pro plot9 , ax,ay,az, tag, num
 nx=10
 var=ptrarr(9)
 titlstr=strarr(9,30)
@@ -27,18 +27,26 @@ titlstr[7]=tag+"theta(y,z)"
 titlstr[8]=tag+"z(y,z)"
 
 
-window, xs=800,ys=800
 !p.multi=[0,3,3]
 !p.position=0
 !p.charsize=2
 cgloadct,33
 for i=0,8 do begin
+rd= *var(i)
 rr= scale_vector (*var(i),1,255)
 sz=size(rr, /dimensions)
 dummyarr=findgen( sz)
-pos=[0.1,0.1,0.9,.9]
+pos=[0.1,0.2,0.9,.9]
 cgimage,rr, pos=pos
+imin=min(rd)
+imax=max(rd)
 cgcontour, dummyarr, /noerase, pos=pos, /nodata, title=titlstr(i)
+cbarchar=2.
+if (abs( imin - imax) gt  1e-8 ) then begin
+cgcolorbar, Position=[pos[0], pos[1]-0.04, pos[2], pos[1]-0.03], range=[imin,imax], format='(F8.5)', charsize=cbarchar
+endif
 endfor
+fname=tag+string(num, format='(I04)')
+im=cgsnapshot(filename=fname, /jpeg, /nodialog)
 !p.multi=0
 end

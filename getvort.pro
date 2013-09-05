@@ -11,7 +11,7 @@ dvec2dx=vec2
 
 for i=0,nx-1 do begin
    a=reform(vec1(i,*))
-;help, dvec1dy(i,*), a,dx2
+;help, dvec1dy(i,*), a,x2
    dvec1dy(i,*)=deriv(x2,a)
 endfor
 for j=0,ny-1 do begin
