@@ -11,7 +11,7 @@ CASE x OF
    ELSE: PRINT, 'Not one through four'
 ENDCASE
 
-nbeg=20
+nbeg=11
 nend=nbeg
 angles=findgen(7)*15*!dtor
 ;projangle=29*!pi/30.
@@ -68,19 +68,28 @@ endfor
 
 ;
 
-nslice=fix(sqrt(nx^2+nz^2))+50
+nslice=fix(sqrt(nx^2+ny^2))
+nslice2=nz
 
 plane_normal=[ 1./sqrt(2) ,-1./sqrt(2) , 0.]
 xvec        =[ 1./sqrt(2) , 1./sqrt(2) , 0.]
 plane_normal=[-sin(projangle),  cos(projangle) , 0.]
 xvec        =[ cos(projangle),  sin(projangle) ,  0.]
-vxsl = EXTRACT_SLICE(vx, nslice, nslice,nx/2-.5, ny/2-.5, nz/2-.5,  plane_normal, xvec, OUT_VAL=0B, /radians)
-vysl = EXTRACT_SLICE(vy, nslice, nslice,nx/2-.5, ny/2-.5, nz/2-.5,   plane_normal, xvec, OUT_VAL=0B, /radians)
-vzsl = EXTRACT_SLICE(vz, nslice, nslice,nx/2-.5, ny/2-.5, nz/2-.5,   plane_normal, xvec, OUT_VAL=0B, /radians)
+vxsl = EXTRACT_SLICE(vx, nslice, nslice2,nx/2-.5, ny/2-.5, nz/2-.5,  plane_normal, xvec, OUT_VAL=0B, /radians)
+vysl = EXTRACT_SLICE(vy, nslice, nslice2,nx/2-.5, ny/2-.5, nz/2-.5,   plane_normal, xvec, OUT_VAL=0B, /radians)
+vzsl = EXTRACT_SLICE(vz, nslice, nslice2,nx/2-.5, ny/2-.5, nz/2-.5,   plane_normal, xvec, OUT_VAL=0B, /radians)
 
 ;vxsl=congrid(vxsl,128,128, /cubic)
 ;vysl=congrid(vysl,128,128, /cubic)
 ;vzsl=congrid(vzsl,128,128, /cubic)
+
+; subtract background
+backgroundshear1=total(vysl,2)
+backgroundshear=rebin(reform(backgroundshear1,nslice,1),nslice,nslice2 )/nslice2
+vysl=vysl-backgroundshear
+window,4 
+;display, backgroundshear, ims=4
+cgplot, backgroundshear1
 
 cgloadct,33
 ;cgimage, vxsl
@@ -105,14 +114,15 @@ vpz=vzsl
 
 ;vortz=getvort(vpx,vpy,xx,xx,nx,nx)
 xslice=findgen(nslice)
-vorty=getvort(vpx,vpz,xslice,xslice,nslice,nslice)
+xslice2=findgen(nslice2)
+vorty=getvort(vpx,vpz,xslice,xslice2,nslice,nslice2)
 !p.position=0
 pos=[0.1,0.1,0.9,0.9]
 
-xbeg=nslice/2-64
+xbeg=nslice/2-64 	
 xend=nslice/2+64
-ybeg=nslice/2-30 ;+angleno/3
-yend=nslice/2+30 ;+angleno/3
+ybeg=nslice2/2-30 ;+angleno/3
+yend=nslice2/2+30 ;+angleno/3
 data=vorty[xbeg:xend,ybeg:yend]
 
 datptr=ptrarr(4)
@@ -153,8 +163,6 @@ endfor
 cgcontour, data, /nodata, /overplot
 cvx=vpx[xbeg:xend,ybeg:yend]
 cvy=vpz[xbeg:xend,ybeg:yend]
-;cvx=vxsl[nslice/2-64:nslice/2+64,nslice/2-30:nslice/2+30]
-;cvy=vzsl[nslice/2-64:nslice/2+64,nslice/2-30:nslice/2+30]
 
 qx=25
 qz=26
@@ -185,6 +193,11 @@ for j=1,ll-lnt do zero=zero+'0'
 im=cgsnapshot(filename=fname, /nodialog, /jpeg)
 
 endfor
+
+window, 7
+cgplot, backgroundshear1
+
+
 endfor
 !p.position=0
 !p.multi=0
