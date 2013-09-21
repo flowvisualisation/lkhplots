@@ -84,7 +84,7 @@ vzsl = EXTRACT_SLICE(vz, nslice, nslice2,nx/2-.5, ny/2-.5, nz/2-.5,   plane_norm
 ; subtract background
 backgroundshear1=total(vysl,2)
 backgroundshear=rebin(reform(backgroundshear1,nslice,1),nslice,nslice2 )/nslice2
-vysl=vysl-backgroundshear
+;vysl=vysl-backgroundshear
 ;window,4 
 ;display, backgroundshear, ims=4
 ;cgplot, backgroundshear1
@@ -116,7 +116,7 @@ print, 'max back1', max(backgroundmri1)
 backgroundmri=rebin(reform(backgroundmri1,nslice2,1),nslice2,nslice )
 backgroundmri=transpose(backgroundmri)
 print, 'max back', max(backgroundmri)
-vpx=vpx-backgroundmri
+;vpx=vpx-backgroundmri
 
 ;vortz=getvort(vpx,vpy,xx,xx,nx,nx)
 xslice=findgen(nslice)
@@ -182,10 +182,13 @@ cz=congrid(zz,qz)
 ;!p.multi=0
 ;window, 2
 cgimage,data, background='white',  pos=pos
+imin=min(data)
+imax=max(data)
+cgcolorbar, Position=[pos[0], pos[1]-0.05, pos[2], pos[1]-0.04], range=[imin,imax], format='(G8.1)', charsize=cbarchar
 tag=string ( projangle*!radeg, format='(I02)')
 cgcontour, data,xx,yy,/nodata,  /noerase, pos=pos, axiscolor=cgcolor('black'), $
 	 ;title="Vorticity orthogonal to h , with velocity vectors", $
-	 title="angle"+tag, $
+	 title="angle= "+tag+" max(v)"+string(imax), $
 	 xtitle="h, angle="+tag, $
 	 ytitle="z"
 velovect, cvx2,cvz2, cx,cz, /noerase, color=cgcolor('white'), thick=1.5 , len=2.5 , pos=pos
