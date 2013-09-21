@@ -1,6 +1,9 @@
 SetWindowLayout(9)
 import math
-OpenDatabase("mri3d.vtk")
+#OpenDatabase("mri3d.vtk")
+OpenDatabase("localhost:./data.*.vtk database", 0)
+DefineScalarExpression("v0", "0*(3D_Velocity_Field[1])")
+OpenDatabase("localhost:./data.*.vtk database", 2)
 
 pi=3.141592
 theta=-pi/4.0
@@ -14,12 +17,19 @@ DefineScalarExpression("x", "coord(mesh)[0]")
 DefineScalarExpression("y", "coord(mesh)[1]")
 DefineScalarExpression("z", "coord(mesh)[2]")
 DefineVectorExpression("velocity", "{u,v,w}")
-DefineScalarExpression("vshear", "x")
+DefineScalarExpression("sbq", "1.5")
+DefineScalarExpression("sbomega", "1e-3")
+DefineScalarExpression("sba", "-0.5*sbq*sbomega")
+DefineScalarExpression("vsh", "2.0*sba")
+DefineScalarExpression("vshear", "vsh*x")
 DefineScalarExpression("vmri", "sin(pi*z)")
 # simulation initial condition variables
 DefineScalarExpression("u", "sin(pi*z)")
 DefineScalarExpression("v", "sin(pi*z)")
 DefineScalarExpression("w", "sin(pi*x)+sin(pi*y)")
+DefineScalarExpression("u", "3D_Velocity_Field[0]")
+DefineScalarExpression("v", "(3D_Velocity_Field[1]-vshear)")
+DefineScalarExpression("w", "3D_Velocity_Field[2]")
 # test variables
 #DefineScalarExpression("u", "-cos(pi*z)*sin(pi*x)")
 #DefineScalarExpression("v", "0*sin(pi*z)*cos(pi*x)")
@@ -114,6 +124,7 @@ AddOperator("Slice", 1)
 SetOperatorOptions(SliceAtts, 1)
 DrawPlots()
 ToggleLockViewMode()
+ToggleLockTime()
 
 SetActiveWindow(2)
 text = CreateAnnotationObject("Text2D")
@@ -141,6 +152,7 @@ SliceAtts.project2d = 0
 SetOperatorOptions(SliceAtts, 1)
 DrawPlots()
 ToggleLockViewMode()
+ToggleLockTime()
 
 SetActiveWindow(3)
 text = CreateAnnotationObject("Text2D")
@@ -168,6 +180,7 @@ SliceAtts.project2d = 0
 SetOperatorOptions(SliceAtts, 1)
 DrawPlots()
 ToggleLockViewMode()
+ToggleLockTime()
 
 SetActiveWindow(4)
 text = CreateAnnotationObject("Text2D")
@@ -195,6 +208,7 @@ SliceAtts.project2d = 0
 SetOperatorOptions(SliceAtts, 1)
 DrawPlots()
 ToggleLockViewMode()
+ToggleLockTime()
 
 SetActiveWindow(5)
 text = CreateAnnotationObject("Text2D")
@@ -254,6 +268,7 @@ SetPlotOptions(VectorAtts)
 DrawPlots()
 DrawPlots()
 ToggleLockViewMode()
+ToggleLockTime()
 
 SetActiveWindow(6)
 text = CreateAnnotationObject("Text2D")
@@ -281,6 +296,7 @@ SliceAtts.project2d = 0
 SetOperatorOptions(SliceAtts, 1)
 DrawPlots()
 ToggleLockViewMode()
+ToggleLockTime()
 
 
 SetActiveWindow(7)
@@ -302,9 +318,14 @@ AnnotationAtts.userInfoFlag = 0
 SetAnnotationAttributes(AnnotationAtts)
 AddPlot("Vector", "kh", 1, 1)
 VectorAtts.glyphLocation = VectorAtts.UniformInSpace  # AdaptsToMeshResolution, UniformInSpace
+VectorAtts.nVectors = 20
+VectorAtts.scale = 2
+VectorAtts.lineWidth = 3
+VectorAtts.headSize = 0.1
 SetPlotOptions(VectorAtts)
 DrawPlots()
 ToggleLockViewMode()
+ToggleLockTime()
 
 
 SetActiveWindow(8)
@@ -333,6 +354,7 @@ SliceAtts.project2d = 0
 SetOperatorOptions(SliceAtts, 1)
 DrawPlots()
 ToggleLockViewMode()
+ToggleLockTime()
 
 AddPlot("Vector", "velproj", 1, 1)
 VectorAtts = VectorAttributes()
@@ -363,6 +385,7 @@ VectorAtts.geometryQuality = VectorAtts.Fast  # Fast, High
 VectorAtts.stemWidth = 0.08
 VectorAtts.origOnly = 1
 VectorAtts.glyphType = VectorAtts.Arrow  # Arrow, Ellipsoid
+VectorAtts.nVectors = 400
 SetPlotOptions(VectorAtts)
 #AddOperator("Slice", 1)
 DrawPlots()
@@ -387,9 +410,14 @@ AnnotationAtts.userInfoFlag = 0
 SetAnnotationAttributes(AnnotationAtts)
 AddPlot("Vector", "kperp", 1, 1)
 VectorAtts.glyphLocation = VectorAtts.UniformInSpace  # AdaptsToMeshResolution, UniformInSpace
+VectorAtts.nVectors = 20
+VectorAtts.scale = 2
+VectorAtts.lineWidth = 3
+VectorAtts.headSize = 0.1
 SetPlotOptions(VectorAtts)
 DrawPlots()
 ToggleLockViewMode()
+ToggleLockTime()
 
 
 

@@ -27,6 +27,8 @@ titlstr[7]=tag+"theta(y,z)"
 titlstr[8]=tag+"z(y,z)"
 
 
+  !X.OMargin = [2, 6]
+   !Y.OMargin = [2, 6]
 !p.multi=[0,3,3]
 !p.position=0
 !p.charsize=2
@@ -43,10 +45,17 @@ imax=max(rd)
 cgcontour, dummyarr, /noerase, pos=pos, /nodata, title=titlstr(i)
 cbarchar=2.
 if (abs( imin - imax) gt  1e-8 ) then begin
-cgcolorbar, Position=[pos[0], pos[1]-0.04, pos[2], pos[1]-0.03], range=[imin,imax], format='(F8.5)', charsize=cbarchar
+cgcolorbar, Position=[pos[0], pos[1]-0.04, pos[2], pos[1]-0.03], range=[imin,imax], format='(G8.2)', charsize=cbarchar
 endif
 endfor
+  cgText, 0.5, 0.95, ALIGNMENT=0.5, CHARSIZE=2.25, /NORMAL, $
+      tag, color='black'
+
 fname=tag+string(num, format='(I04)')
 im=cgsnapshot(filename=fname, /jpeg, /nodialog)
 !p.multi=0
+
+
+  !Y.OMargin = [0, 0]
+   !X.OMargin = [0, 0]
 end
