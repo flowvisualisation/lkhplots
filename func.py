@@ -95,6 +95,10 @@ def func (theta,state, unused2):
 	DefineScalarExpression("u", "3D_Velocity_Field[0]-vmri")
 	DefineScalarExpression("v", "(3D_Velocity_Field[1]-vshear)")
 	DefineScalarExpression("w", "3D_Velocity_Field[2]")
+	DefineScalarExpression("bx", "3D_Magnetic_Field[0]")
+	DefineScalarExpression("by", "3D_Magnetic_Field[1])")
+	DefineScalarExpression("bz", "3D_Magnetic_Field[2]")
+	DefineVectorExpression("b", "3D_Magnetic_Field")
 	# test variables
 	#DefineScalarExpression("u", "-cos(pi*z)*sin(pi*x)")
 	#DefineScalarExpression("v", "0*sin(pi*z)*cos(pi*x)")
