@@ -142,6 +142,12 @@ if (doloop == 1):
 			sw=SaveWindowAttributes()
 			sw.saveTiled=1
 			sw.progressive=1
+			sw.family = 0
+			sw.width = 1024
+			sw.height = 768
+			sw.resConstraint = saveatts.NoConstraint
+			sw.outputToCurrentDirectory = 1
+			sw.fileName = 'result-susceptibility.png'
 			SetSaveWindowAttributes(sw)
 			SaveWindow()
 
