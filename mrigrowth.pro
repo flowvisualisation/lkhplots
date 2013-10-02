@@ -41,10 +41,14 @@ betap=2*max(pr0)/max(bx3^2)
 tag=' , growth='+string(growth, format='(F6.4)') +' , beta='+string(betap, format='(F9.3)')
 print, tag
 cgplot, tnorm, bnorm,  $
-	title="b2"+tag, $
-	xtitle="Time, (orbits)", xrange=[0,14], /ylog, xstyle=1
-cgplot, t2 , linearfit , /overplot
+	title="bnorm"+tag, $
+	xtitle="Time, (orbits)", xrange=[0,14], /ylog, xstyle=1, color='blue'
+cgplot, t2 , linearfit , /overplot, color='red'
 cgplot, qt1 , qq1 , /overplot, psym=1
+items=['bnorm', 'fit', 'point']
+linestyles=[0,2,3]
+colors=['red', 'blue', 'green']
+al_legend, items, colors=colors, linestyle=linestyles
 ;cgplot, tnorm, abs(alpha), /ylog, title="alpha",xtitle="Time, (orbits)"
 ;cgplot, tnorm, abs(bxby), /ylog, title="bxby",xtitle="Time, (orbits)"
 ;cgplot, tnorm, abs(rhou),/ylog, title="rho ux",xtitle="Time, (orbits)"
