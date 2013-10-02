@@ -37,8 +37,8 @@ t2=tnorm(*)+tdrag
 pload,0, /silent
 cs=1.e-3
 pr0=rho*(cs)^2
-betap=2*pr0/max(bx3^2)
-tag=' , growth='+string(growth, format='(F6.4)') +' , bmax='+string(max(bx3), format='(F8.6)')
+betap=2*max(pr0)/max(bx3^2)
+tag=' , growth='+string(growth, format='(F6.4)') +' , beta='+string(betap, format='(F9.3)')
 print, tag
 cgplot, tnorm, bnorm,  $
 	title="b2"+tag, $
@@ -58,7 +58,7 @@ print, 'fastest Lz/2', 2*!PI*sqrt(16./15.)* max(va)/omega/2.
 lz=(x3[nx3-1] - x3[0])+dx3[0]
 print, 'lz' ,lz 
 print, 'lz/2' , lz/2
-print, 'dx1', dx1[0],'dx2', dx2[0],'dx3', dx3[0]
+print, 'dx1=', dx1[0],' , dx2= ', dx2[0],' , dx3= ', dx3[0]
 
 
 bpref=omega *sqrt(15./16.)/2/!PI*lz *sqrt(max(rho))
