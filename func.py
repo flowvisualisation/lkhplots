@@ -7,8 +7,8 @@ import math
 #OpenDatabase("mri3d.vtk")
 OpenDatabase("localhost:./data.*.vtk database", 0)
 
-pi=3.141592
-theta=-pi/4.0
+pi=math.pi
+theta=-math.pi/4.0
 sliceq1 = math.cos(theta)
 sliceq2 = math.sin(theta)
 DefineScalarExpression("pi", "3.141592")
@@ -191,8 +191,8 @@ incdeg=-math.pi/16.0
 unused1=0
 unused2=0
 
-#for state in range(TimeSliderGetNStates()):
-for state in range(0,1):
+#for state in range(0,17):
+for state in range(TimeSliderGetNStates()):
 	SetTimeSliderState(state)
 	DeleteAllPlots()
 	SetWindowLayout(9)
@@ -221,5 +221,4 @@ for state in range(0,1):
 	sw.progressive=1
 	SetSaveWindowAttributes(sw)
 	SaveWindow()
-	ClearAllWindows()
 
