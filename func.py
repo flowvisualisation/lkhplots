@@ -5,7 +5,7 @@ num=3
 
 import math
 #OpenDatabase("mri3d.vtk")
-OpenDatabase("localhost:./data.*.vtk database", 9)
+OpenDatabase("localhost:./data.*.vtk database", 0)
 
 pi=3.141592
 theta=-pi/4.0
@@ -192,7 +192,7 @@ unused1=0
 unused2=0
 
 #for state in range(TimeSliderGetNStates()):
-for state in range(11,17):
+for state in range(0,1):
 	SetTimeSliderState(state)
 	DeleteAllPlots()
 	SetWindowLayout(9)
