@@ -17,8 +17,9 @@ linearfit =InitialAmplitude*exp(growth*tnorm)
 
 i1=105
 i2=115
-qxq=where( bnorm gt 1e-3) 
-qxq2=where( linearfit gt 1e-3) 
+samplepoint=1e-3
+qxq=where( bnorm gt samplepoint) 
+qxq2=where( linearfit gt samplepoint) 
 
 tdrag=tnorm[qxq(0)]- tnorm[qxq2(0)]
 print,'tdrag', tdrag
@@ -40,15 +41,16 @@ pr0=rho*(cs)^2
 betap=2*max(pr0)/max(bx3^2)
 tag=' , growth='+string(growth, format='(F6.4)') +' , beta='+string(betap, format='(F9.3)')
 print, tag
+items=['bnorm', 'analytical, 0.75', 'point']
+linestyles=[0,2,3]
+psym=[0,0,1]
+colors=['red', 'blue', 'green']
 cgplot, tnorm, bnorm,  $
 	title="bnorm"+tag, $
-	xtitle="Time, (orbits)", xrange=[0,14], /ylog, xstyle=1, color='blue'
-cgplot, t2 , linearfit , /overplot, color='red'
-cgplot, qt1 , qq1 , /overplot, psym=1
-items=['bnorm', 'fit', 'point']
-linestyles=[0,2,3]
-colors=['red', 'blue', 'green']
-al_legend, items, colors=colors, linestyle=linestyles
+	xtitle="Time, (orbits)", xrange=[tdrag-1,tdrag+5], /ylog, xstyle=1, color=colors[0]
+cgplot, t2 , linearfit , /overplot, color=colors[1], linestyle=linestyles[1]
+cgplot, qt1 , qq1 , /overplot,  color=colors[2], psym=psym[2]
+al_legend, items, colors=colors, linestyle=linestyles, psym=psym
 ;cgplot, tnorm, abs(alpha), /ylog, title="alpha",xtitle="Time, (orbits)"
 ;cgplot, tnorm, abs(bxby), /ylog, title="bxby",xtitle="Time, (orbits)"
 ;cgplot, tnorm, abs(rhou),/ylog, title="rho ux",xtitle="Time, (orbits)"
