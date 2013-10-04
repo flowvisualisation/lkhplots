@@ -1,6 +1,6 @@
 
 
-readcol, "averages.dat", t,dt, b2, bxby, rhou, alpha, bz2,by2,bx2
+readcol, "averages.dat", t,dt, b2, bxby, rhou, alpha, bz2,by2,bx22
 
 omega=1e-3
 tnorm=t*omega
