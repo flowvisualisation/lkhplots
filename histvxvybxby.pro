@@ -1,6 +1,6 @@
 
 window, xs=1200, ys=1200
-for i=0,20 do begin
+for i=0,nlast do begin
 pload,i, /silent
 sbq=1.5
 sbomega=1e-3
@@ -21,8 +21,8 @@ vec1=bx1
 vec2=bx2
 qtag='histvxvybxby'
 
-a=reform(vec1, 128L*128L*64L)
-b=reform(vec2, 128L*128L*64L)
+a=reform(vec1, long(nx1)*long(nx2)*long(nx3))
+b=reform(vec2, long(nx1)*long(nx2)*long(nx3))
 mn1a=min(vec1)
 mx1a=max(vec1)
 mn2a=min(vec2)
@@ -33,8 +33,8 @@ bn2a=(mx2a-mn2a)/(nsize)
 
 vec1=vx1
 vec2=vx2-vshear
-c=reform(vec1, 128L*128L*64L)
-d=reform(vec2, 128L*128L*64L)
+c=reform(vec1, long(nx1)*long(nx2)*long(nx3)) 
+d=reform(vec2, long(nx1)*long(nx2)*long(nx3))
 
 
 mn1=double(-6e-7)	

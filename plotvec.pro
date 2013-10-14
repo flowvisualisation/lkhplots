@@ -1,5 +1,5 @@
 
-pro plotvec, v1arr,v2arr,v3arr,b1arr,b2arr,b3arr, tnorm
+pro plotvec, v1arr,v2arr,v3arr,b1arr,b2arr,b3arr, b3totarr, tnorm
 
 fname="growthrates"
 for usingps=0,1 do begin
@@ -69,6 +69,7 @@ cgplot, tnorm, v1arr,  $
 	cgplot, tnorm, b1arr, /overplot, color=colors[3], linestyle=linestyles[3]
 	cgplot, tnorm, b2arr, /overplot, color=colors[4], linestyle=linestyles[4]
 	cgplot, tnorm, b3arr, /overplot, color=colors[5], linestyle=linestyles[5]
+	cgplot, tnorm, b3totarr, /overplot, color=colors[5], linestyle=linestyles[5]
 
 	
 	cgplot, tnorm, 0.2*exp(0.75*tnorm), /overplot, color=colors[6], linestyle=linestyles[6]

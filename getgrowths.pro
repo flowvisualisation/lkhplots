@@ -1,4 +1,5 @@
 
+nend=15
 pload,0
 
 sbq=1.5
@@ -20,6 +21,7 @@ v3arr=fltarr(1)
 b1arr=fltarr(1)
 b2arr=fltarr(1)
 b3arr=fltarr(1)
+b3totarr=fltarr(1)
 thetabarr=fltarr(1)
 thetavarr=fltarr(1)
 
@@ -29,6 +31,7 @@ v3arr(0)=total(abs(vx3))
 b1arr(0)=total(abs(bx1))
 b2arr(0)=total(abs(bx2))
 b3arr(0)=total(abs(bx3-bconst))
+b3totarr(0)=total(abs(bx3))
 thetab=atan(bx1/(bx2))*!radeg
 thetav=atan(vx1/(vx2-vshear))*!radeg
 thetabarr(0)=max(thetab, /absolute)
@@ -38,7 +41,7 @@ thetav=atan(vx1,(vx2-vshear))*!radeg
 thetabarr(0)=max(thetab, /absolute)
 thetavarr(0)=max(thetav, /absolute)
 
-for i=1,nlast do begin
+for i=1,nend do begin
 pload,i
 
 v1tot=total(abs(vx1))
@@ -47,6 +50,7 @@ v3tot=total(abs(vx3))
 b1tot=total(abs(bx1))
 b2tot=total(abs(bx2))
 b3tot=total(abs(bx3-bconst))
+b3tottot=total(abs(bx3))
 
 ;thetab=atan(bx1/(bx2))*!radeg
 ;thetav=atan(vx1/(vx2-vshear))*!radeg
@@ -61,6 +65,7 @@ v3arr=[v3arr,v3tot]
 b1arr=[b1arr,b1tot]
 b2arr=[b2arr,b2tot]
 b3arr=[b3arr,b3tot]
+b3totarr=[b3totarr,b3tottot]
 thetabarr=[thetabarr,thetabmax]
 thetavarr=[thetavarr,thetavmax]
 
@@ -71,7 +76,7 @@ endfor
 omega=1e-3
 tnorm=t*omega
 
- plotvec, v1arr,v2arr,v3arr,b1arr,b2arr,b3arr, tnorm
+ plotvec, v1arr,v2arr,v3arr,b1arr,b2arr,b3arr, b3totarr, tnorm[0:nend]
 
 
 growtharr=[  [ v1arr] , [ v2arr] , [ v3arr] , [ b2arr] , [ b2arr] , [ b3arr]  , [tnorm] ]

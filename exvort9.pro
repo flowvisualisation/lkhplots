@@ -1,5 +1,4 @@
-
-pro exvort9, nfile, vx1,vx2,vx3, rho, prs, t , nlast, nx1,nx2,nx3,x1,x2,x3, background, dx1,dx2, vorty, vpx, backgroundmri
+pro exvort9, nfile, vx1,vx2,vx3, rho, prs, t , nlast, nx1,nx2,nx3,x1,x2,x3, dx1,dx2, vorty, vpx,vpz, vmri, vshear, vx,vy,vz, vxsl, vysl
 x=2
  
 omega=1e-3
@@ -34,11 +33,29 @@ zz=x3
 nx=nx1
 ny=nx2
 nz=nx3
+
+sbq=1.5
+sbomega=1e-3
+sba=-0.5*sbq*sbomega
+vsh=2*sba
+eps=1e-3
+lx=2.0
+
+xx3d=rebin(reform(x1,nx1,  1,  1),nx1,nx2,nx3) 
+yy3d=rebin(reform(x2,  1,nx2,  1),nx1,nx2,nx3) 
+zz3d=rebin(reform(x3,  1,  1,nx3),nx1,nx2,nx3) 
+vshear=vsh*xx3d
+scrh=lx*sbomega*eps/8.0
+vmri=scrh*sin(2*!PI*zz3d)*exp(0.74975229*nfile)
 ;; calc vorticity, x,y,z
 ;vortz=getvort(vx,vy,xx,yy,nx,ny)
 ;vorty=getvort(vx,vz,xx,zz,nx,nz)
 ;vortx1getvort(vy,vz,yy,zz,ny,nz)
 
+vx=vx-vmri
+vy=vy-vshear-vmri
+;vx=vx;-vmri
+;vy=vy;-vshear-vmri
 ;; extract slices
 
 
@@ -82,8 +99,8 @@ vzsl = EXTRACT_SLICE(vz, nslice, nslice2,nx/2-.5, ny/2-.5, nz/2-.5,   plane_norm
 ;vzsl=congrid(vzsl,128,128, /cubic)
 
 ; subtract background
-backgroundshear1=total(vysl,2)
-backgroundshear=rebin(reform(backgroundshear1,nslice,1),nslice,nslice2 )/nslice2
+;backgroundshear1=total(vysl,2)
+;backgroundshear=rebin(reform(backgroundshear1,nslice,1),nslice,nslice2 )/nslice2
 ;vysl=vysl-backgroundshear
 ;window,4 
 ;display, backgroundshear, ims=4
@@ -117,6 +134,7 @@ backgroundmri=rebin(reform(backgroundmri1,nslice2,1),nslice2,nslice )
 backgroundmri=transpose(backgroundmri)
 print, 'max back', max(backgroundmri)
 ;vpx=vpx-backgroundmri
+;vpy=vpy-backgroundmri
 
 ;vortz=getvort(vpx,vpy,xx,xx,nx,nx)
 xslice=findgen(nslice)
@@ -206,10 +224,10 @@ endfor
 ;window, 7
 ;cgplot, backgroundshear1
 
-
-endfor
    cgText, 0.5, 0.95, ALIGNMENT=0.5, CHARSIZE=2.25, /NORMAL, $
       'Vorticity with velocity vectors'+', t='+string(t(nfile)*omega, format='(F5.1)')+' orbits', color='black'
+
+endfor
 im=cgsnapshot(filename=fname, /nodialog, /jpeg)
 !p.position=0
 !p.multi=0
