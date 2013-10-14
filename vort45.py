@@ -7,10 +7,10 @@ import math
 #OpenDatabase("mri3d.vtk")
 OpenDatabase("localhost:./data.*.vtk database", 9)
 
-theta=-math.pi/4.0
+theta= math.pi/4.0
 sliceq1 = math.cos(theta)
 sliceq2 = math.sin(theta)
-DefineScalarExpression("pi", "3.141592741012573242187500")
+DefineScalarExpression("pi", "3.14159265")
 DefineScalarExpression("theta", "pi/4.0")
 
 
@@ -45,8 +45,10 @@ theta=0.0
 thetastr="0.0"
 titlestr = "vx"
 def func (theta,state, unused2):
+	import math
+	pi=math.pi
 	thetastr=str(theta)
-	thetaanglestr=str(theta*180/math.pi)
+	thetaanglestr=str(theta*180/pi)
 	titlestr="Vorticity Projected (h,z) , angle="+thetaanglestr[0:6]+", t=$cycle orbits"
 	text = CreateAnnotationObject("Text2D")
 	text.visible = 1
@@ -64,11 +66,10 @@ def func (theta,state, unused2):
 	AnnotationAtts.userInfoFlag = 0
 	SetAnnotationAttributes(AnnotationAtts)
 	sliceq1 = math.sin(theta)
-	sliceq2 = math.cos(theta)
+	sliceq2 = -math.cos(theta)
 	DefineScalarExpression("x", "coord(mesh)[0]")
 	DefineScalarExpression("y", "coord(mesh)[1]")
 	DefineScalarExpression("z", "coord(mesh)[2]")
-	DefineVectorExpression("velocity", "{u,v,w}")
 	DefineScalarExpression("sbq", "1.5")
 	DefineScalarExpression("sbomega", "1e-3")
 	DefineScalarExpression("sba", "-0.5*sbq*sbomega")
@@ -83,17 +84,21 @@ def func (theta,state, unused2):
 	amparr[11]=0.0002354
 	amparr[12]=0.0004782
 	print "state", state
-	ampdef=math.exp(.75*state)*5.444e-5/math.exp(0.75*9)
+	ampdef=math.exp(.75*state)*1.122e-6/math.exp(0.75*2)
+	lx=2.0
+	eps=1e-3
+	scrh=lx*eps*sbomega/8.0
+	ampdef=math.exp(.75*state)*scrh
 	DefineScalarExpression("amp",str(ampdef) )
 	#DefineScalarExpression("amp","0.001138" )
 	DefineScalarExpression("amp2", "0.0004670")
-	DefineScalarExpression("vmri", "amp*sin(2*pi*z/0.8)")
-	DefineScalarExpression("vmri2", "amp2*sin(2*pi*z/0.8)")
+	DefineScalarExpression("vmri", "amp*sin(2*pi*z)")
 	# simulation variables
 	DefineScalarExpression("ufull", "3D_Velocity_Field[0]")
 	DefineScalarExpression("u", "3D_Velocity_Field[0]-vmri")
-	DefineScalarExpression("v", "(3D_Velocity_Field[1]-vshear)")
+	DefineScalarExpression("v", "(3D_Velocity_Field[1]-vshear-vmri)")
 	DefineScalarExpression("w", "3D_Velocity_Field[2]")
+	DefineVectorExpression("velocity", "{u,v,w}")
 	DefineScalarExpression("bx", "3D_Magnetic_Field[0]")
 	DefineScalarExpression("by", "3D_Magnetic_Field[1])")
 	DefineScalarExpression("bz", "3D_Magnetic_Field[2]")
@@ -136,7 +141,7 @@ def func (theta,state, unused2):
 	SliceAtts.normal = (sliceq1,sliceq2 , 0)
 	SliceAtts.axisType = SliceAtts.Arbitrary  # XAxis, YAxis, ZAxis, Arbitrary, ThetaPhi
 	SliceAtts.upAxis = (0, 0, 1)
-	SliceAtts.project2d = 1
+	SliceAtts.project2d = 0
 	SliceAtts.interactive = 1
 	SliceAtts.flip = 0
 	SliceAtts.originZoneDomain = 0
@@ -190,34 +195,10 @@ incdeg=-math.pi/16.0
 unused1=0
 unused2=0
 
+import math
 #for state in range(TimeSliderGetNStates()):
-for state in range(1,2):
+for state in range(0,1):
 	SetTimeSliderState(state)
 	DeleteAllPlots()
-	SetWindowLayout(9)
-	for ywin in range(0,3):
-		for xwin in range(0,3):
-			win=xwin+1+(num)*(ywin+0)
-			print win
-			MoveWindow(win,400+xwin*(xsize),ywin*ysize)
-			ResizeWindow(win, xsize, ysize)
-	#AddOperator("Slice", 1)
-	for i in range(0,9):
-		SetActiveWindow(i+1)
-		theta=i*incdeg
-		func (theta,state, unused2)
-	showufull=0
-	if showufull == 1:
-		SetActiveWindow(2)
-		AddPlot("Pseudocolor", "vmri" )
-		DrawPlots()
-		SetActiveWindow(3)
-		AddPlot("Pseudocolor", "ufull" )
-		DrawPlots()
-		#SaveWindow()
-	sw=SaveWindowAttributes()
-	sw.saveTiled=1
-	sw.progressive=1
-	SetSaveWindowAttributes(sw)
-	SaveWindow()
-
+	theta=math.pi/4.
+	func (theta,state, unused2)
