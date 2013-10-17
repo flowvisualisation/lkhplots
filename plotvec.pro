@@ -1,7 +1,27 @@
 
 pro plotvec, v1arr,v2arr,v3arr,b1arr,b2arr,b3arr, b3totarr, tnorm
 
-fname="growthrates"
+
+CD, CURRENT=str & PRINT, str
+dirpath=STRSPLIT(Str,'/',  /EXTRACT) 
+ dirname=dirpath(size(dirpath, /dimensions)-1)
+
+
+ titlstr='?D MRI + PI ?'
+CASE dirname OF
+   '2d_mri_pi_kx_ll_ky'	: titlstr='2D MRI + PI k!Dx!N << k!Dy!N'
+	'2d_mri_pi_ky_0'		: titlstr='2D MRI + PI k!Dy!N = 0 '
+	'3d_mri_pi_kx_ky'		: titlstr='3D MRI + PI k!Dx!N = k!Dy!N'
+	'3d_mri_pi_ky_0'		: titlstr='3D MRI + PI k!Dy!N = 0'
+	'3d_mri_wn_pi_wn'		: titlstr='3D MRI!DWN!N + PI !DWN!N =0 '
+	'3d_mri_pi_wn'		: titlstr='3D MRI + PI k!DWN!N =0 '
+   ELSE: PRINT, 'Not one through four'
+   ELSE: PRINT, 'Not one through four'
+ENDCASE
+
+
+
+fname="growthrates"+dirname
 for usingps=0,1 do begin
 if ( usingps ) then begin
 set_plot,'ps'
@@ -58,7 +78,7 @@ b2growthrate=(alog(b2arr[q2]) - alog(b2arr[q1]))/(tnorm[q2]-tnorm[q1])
 
 cgplot, tnorm, v1arr,  $
 		/ylog, yrange=[1e-4,1e4], $
-		title=string(b1growthrate),$
+		title=titlstr +' , growth rate= ' + string(b1growthrate, format='(F8.5)'),$
 		xtitle="Time, t [orbits]",$
 		xstyle=1, $
 		color=colors[0], linestyle=linestyles[0]
