@@ -1,5 +1,5 @@
 
-nend=nlast
+nend=14
 pload,0, /silent
 
 sbq=1.5
@@ -76,7 +76,7 @@ endfor
 omega=1e-3
 tnorm=t*omega
 
- plotvec, v1arr,v2arr,v3arr,b1arr,b2arr,b3arr, b3totarr, tnorm
+ plotvec, v1arr,v2arr,v3arr,b1arr,b2arr,b3arr, b3totarr, tnorm[0:nend-1]
 
 
 growtharr=[  [ v1arr] , [ v2arr] , [ v3arr] , [ b2arr] , [ b2arr] , [ b3arr]  , [tnorm] ]
