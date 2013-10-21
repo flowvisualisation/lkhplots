@@ -25,9 +25,9 @@ projangle=angles[angleno]
 for nfile=nbeg,nend,1 do begin
 pload,nfile, /silent
 
-vx=vx1
-vy=vx2
-vz=vx3
+vx=bx1
+vy=bx2
+vz=bx3
 xx=x1
 yy=x2
 zz=x3
@@ -48,14 +48,18 @@ zz3d=rebin(reform(x3,  1,  1,nx3),nx1,nx2,nx3)
 vshear=vsh*xx3d
 scrh=lx*sbomega*eps/8.0
 vmri=scrh*sin(2*!PI*zz3d)*exp(0.74975229*nfile)
-vmri=max(vx)*sin(2*!PI*zz3d)
+bmri2=  sqrt(5./3.)*scrh*cos(2*!PI*zz3d)*exp(0.74975229*nfile)
+bmri1= -sqrt(5./3.)*scrh*cos(2*!PI*zz3d)*exp(0.74975229*nfile)
+bmri2=  max(vx)*cos(2*!PI*zz3d)
+bmri1=  max(vy)*cos(2*!PI*zz3d)
 ;; calc vorticity, x,y,z
 ;vortz=getvort(vx,vy,xx,yy,nx,ny)
 ;vorty=getvort(vx,vz,xx,zz,nx,nz)
 ;vortx1getvort(vy,vz,yy,zz,ny,nz)
 
-vx=vx -vmri
-vy=vy-vshear -vmri
+vx=vx-bmri2
+vy=vy-bmri1
+vz=vz-0.00015410111
 ;vx=vx;-vmri
 ;vy=vy;-vshear-vmri
 ;; extract slices
@@ -218,10 +222,10 @@ zero=''
 nts=strcompress(string(nfile),/remove_all)
 lnt=strlen(nts)
 for j=1,ll-lnt do zero=zero+'0'
-           fname='vorticity'+tag+"_"+zero+nts
+           fname='current'+tag+"_"+zero+nts
 
    cgText, 0.5, 0.95, ALIGNMENT=0.5, CHARSIZE=2.25, /NORMAL, $
-      'Vorticity with velocity vectors'+', t='+string(t(nfile)*omega, format='(F5.1)')+' orbits', color='black'
+      'Current with magnetic field lines'+', t='+string(t(nfile)*omega, format='(F5.1)')+' orbits', color='black'
 
 im=cgsnapshot(filename=fname, /nodialog, /jpeg)
 endfor
@@ -235,4 +239,5 @@ endfor
 
   !Y.OMargin = [0, 0]
    !X.OMargin = [0, 0]
+	cgloadct,33
 end

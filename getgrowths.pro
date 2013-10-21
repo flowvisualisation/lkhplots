@@ -1,6 +1,6 @@
 
 nend=nlast
-pload,0
+pload,0, /silent
 
 sbq=1.5
 sbomega=1e-3
@@ -42,7 +42,7 @@ thetabarr(0)=max(thetab, /absolute)
 thetavarr(0)=max(thetav, /absolute)
 
 for i=1,nend do begin
-pload,i
+pload,i, /silent
 
 v1tot=total(abs(vx1))
 v2tot=total(abs(vx2-vshear))
