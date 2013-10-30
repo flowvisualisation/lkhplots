@@ -32,16 +32,10 @@ window, 0, xs=1700, ys=900
 nbeg=1
 nend=8
 angles=findgen(7)*15*!dtor
-;projangle=29*!pi/30.
-;projangle=5*!pi/12.
-;projangle=!pi/3.
-;projangle=!pi/4.
-;projangle=!pi/6.
-;projangle=!pi/12.
-;projangle=!pi/30.
 
-angleno=0
+angleno=4
 projangle=angles[angleno]
+projangle=!PI/2.
 for nfile=nbeg,nend,1 do begin
 pload,nfile, /silent
 
@@ -117,13 +111,13 @@ plane_normal=[ 1./sqrt(2) ,-1./sqrt(2) , 0.]
 xvec        =[ 1./sqrt(2) , 1./sqrt(2) , 0.]
 plane_normal=[-sin(projangle),  cos(projangle) , 0.]
 xvec        =[ cos(projangle),  sin(projangle) ,  0.]
-;vxsl = EXTRACT_SLICE(vx, nslice, nslice2,nx/2-.5, ny/2-.5, nz/2-.5,  plane_normal, xvec, OUT_VAL=0B, /radians)
-;vysl = EXTRACT_SLICE(vy, nslice, nslice2,nx/2-.5, ny/2-.5, nz/2-.5,   plane_normal, xvec, OUT_VAL=0B, /radians)
-;vzsl = EXTRACT_SLICE(vz, nslice, nslice2,nx/2-.5, ny/2-.5, nz/2-.5,   plane_normal, xvec, OUT_VAL=0B, /radians)
+vxsl = EXTRACT_SLICE(vx, nslice, nslice2,nx/2-.5, ny/2-.5, nz/2-.5,  plane_normal, xvec, OUT_VAL=0B, /radians)
+vysl = EXTRACT_SLICE(vy, nslice, nslice2,nx/2-.5, ny/2-.5, nz/2-.5,   plane_normal, xvec, OUT_VAL=0B, /radians)
+vzsl = EXTRACT_SLICE(vz, nslice, nslice2,nx/2-.5, ny/2-.5, nz/2-.5,   plane_normal, xvec, OUT_VAL=0B, /radians)
 
-vxsl=reform(vx(*,4,*))
-vysl=reform(vy(*,4,*))
-vzsl=reform(vz(*,4,*))
+;vxsl=reform(vx(*,4,*))
+;vysl=reform(vy(*,4,*))
+;vzsl=reform(vz(*,4,*))
 
 ;vxsl=congrid(vxsl,128,128, /cubic)
 ;vysl=congrid(vysl,128,128, /cubic)
@@ -153,8 +147,10 @@ unitvec1(*,*)=cos( projangle)
 unitvec2(*,*)=sin( projangle)
 unitvec3(*,*)=cos( projangle)
 
-vpx=vxsl ;*unitvec1 + vysl*unitvec2
-vpy=vxsl ;*unitvec2 - vysl*unitvec1
+vpx=vxsl
+vpy=vysl
+;vpx=vxsl*unitvec1 + vysl*unitvec2
+;vpy=vxsl*unitvec2 - vysl*unitvec1
 vpz=vzsl
 
 mvpx=max(vpx)
