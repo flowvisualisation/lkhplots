@@ -42,9 +42,9 @@ nstart=nend
 nstep=1
 endif else begin
 nend=400
-nstart=1
+nstart=0
 if ( background eq 1) then begin
-nstart=1
+nstart=0
 endif
 nstep=1
 endelse
@@ -377,7 +377,7 @@ for i=0,13 do begin
    pos = [0.02, 0.35, 0.98, 0.91]
 localimagecopy=reform(*var(i))
  cgIMAGE, localimagecopy, POSITION=pos, /KEEP_ASPECT_RATIO ,background='white', scale=1
- cgcontour, localimagecopy, xx,yy,POSITION=pos, /NOERASE, XSTYLE=1, $
+ cgcontour, xx#yy, xx,yy,POSITION=pos, /NOERASE, XSTYLE=1, $
       YSTYLE=1,  NLEVELS=10, /nodata, title=titlstr(i), $
        axiscolor='black',$
       xtitle='x ', ytitle='y'
