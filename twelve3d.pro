@@ -61,7 +61,7 @@ tvimage, r, /overplot
 
 
 
-qsm=200
+qsm=1
 vixsm=smooth(vix,qsm,/edge_wrap)
 vizsm=smooth(viz,qsm,/edge_wrap)
 var= 0.5*(shift(vixsm,0,-1)-shift(vixsm,0,1) ) - 0.5*(shift(vizsm,-1,0) - shift(vizsm,1,0))
@@ -77,7 +77,6 @@ r=scale_vector(vex,0,255)
 contour, vex, xx,yy,/nodata, title='V!Delec, X!N'
 tvimage, r, /overplot
 
-qsm=200
 vexsm=smooth(vex,qsm,/edge_wrap)
 vezsm=smooth(vez,qsm,/edge_wrap)
 var= 0.5*(shift(vexsm,0,-1)-shift(vexsm,0,1) ) - 0.5*(shift(vezsm,-1,0) - shift(vezsm,1,0))

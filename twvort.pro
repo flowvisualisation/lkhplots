@@ -19,8 +19,8 @@ if ( keyword_set(lowres)) then begin
 xs=1600
 ys=800
 endif else begin
-xs=1600
-ys=800
+xs=1700
+ys=600
 endelse 
 if ( keyword_set(zbuf) ) then begin
 set_plot, 'z'
@@ -44,7 +44,7 @@ nstart=nend
 nstep=1
 endif else begin
 nend=400
-nstart=1
+nstart=0
 if ( background eq 1) then begin
 nstart=1
 endif
@@ -119,12 +119,13 @@ totalelecke0=total(vex0^2+vez0^2)
 totalionke0=total(vix0^2+viz0^2)
 totalb0=total(bx0^2+bz0^2)
 totalen=totalb0+totalelecke0+totalionke0
-tvz2=fltarr(1)
-tvx2=fltarr(1)
+simtime=fltarr(1)
+tvix2=fltarr(1)
+tviz2=fltarr(1)
+tvex2=fltarr(1)
+tvez2=fltarr(1)
 tbx2=fltarr(1)
 tbz2=fltarr(1)
-maxvz2=fltarr(1)
-maxvdiff=fltarr(1)
 
 for nfile=nstart,nend,nstep do begin
 print, ' nfile= ' , nfile
@@ -151,6 +152,7 @@ endif
 f=rf(nfile) ELSE $
 f=rf(nfile, /swap_endian)
 ;p=rp(nfile, /wrap)
+simtime1=f.s.time
 
 !p.position=0
 ;nx = f.s.gn[0]
@@ -288,14 +290,16 @@ a=max(vixsm)
 b=max(vizsm)
 e=max(vexsm)
 f=max(vezsm)
+g=simtime1
 
 
-tvz2=[tvz2, a]
-tvx2=[tvx2, b]
+tvix2=[tvix2, a]
+tviz2=[tviz2, b]
 tbx2=[tbx2, c]
 tbz2=[tbz2, d]
-maxvz2=[maxvz2, e]
-maxvdiff=[maxvdiff, f]
+tvex2=[tvex2, e]
+tvez2=[tvez2, f]
+simtime=[simtime, g]
 print, a,b,c,d,e,f
 
 
@@ -374,10 +378,10 @@ endfor
  cgLoadCT, 33, CLIP=[5, 245]
 
 for i=2,2 do begin
-   pos = [0.02, 0.05, 0.98, 0.91]
+   pos = [0.07, 0.05, 0.98, 0.91]
 localimagecopy=reform(*var(i))
  cgIMAGE, localimagecopy, POSITION=pos, /KEEP_ASPECT_RATIO ,background='white', scale=1
- cgcontour, localimagecopy, xx,yy,POSITION=pos, /NOERASE, XSTYLE=1, $
+ cgcontour, xx#yy, xx,yy,POSITION=pos, /NOERASE, XSTYLE=1, $
       YSTYLE=1,  NLEVELS=10, /nodata, title=titlstr(i), $
        axiscolor='black',$
       xtitle='x ', ytitle='y'
@@ -431,16 +435,16 @@ if ( dogrowth eq 1) then begin
 !y.range=0
 
 
-cgplot,     tvz2, title='Growth vs time',color='black', psym=-14, /ylog, yrange=[1e-4,1e-0]
-cgplot,     tvx2,  /overplot, color='blue'  , psym=-15, linestyle=2
-cgplot,     tbx2,  /overplot, color='green' , psym=-16, linestyle=3
-cgplot,     tbz2,  /overplot, color='red'   , psym=-17, linestyle=4
-cgplot,   maxvz2,  /overplot, color='orange', psym=-18, linestyle=5
-cgplot,  maxvdiff, /overplot, color='violet', psym=-19, linestyle=1
+cgplot,simtime,     tvix2, title='Growth vs time',color='black', psym=-14, /ylog, yrange=[1e-3,1e0]
+cgplot,simtime,     tvex2,  /overplot, color='blue'  , psym=-15, linestyle=2
+cgplot,simtime,     tviz2,  /overplot, color='green' , psym=-16, linestyle=3
+cgplot,simtime,    tvez2,  /overplot, color='red'   , psym=-17, linestyle=4
+cgplot,simtime,     tbx2,  /overplot, color='orange', psym=-18, linestyle=5
+cgplot,simtime,     tbz2, /overplot, color='violet', psym=-19, linestyle=1
 
 
-al_legend, ['ViX','ViZ', 'bx','bz','VeX','VeZ'], PSym=[-14,-15,-16,-17,-18,-19], $
-      LineStyle=[0,2,3,4,5,1], Color=['black','blue','green','red','orange','violet'], charsize=legchar, /left
+al_legend, ['ViX','VeX', 'ViZ','VeZ','bx','bz'], PSym=[-14,-15,-16,-17,-18,-19], $
+      LineStyle=[0,2,3,4,5,1], Color=['black','blue','green','red','orange','violet'], charsize=legchar, /left, /bottom
 
 
 xyouts, 0.01,0.01,$
