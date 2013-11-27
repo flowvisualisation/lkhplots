@@ -1,5 +1,5 @@
 
-nend=14
+nend=nlast
 pload,0, /silent
 
 sbq=1.5
