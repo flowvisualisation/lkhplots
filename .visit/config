@@ -1,0 +1,642 @@
+<?xml version="1.0"?>
+<Object name="VisIt">
+    <Field name="Version" type="string">1.12.0</Field>
+    <Object name="VIEWER">
+        <Object name="DEFAULT_VALUES">
+            <Object name="GlobalAttributes">
+                <Field name="applyOperator" type="bool">false</Field>
+            </Object>
+            <Object name="SaveWindowAttributes">
+                <Field name="lastRealFilename" type="string">visit0002.tif</Field>
+            </Object>
+            <Object name="ColorTableAttributes">
+                <Field name="activeContinuous" type="string">hot</Field>
+                <Field name="activeDiscrete" type="string">levels</Field>
+                <Object name="table00">
+                    <Field name="ctName" type="string">amino_rasmol</Field>
+                    <Field name="equal" type="bool">true</Field>
+                    <Field name="smooth" type="bool">false</Field>
+                    <Field name="discrete" type="bool">true</Field>
+                    <Field name="controlPts" type="floatVector">0 189 159 109 0.009 199 199 199 0.019 255 105 180 0.028 230 230 0 0.037 230 9 9 0.046 230 9 9 0.056 49 49 170 0.065 235 235 235 0.074 130 130 210 0.083 15 130 15 0.093 19 90 255 0.102 15 130 15 0.111 230 230 0 0.12 0 220 220 0.13 220 149 130 0.139 0 220 220 0.148 19 90 255 0.157 249 149 0 0.167 249 149 0 0.176 15 130 15 0.185 180 90 180 0.194 49 49 170 0.204 255 105 180 </Field>
+                </Object>
+                <Object name="table01">
+                    <Field name="ctName" type="string">amino_shapely</Field>
+                    <Field name="equal" type="bool">true</Field>
+                    <Field name="smooth" type="bool">false</Field>
+                    <Field name="discrete" type="bool">true</Field>
+                    <Field name="controlPts" type="floatVector">0 255 0 255 0.009 139 255 139 0.019 255 0 255 0.028 255 255 111 0.037 159 0 66 0.046 102 0 0 0.056 82 75 82 0.065 255 255 255 0.074 111 111 255 0.083 0 75 0 0.093 70 70 184 0.102 69 94 69 0.111 184 159 66 0.12 255 123 111 0.13 82 82 82 0.139 255 75 75 0.148 0 0 123 0.157 255 111 66 0.167 184 75 0 0.176 255 139 255 0.185 79 70 0 0.194 139 111 75 0.204 255 0 255 </Field>
+                </Object>
+                <Object name="table02">
+                    <Field name="ctName" type="string">bluehot</Field>
+                    <Field name="controlPts" type="floatVector">0 0 0 0 0.333 0 0 127 0.666 0 127 255 1 255 255 255 </Field>
+                </Object>
+                <Object name="table03">
+                    <Field name="ctName" type="string">caleblack</Field>
+                    <Field name="controlPts" type="floatVector">0 0 0 0 0.17 0 0 255 0.34 0 255 255 0.5 0 255 0 0.67 255 255 0 0.84 255 0 0 1 255 0 255 </Field>
+                </Object>
+                <Object name="table04">
+                    <Field name="ctName" type="string">calewhite</Field>
+                    <Field name="controlPts" type="floatVector">0 255 255 255 0.17 0 0 255 0.34 0 255 255 0.5 0 255 0 0.67 255 255 0 0.84 255 0 0 1 255 0 255 </Field>
+                </Object>
+                <Object name="table05">
+                    <Field name="ctName" type="string">contoured</Field>
+                    <Field name="equal" type="bool">true</Field>
+                    <Field name="smooth" type="bool">false</Field>
+                    <Field name="controlPts" type="floatVector">0 0 0 255 0.333 0 255 0 0.666 255 255 0 1 255 0 0 </Field>
+                </Object>
+                <Object name="table06">
+                    <Field name="ctName" type="string">cpk_jmol</Field>
+                    <Field name="equal" type="bool">true</Field>
+                    <Field name="smooth" type="bool">false</Field>
+                    <Field name="discrete" type="bool">true</Field>
+                    <Field name="controlPts" type="floatVector">0 255 255 255 0.009 217 255 255 0.019 204 128 255 0.028 194 255 0 0.037 255 181 181 0.046 144 144 144 0.056 47 80 248 0.065 255 13 13 0.074 144 223 80 0.083 179 226 245 0.093 171 92 241 0.102 137 255 0 0.111 190 166 166 0.12 239 199 159 0.13 255 128 0 0.139 255 255 47 0.148 31 239 31 0.157 128 209 226 0.167 143 64 211 0.176 60 255 0 0.185 230 230 230 0.194 190 194 198 0.204 166 166 171 0.213 137 153 198 0.222 156 121 198 0.231 223 102 51 0.241 239 144 159 0.25 80 208 80 0.259 199 128 51 0.269 124 128 175 0.278 194 143 143 0.287 102 143 143 0.296 188 128 226 0.306 255 160 0 0.315 166 41 41 0.324 92 184 209 0.333 111 45 175 0.343 0 255 0 0.352 147 255 255 0.361 147 223 223 0.37 115 194 200 0.38 83 181 181 0.389 58 158 158 0.398 35 143 143 0.407 9 124 139 0.417 0 105 133 0.426 192 192 192 0.435 255 217 143 0.444 166 117 115 0.454 102 128 128 0.463 158 98 181 0.472 211 121 0 0.481 147 0 147 0.491 66 158 175 0.5 86 22 143 0.509 0 200 0 0.519 111 211 255 0.528 255 255 198 0.537 217 255 198 0.546 198 255 198 0.556 162 255 198 0.565 143 255 198 0.574 96 255 198 0.583 69 255 198 0.593 47 255 198 0.602 31 255 198 0.611 0 255 156 0.62 0 230 117 0.63 0 211 82 0.639 0 190 56 0.648 0 171 35 0.657 77 194 255 0.667 77 166 255 0.676 32 147 213 0.685 37 124 171 0.694 37 102 149 0.704 22 83 134 0.713 208 208 223 0.722 255 209 34 0.731 184 184 208 0.741 166 83 77 0.75 86 88 96 0.759 158 79 181 0.769 171 92 0 0.778 117 79 69 0.787 66 130 149 0.796 66 0 102 0.806 0 124 0 0.815 111 171 249 0.824 0 185 255 0.833 0 160 255 0.843 0 143 255 0.852 0 128 255 0.861 0 107 255 0.87 83 92 241 0.88 120 92 226 0.889 137 79 226 0.898 160 54 211 0.907 179 31 211 0.917 179 31 185 0.926 179 13 166 0.935 188 13 134 0.944 198 0 102 0.954 204 0 88 0.963 209 0 79 0.972 217 0 69 0.981 223 0 56 0.991 230 0 45 1 235 0 37 </Field>
+                </Object>
+                <Object name="table07">
+                    <Field name="ctName" type="string">cpk_rasmol</Field>
+                    <Field name="equal" type="bool">true</Field>
+                    <Field name="smooth" type="bool">false</Field>
+                    <Field name="discrete" type="bool">true</Field>
+                    <Field name="controlPts" type="floatVector">0 255 255 255 0.009 255 192 202 0.019 177 33 33 0.028 255 19 146 0.037 0 255 0 0.046 199 199 199 0.056 143 143 255 0.065 239 0 0 0.074 218 164 31 0.083 255 19 146 0.093 0 0 255 0.102 33 138 33 0.111 128 128 144 0.12 218 164 31 0.13 255 164 0 0.139 255 199 49 0.148 0 255 0 0.157 255 19 146 0.167 255 19 146 0.176 128 128 144 0.185 255 19 146 0.194 128 128 144 0.204 255 19 146 0.213 128 128 144 0.222 128 128 144 0.231 255 164 0 0.241 255 19 146 0.25 164 42 42 0.259 164 42 42 0.269 164 42 42 0.278 255 19 146 0.287 255 19 146 0.296 255 19 146 0.306 255 19 146 0.315 164 42 42 0.324 255 19 146 0.333 255 19 146 0.343 255 19 146 0.352 255 19 146 0.361 255 19 146 0.37 255 19 146 0.38 255 19 146 0.389 255 19 146 0.398 255 19 146 0.407 255 19 146 0.417 255 19 146 0.426 128 128 144 0.435 255 19 146 0.444 255 19 146 0.454 255 19 146 0.463 255 19 146 0.472 255 19 146 0.481 159 31 239 0.491 255 19 146 0.5 255 19 146 0.509 255 164 0 0.519 255 19 146 0.528 255 19 146 0.537 255 19 146 0.546 255 19 146 0.556 255 19 146 0.565 255 19 146 0.574 255 19 146 0.583 255 19 146 0.593 255 19 146 0.602 255 19 146 0.611 255 19 146 0.62 255 19 146 0.63 255 19 146 0.639 255 19 146 0.648 255 19 146 0.657 255 19 146 0.667 255 19 146 0.676 255 19 146 0.685 255 19 146 0.694 255 19 146 0.704 255 19 146 0.713 255 19 146 0.722 218 164 31 0.731 255 19 146 0.741 255 19 146 0.75 255 19 146 0.759 255 19 146 0.769 255 19 146 0.778 255 19 146 0.787 255 19 146 0.796 255 19 146 0.806 255 19 146 0.815 255 19 146 0.824 255 19 146 0.833 255 19 146 0.843 255 19 146 0.852 255 19 146 0.861 255 19 146 0.87 255 19 146 0.88 255 19 146 0.889 255 19 146 0.898 255 19 146 0.907 255 19 146 0.917 255 19 146 0.926 255 19 146 0.935 255 19 146 0.944 255 19 146 0.954 255 19 146 0.963 255 19 146 0.972 255 19 146 0.981 255 19 146 0.991 255 19 146 1 255 19 146 </Field>
+                </Object>
+                <Object name="table08">
+                    <Field name="ctName" type="string">difference</Field>
+                    <Field name="controlPts" type="floatVector">0 0 0 255 0.5 255 255 255 1 255 0 0 </Field>
+                </Object>
+                <Object name="table09">
+                    <Field name="ctName" type="string">gray</Field>
+                    <Field name="controlPts" type="floatVector">0 0 0 0 1 255 255 255 </Field>
+                </Object>
+                <Object name="table10">
+                    <Field name="ctName" type="string">hot</Field>
+                    <Field name="controlPts" type="floatVector">0 0 0 255 0.25 0 255 255 0.5 0 255 0 0.75 255 255 0 1 255 0 0 </Field>
+                </Object>
+                <Object name="table11">
+                    <Field name="ctName" type="string">hot_and_cold</Field>
+                    <Field name="controlPts" type="floatVector">0 0 255 255 0.45 0 0 255 0.5 0 0 127 0.55 255 0 0 1 255 255 0 </Field>
+                </Object>
+                <Object name="table12">
+                    <Field name="ctName" type="string">hot_desaturated</Field>
+                    <Field name="controlPts" type="floatVector">0 71 71 219 0.143 0 0 91 0.285 0 255 255 0.429 0 127 0 0.571 255 255 0 0.714 255 96 0 0.857 107 0 0 1 224 76 76 </Field>
+                </Object>
+                <Object name="table13">
+                    <Field name="ctName" type="string">levels</Field>
+                    <Field name="equal" type="bool">true</Field>
+                    <Field name="smooth" type="bool">false</Field>
+                    <Field name="discrete" type="bool">true</Field>
+                    <Field name="controlPts" type="floatVector">0 255 0 0 0.03 0 255 0 0.07 0 0 255 0.1 0 255 255 0.14 255 0 255 0.17 255 255 0 0.21 255 135 0 0.24 255 0 135 0.28 168 168 168 0.31 255 68 68 0.34 99 255 99 0.38 99 99 255 0.41 40 165 165 0.45 255 99 255 0.48 255 255 99 0.52 255 170 99 0.55 170 79 255 0.59 150 0 0 0.62 0 150 0 0.66 0 0 150 0.69 0 109 109 0.72 150 0 150 0.76 150 150 0 0.79 150 84 0 0.83 160 0 79 0.86 255 104 28 0.9 0 170 81 0.93 68 255 124 0.97 0 130 255 1 130 0 255 </Field>
+                </Object>
+                <Object name="table14">
+                    <Field name="ctName" type="string">orangehot</Field>
+                    <Field name="controlPts" type="floatVector">0 0 0 0 0.333 127 0 0 0.666 255 127 0 1 255 255 255 </Field>
+                </Object>
+                <Object name="table15">
+                    <Field name="ctName" type="string">rainbow</Field>
+                    <Field name="controlPts" type="floatVector">0 255 0 255 0.2 0 0 255 0.4 0 255 255 0.6 0 255 0 0.8 255 255 0 1 255 0 0 </Field>
+                </Object>
+                <Object name="table16">
+                    <Field name="ctName" type="string">xray</Field>
+                    <Field name="controlPts" type="floatVector">0 255 255 255 1 0 0 0 </Field>
+                </Object>
+                <Field name="Ntables" type="int">17</Field>
+            </Object>
+            <Object name="ExpressionList">
+                <Object name="Expression">
+                    <Field name="name" type="string">unnamed1</Field>
+                    <Field name="definition" type="string"></Field>
+                </Object>
+                <Object name="Expression">
+                    <Field name="name" type="string">unnamed2</Field>
+                    <Field name="definition" type="string"></Field>
+                </Object>
+            </Object>
+            <Object name="AnnotationAttributes">
+                <Object name="backgroundColor">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">255 255 255 255 </Field>
+                    </Object>
+                </Object>
+                <Object name="foregroundColor">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">0 0 0 255 </Field>
+                    </Object>
+                </Object>
+                <Object name="gradientColor1">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">0 0 255 255 </Field>
+                    </Object>
+                </Object>
+                <Object name="gradientColor2">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">0 0 0 255 </Field>
+                    </Object>
+                </Object>
+            </Object>
+            <Object name="ViewCurveAttributes">
+                <Field name="viewportCoords" type="doubleArray" length="4">0.2 0.95 0.15 0.95 </Field>
+            </Object>
+            <Object name="View2DAttributes">
+                <Field name="windowCoords" type="doubleArray" length="4">0 1 0 1 </Field>
+                <Field name="viewportCoords" type="doubleArray" length="4">0.2 0.95 0.15 0.95 </Field>
+            </Object>
+            <Object name="View3DAttributes">
+                <Field name="viewNormal" type="doubleArray" length="3">-0.793172 0.433142 0.428096 </Field>
+                <Field name="focus" type="doubleArray" length="3">749.5 99 99 </Field>
+                <Field name="viewUp" type="doubleArray" length="3">0.376659 0.901285 -0.214039 </Field>
+                <Field name="parallelScale" type="double">762.465</Field>
+                <Field name="nearPlane" type="double">-1524.93</Field>
+                <Field name="farPlane" type="double">1524.93</Field>
+                <Field name="imagePan" type="doubleArray" length="2">-0.0258278 -0.00613497 </Field>
+                <Field name="imageZoom" type="double">3.43158</Field>
+                <Field name="centerOfRotation" type="doubleArray" length="3">749.5 99 99 </Field>
+            </Object>
+            <Object name="ViewerWindowManagerAttributes">
+                <Object name="ActionConfigurations">
+                    <Object name="ActionGroupDescription">
+                        <Field name="name" type="string">Mode</Field>
+                        <Field name="actions" type="stringVector"></Field>
+                        <Field name="visible" type="bool">true</Field>
+                    </Object>
+                    <Object name="ActionGroupDescription">
+                        <Field name="name" type="string">Tools</Field>
+                        <Field name="actions" type="stringVector"></Field>
+                        <Field name="visible" type="bool">true</Field>
+                    </Object>
+                    <Object name="ActionGroupDescription">
+                        <Field name="name" type="string">Window</Field>
+                        <Field name="actions" type="stringVector">"SetActiveWindowRPC" "AddWindowRPC" "CloneWindowRPC" "DeleteWindowRPC" "SetWindowLayoutRPC" "ToggleSpinModeRPC" "ToggleBoundingBoxModeRPC" "InvertBackgroundRPC" </Field>
+                        <Field name="visible" type="bool">true</Field>
+                    </Object>
+                    <Object name="ActionGroupDescription">
+                        <Field name="name" type="string">View</Field>
+                        <Field name="actions" type="stringVector">"TogglePerspectiveViewRPC" "ResetViewRPC" "RecenterViewRPC" "UndoViewRPC" "RedoViewRPC" "ToggleFullFrameRPC" "SaveViewRPC" "ChooseCenterOfRotationRPC" </Field>
+                        <Field name="visible" type="bool">true</Field>
+                    </Object>
+                    <Object name="ActionGroupDescription">
+                        <Field name="name" type="string">Animation</Field>
+                        <Field name="actions" type="stringVector">"TimeSliderPreviousStateRPC" "AnimationReversePlayRPC" "AnimationStopRPC" "AnimationPlayRPC" "TimeSliderNextStateRPC" </Field>
+                        <Field name="visible" type="bool">true</Field>
+                    </Object>
+                    <Object name="ActionGroupDescription">
+                        <Field name="name" type="string">Operators</Field>
+                        <Field name="actions" type="stringVector">"AddOperatorRPC" "RemoveLastOperatorRPC" "RemoveAllOperatorsRPC" </Field>
+                        <Field name="visible" type="bool">false</Field>
+                    </Object>
+                    <Object name="ActionGroupDescription">
+                        <Field name="name" type="string">Plots</Field>
+                        <Field name="actions" type="stringVector">"AddPlotRPC" "DrawPlotsRPC" "HideActivePlotsRPC" "DeleteActivePlotsRPC" "CopyActivePlotsRPC" "SetPlotFollowsTimeRPC" </Field>
+                        <Field name="visible" type="bool">false</Field>
+                    </Object>
+                    <Object name="ActionGroupDescription">
+                        <Field name="name" type="string">Clear</Field>
+                        <Field name="actions" type="stringVector">"ClearWindowRPC" "ClearAllWindowsRPC" "ClearPickPointsRPC" "ClearRefLinesRPC" </Field>
+                        <Field name="visible" type="bool">true</Field>
+                    </Object>
+                    <Object name="ActionGroupDescription">
+                        <Field name="name" type="string">Lock</Field>
+                        <Field name="actions" type="stringVector">"ToggleLockViewModeRPC" "ToggleLockTimeRPC" "ToggleLockToolsRPC" "TurnOffAllLocksRPC" </Field>
+                        <Field name="visible" type="bool">true</Field>
+                    </Object>
+                </Object>
+                <Field name="toolbarsVisible" type="bool">true</Field>
+                <Field name="largeIcons" type="bool">false</Field>
+            </Object>
+            <Object name="RenderingAttributes">
+                <Object name="specularColor">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">255 255 255 255 </Field>
+                    </Object>
+                </Object>
+            </Object>
+            <Object name="FileOpenOptions">
+                <Field name="typeNames" type="stringVector">"ANALYZE" "ANSYS" "AUXFile" "AugDecomp" "BOV" "BOW" "Boxlib2D" "Boxlib3D" "CCM" "CEAucd" "CGNS" "CMAT" "CTRL" "Cale" "Chombo" "Claw" "Cosmos" "CosmosPP" "Curve2D" "DDCMD" "Dune" "Dyna3D" "EnSight" "Enzo" "Exodus" "ExtrudedVol" "FITS" "FLASH" "Fluent" "GDAL" "GGCM" "GTC" "Gadget" "H5Nimrod" "H5Part" "Image" "KullLite" "LAMMPS" "Lines" "M3D" "MFIX" "MM5" "Mili" "Miranda" "NASTRAN" "NETCDF" "Nek5000" "OVERFLOW" "OpenFOAM" "PATRAN" "PDB" "PFLOTRAN" "PLOT2D" "PLOT3D" "Pixie" "PlainText" "PlasmaState" "Point3D" "ProteinDataBank" "RAW" "S3D" "SAMI" "SAMRAI" "SAR" "SAS" "STL" "Shapefile" "Silo" "SimV1" "SimV1Writer" "Spheral" "TFT" "TSurf" "Tecplot" "Tetrad" "TimeVaryingExodus" "UNIC" "VASP" "VTK" "Vis5D" "Vista" "WavefrontOBJ" "XDMF" "XYZ" "Xmdv" "ZeusMP" "ZipWrapper" </Field>
+                <Field name="typeIDs" type="stringVector">"ANALYZE_1.0" "ANSYS_1.0" "AUXFile_1.0" "AugDecomp_1.0" "BOV_1.0" "BOW_1.0" "Boxlib2D_1.0" "Boxlib3D_1.0" "CCM_1.0" "CEAucd_1.0" "CGNS_1.0" "CMAT_1.0" "CTRL_1.0" "Cale_1.0" "Chombo_1.0" "Claw_1.0" "Cosmos_1.0" "CosmosPP_1.0" "Curve2D_1.0" "DDCMD_1.0" "Dune_1.0" "Dyna3D_1.0" "EnSight_1.0" "Enzo_1.0" "Exodus_1.0" "ExtrudedVol_1.0" "FITS_1.0" "FLASH_1.0" "Fluent_1.0" "GDAL_1.0" "GGCM_1.0" "GTC_1.0" "Gadget_2.0a" "H5Nimrod_1.0" "H5Part_1.0" "Image_1.0" "KullLite_1.0" "LAMMPS_1.0" "Lines_1.0" "M3D_1.0" "MFIX_1.0" "MM5_1.0" "Mili_1.0" "Miranda_1.0" "NASTRAN_1.0" "NETCDF_1.0" "Nek5000_1.0" "OVERFLOW_1.0" "OpenFOAM_1.0" "PATRAN_1.0" "PDB_1.1" "PFLOTRAN_1.0" "PLOT2D_1.0" "PLOT3D_1.0" "Pixie_1.0" "PlainText_1.0" "PlasmaState_1.0" "Point3D_1.0" "ProteinDataBank_1.0" "RAW_1.0" "S3D_1.0" "SAMI_1.0" "SAMRAI_1.0" "SAR_1.0" "SAS_1.0" "STL_1.0" "Shapefile_1.0" "Silo_1.0" "SimV1_1.0" "SimV1Writer_1.0" "Spheral_1.0" "TFT_1.0" "TSurf_1.0" "Tecplot_1.0" "Tetrad_1.0" "TimeVaryingExodus_1.0" "UNIC_1.0" "VASP_1.0" "VTK_1.0" "Vis5D_1.0" "Vista_1.0" "WavefrontOBJ_1.0" "XDMF_1.0" "XYZ_1.0" "Xmdv_1.0" "ZeusMP_1.0" "ZipWrapper_1.0" </Field>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                    <Field name="types" type="intVector">0 0 0 0 </Field>
+                    <Field name="names" type="stringVector">"Use ghost data (if present)" "Enable only root level by default" "Enable only explicitly defined materials by default" "Check for mapping file and import coordinates if available" </Field>
+                    <Field name="optBools" type="intVector">1 0 0 1 </Field>
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                    <Field name="types" type="intVector">0 </Field>
+                    <Field name="names" type="stringVector">"Ignore files with FastBit index" </Field>
+                    <Field name="optBools" type="intVector">1 </Field>
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                    <Field name="types" type="intVector">0 </Field>
+                    <Field name="names" type="stringVector">"Big Endian" </Field>
+                    <Field name="optBools" type="intVector">1 </Field>
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                    <Field name="types" type="intVector">1 </Field>
+                    <Field name="names" type="stringVector">"Num Materials (-1==costly search)" </Field>
+                    <Field name="optInts" type="intVector">0 </Field>
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                    <Field name="types" type="intVector">1 </Field>
+                    <Field name="names" type="stringVector">"LEOS try harder level [set to 0, 1 or 2]" </Field>
+                    <Field name="optInts" type="intVector">0 </Field>
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                    <Field name="types" type="intVector">5 1 0 1 1 1 </Field>
+                    <Field name="names" type="stringVector">"Format of data" "Lines to skip at beginning of file" "First row has variable names" "Column for X coordinate (or -1 for none)" "Column for Y coordinate (or -1 for none)" "Column for Z coordinate (or -1 for none)" </Field>
+                    <Field name="optBools" type="intVector">0 </Field>
+                    <Field name="optInts" type="intVector">0 -1 -1 -1 </Field>
+                    <Field name="optEnums" type="intVector">0 </Field>
+                    <Field name="enumStrings" type="stringVector">"2D Grid" "1D Columns" </Field>
+                    <Field name="enumStringsSizes" type="intVector">2 </Field>
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                    <Field name="types" type="intVector">0 0 0 0 </Field>
+                    <Field name="names" type="stringVector">"Polygons as lines" "No tesselation" "ESRI Logging" "DBF Logging" </Field>
+                    <Field name="optBools" type="intVector">0 0 0 0 </Field>
+                </Object>
+                <Object name="DBOptionsAttributes">
+                    <Field name="types" type="intVector">0 0 0 0 </Field>
+                    <Field name="names" type="stringVector">"Force Single" "Ignore Spatial Extents" "Ignore Data Extents" "Search For ANNOTATION_INT (!!Slow!!)" </Field>
+                    <Field name="optBools" type="intVector">1 0 0 0 </Field>
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                </Object>
+                <Object name="DBOptionsAttributes">
+                    <Field name="types" type="intVector">4 4 1 4 0 </Field>
+                    <Field name="names" type="stringVector">"TMPDIR for decompressed files" "Unique moniker for dirs made in $TMPDIR" "Max. # decompressed files" "Decompression command" "Don't atexit()" </Field>
+                    <Field name="optBools" type="intVector">0 </Field>
+                    <Field name="optInts" type="intVector">50 </Field>
+                    <Field name="optStrings" type="stringVector">"$TMPDIR" "$USER" "" </Field>
+                </Object>
+                <Field name="Enabled" type="intVector">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 </Field>
+            </Object>
+            <Object name="BoundaryAttributes">
+                <Object name="singleColor">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">0 0 0 255 </Field>
+                    </Object>
+                </Object>
+            </Object>
+            <Object name="ContourAttributes">
+                <Object name="defaultPalette">
+                    <Object name="ColorControlPointList">
+                        <Field name="compactColors" type="unsignedCharVector">255 0 0 255 0 255 0 255 0 0 255 255 0 255 255 255 255 0 255 255 255 255 0 255 255 135 0 255 255 0 135 255 168 168 168 255 255 68 68 255 99 255 99 255 99 99 255 255 40 165 165 255 255 99 255 255 255 255 99 255 255 170 99 255 170 79 255 255 150 0 0 255 0 150 0 255 0 0 150 255 0 109 109 255 150 0 150 255 150 150 0 255 150 84 0 255 160 0 79 255 255 104 28 255 0 170 81 255 68 255 124 255 0 130 255 255 130 0 255 255 </Field>
+                        <Field name="compactPositions" type="floatVector">0 0.03 0.07 0.1 0.14 0.17 0.21 0.24 0.28 0.31 0.34 0.38 0.41 0.45 0.48 0.52 0.55 0.59 0.62 0.66 0.69 0.72 0.76 0.79 0.83 0.86 0.9 0.93 0.97 1 </Field>
+                        <Field name="smoothingFlag" type="bool">false</Field>
+                        <Field name="equalSpacingFlag" type="bool">true</Field>
+                        <Field name="discreteFlag" type="bool">true</Field>
+                    </Object>
+                </Object>
+                <Object name="singleColor">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">255 0 0 255 </Field>
+                    </Object>
+                </Object>
+            </Object>
+            <Object name="CurveAttributes">
+                <Object name="color">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">0 0 0 255 </Field>
+                    </Object>
+                </Object>
+            </Object>
+            <Object name="FilledBoundaryAttributes">
+                <Object name="singleColor">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">0 0 0 255 </Field>
+                    </Object>
+                </Object>
+                <Object name="mixedColor">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">255 255 255 255 </Field>
+                    </Object>
+                </Object>
+            </Object>
+            <Object name="HistogramAttributes">
+                <Object name="color">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">200 80 40 255 </Field>
+                    </Object>
+                </Object>
+            </Object>
+            <Object name="LabelAttributes">
+                <Object name="textColor1">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">255 0 0 0 </Field>
+                    </Object>
+                </Object>
+                <Object name="textColor2">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">0 0 255 0 </Field>
+                    </Object>
+                </Object>
+            </Object>
+            <Object name="MeshAttributes">
+                <Object name="meshColor">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">0 0 0 255 </Field>
+                    </Object>
+                </Object>
+                <Object name="opaqueColor">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">255 255 255 255 </Field>
+                    </Object>
+                </Object>
+            </Object>
+            <Object name="MoleculeAttributes">
+                <Object name="bondSingleColor">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">128 128 128 255 </Field>
+                    </Object>
+                </Object>
+            </Object>
+            <Object name="ParallelCoordinatesAttributes">
+                <Object name="linesColor">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">128 0 0 255 </Field>
+                    </Object>
+                </Object>
+                <Object name="contextColor">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">0 220 0 255 </Field>
+                    </Object>
+                </Object>
+            </Object>
+            <Object name="PoincareAttributes">
+                <Object name="singleColor">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">0 0 0 255 </Field>
+                    </Object>
+                </Object>
+            </Object>
+            <Object name="ScatterAttributes">
+                <Object name="singleColor">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">255 0 0 255 </Field>
+                    </Object>
+                </Object>
+            </Object>
+            <Object name="SpreadsheetAttributes">
+                <Object name="tracerColor">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">255 0 0 150 </Field>
+                    </Object>
+                </Object>
+            </Object>
+            <Object name="StreamlineAttributes">
+                <Object name="singleColor">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">0 0 0 255 </Field>
+                    </Object>
+                </Object>
+            </Object>
+            <Object name="SubsetAttributes">
+                <Object name="singleColor">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">0 0 0 255 </Field>
+                    </Object>
+                </Object>
+            </Object>
+            <Object name="SurfaceAttributes">
+                <Object name="surfaceColor">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">0 0 0 255 </Field>
+                    </Object>
+                </Object>
+                <Object name="wireframeColor">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">0 0 0 255 </Field>
+                    </Object>
+                </Object>
+            </Object>
+            <Object name="TensorAttributes">
+                <Object name="tensorColor">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">0 0 0 255 </Field>
+                    </Object>
+                </Object>
+            </Object>
+            <Object name="VectorAttributes">
+                <Object name="vectorColor">
+                    <Object name="ColorAttribute">
+                        <Field name="color" type="unsignedCharArray" length="4">0 0 0 255 </Field>
+                    </Object>
+                </Object>
+            </Object>
+            <Object name="DualMeshAttributes">
+                <Field name="mode" type="string">Auto</Field>
+            </Object>
+            <Object name="ReplicateAttributes">
+                <Field name="useUnitCellVectors" type="bool">false</Field>
+            </Object>
+            <Object name="ResamplePluginAttributes">
+                <Field name="useExtents" type="bool">false</Field>
+            </Object>
+            <Object name="PluginManagerAttributes">
+                <Field name="name" type="stringVector">"Boundary" "Contour" "Curve" "FilledBoundary" "Histogram" "Label" "Mesh" "Molecule" "ParallelCoordinates" "Poincare" "Pseudocolor" "Scatter" "Spreadsheet" "Streamline" "Subset" "Surface" "Tensor" "Truecolor" "Vector" "Volume" "WellBore" "BoundaryOp" "Box" "Clip" "Cone" "CoordSwap" "CracksClipper" "CreateBonds" "Cylinder" "Decimate" "DeferExpression" "Displace" "DualMesh" "Elevate" "ExternalSurface" "IndexSelect" "InverseGhostZone" "Isosurface" "Isovolume" "Lineout" "Merge" "OnionPeel" "PDF" "PersistentParticles" "Project" "Reflect" "Replicate" "Resample" "Revolve" "Slice" "Smooth" "SphereSlice" "ThreeSlice" "Threshold" "Transform" "TriangulateRegularPoints" "Tube" "ZoneDump" </Field>
+                <Field name="type" type="stringVector">"plot" "plot" "plot" "plot" "plot" "plot" "plot" "plot" "plot" "plot" "plot" "plot" "plot" "plot" "plot" "plot" "plot" "plot" "plot" "plot" "plot" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" "operator" </Field>
+                <Field name="version" type="stringVector">"1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.1" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" "1.0" </Field>
+                <Field name="id" type="stringVector">"Boundary_1.0" "Contour_1.0" "Curve_1.0" "FilledBoundary_1.0" "Histogram_1.0" "Label_1.0" "Mesh_1.0" "Molecule_1.0" "ParallelCoordinates_1.0" "Poincare_1.0" "Pseudocolor_1.0" "Scatter_1.0" "Spreadsheet_1.0" "Streamline_1.0" "Subset_1.0" "Surface_1.0" "Tensor_1.0" "Truecolor_1.0" "Vector_1.0" "Volume_1.1" "WellBore_1.0" "BoundaryOp_1.0" "Box_1.0" "Clip_1.0" "Cone_1.0" "CoordSwap_1.0" "CracksClipper_1.0" "CreateBonds_1.0" "Cylinder_1.0" "Decimate_1.0" "DeferExpression_1.0" "Displace_1.0" "DualMesh_1.0" "Elevate_1.0" "ExternalSurface_1.0" "IndexSelect_1.0" "InverseGhostZone_1.0" "Isosurface_1.0" "Isovolume_1.0" "Lineout_1.0" "Merge_1.0" "OnionPeel_1.0" "PDF_1.0" "PersistentParticles_1.0" "Project_1.0" "Reflect_1.0" "Replicate_1.0" "Resample_1.0" "Revolve_1.0" "Slice_1.0" "Smooth_1.0" "SphereSlice_1.0" "ThreeSlice_1.0" "Threshold_1.0" "Transform_1.0" "TriangulateRegularPoints_1.0" "Tube_1.0" "ZoneDump_1.0" </Field>
+                <Field name="enabled" type="intVector">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 0 0 1 1 0 0 1 1 1 0 1 1 1 1 1 0 1 0 1 1 1 1 1 1 1 0 1 1 1 1 1 0 0 </Field>
+            </Object>
+        </Object>
+        <Object name="ViewerSubject">
+            <Object name="SourceMap">
+                <Field name="SOURCE00" type="string">localhost:/Users/gmurphy/Documents/3d/ti00900.cdf</Field>
+                <Field name="SOURCE01" type="string">localhost:</Field>
+            </Object>
+            <Object name="DatabaseCorrelationList">
+                <Field name="needPermission" type="bool">true</Field>
+                <Field name="defaultCorrelationMethod" type="int">0</Field>
+                <Field name="whenToCorrelate" type="string">CorrelateOnlyIfSameLength</Field>
+            </Object>
+            <Object name="ViewerWindowManager">
+                <Field name="maintainView" type="bool">false</Field>
+                <Field name="maintainData" type="bool">false</Field>
+                <Field name="cameraView" type="bool">false</Field>
+                <Field name="viewExtentsType" type="string">AVT_ORIGINAL_EXTENTS</Field>
+                <Object name="Windows">
+                    <Object name="ViewerWindow">
+                        <Field name="windowSize" type="intArray" length="2">755 755 </Field>
+                        <Field name="windowImageSize" type="intArray" length="2">755 652 </Field>
+                        <Field name="windowLocation" type="intArray" length="2">401 20 </Field>
+                        <Object name="ViewerActionManager">
+                            <Object name="SaveViewAction">
+                                <Object name="View3DAttributes">
+                                    <Field name="viewNormal" type="doubleArray" length="3">-0.477341 0.418988 0.772396 </Field>
+                                    <Field name="focus" type="doubleArray" length="3">749.5 49.5 49.5 </Field>
+                                    <Field name="viewUp" type="doubleArray" length="3">0.397363 0.886918 -0.23554 </Field>
+                                    <Field name="viewAngle" type="double">30</Field>
+                                    <Field name="parallelScale" type="double">752.762</Field>
+                                    <Field name="nearPlane" type="double">-1505.52</Field>
+                                    <Field name="farPlane" type="double">1505.52</Field>
+                                    <Field name="imagePan" type="doubleArray" length="2">0 0 </Field>
+                                    <Field name="imageZoom" type="double">1</Field>
+                                    <Field name="perspective" type="bool">true</Field>
+                                    <Field name="eyeAngle" type="double">2</Field>
+                                    <Field name="centerOfRotationSet" type="bool">false</Field>
+                                    <Field name="centerOfRotation" type="doubleArray" length="3">749.5 49.5 49.5 </Field>
+                                </Object>
+                                <Field name="viewTypes" type="intVector">3 </Field>
+                            </Object>
+                        </Object>
+                    </Object>
+                    <Object name="ViewerWindow">
+                        <Field name="windowSize" type="intArray" length="2">438 438 </Field>
+                        <Field name="windowImageSize" type="intArray" length="2">438 301 </Field>
+                        <Field name="windowLocation" type="intArray" length="2">840 20 </Field>
+                    </Object>
+                </Object>
+            </Object>
+        </Object>
+    </Object>
+</Object>
