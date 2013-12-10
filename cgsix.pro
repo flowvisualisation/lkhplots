@@ -29,10 +29,50 @@ initv2= 0.0
 ;background=1
 if ( background eq 1) then begin
 initvort=getvort(vx1,vx2,x1,x2,nx1,nx2)
-initv1=vx1
-initv2=vx2
-
+initv1b=vx1
+initv2b=vx2
+initvortb=getvort(initv1b,initv2b,x1,x2,nx1,nx2)
 endif
+
+
+;; test subtracting the cell average instead
+
+x2d=rebin (reform(x1, nx1,1 ), nx1,nx2)
+y2d=rebin (reform(x2, 1,nx2 ), nx1,nx2)
+
+dx2d=rebin (reform(dx1, nx1,1 ), nx1,nx2)
+dy2d=rebin (reform(dx2[0], 1,1 ), nx1,nx2)
+
+xarg=x2d /(x1(nx1-1) - x1(0)+ dx1[0] )
+yarg=y2d / (x2(nx2-1) - x2(0)+ dx2[0] )
+
+dxnorm=dx2d / (x1(nx1-1) - x1(0) )
+dynorm=dy2d / (x2(nx2-1) - x2(0) )
+
+initv1a= -sin (2.d0 *!PI *  yarg)
+initv2a= -0.01* sin (2.d0 *!PI * xarg)
+
+initv1= -     (-cos (2 *!PI * (yarg+dxnorm/2)) + cos (2 *!PI *(yarg -dxnorm/2)))/dxnorm/2/!PI
+initv2= -0.01*(-cos (2 *!PI * (xarg+dynorm/2)) + cos (2 *!PI *(xarg -dynorm/2)))/dynorm/2/!PI
+initvort=getvort(initv1,initv2,x1,x2,nx1,nx2)
+initvorta=getvort(initv1a,initv2a,x1,x2,nx1,nx2)
+
+debugging=1
+;debugging=0
+if ( debugging eq 0 ) then begin
+;cgplot, x2, vort(0,*)-initvort(0,*) ;, xrange=[-0.51,-0.48]
+;stop
+cgplot,x2, initv1a(0,*) , xrange=[-0.51,-0.48], yrange=[0.9999,1.0001] , linestyle=3
+cgplot,x2, initv1(0,*) , color='red', /overplot, linestyle=2
+pload,0
+initv1b=vx1
+cgplot,x2, initv1b(0,*) , color='blue', /overplot, linestyle=1
+stop
+endif
+
+; cgplot,x1, initv2a(*,0) , xrange=[0.83,0.85]
+; cgplot,x1, initv2(*,0) , color='red', /overplot
+
 
 nstart=1
 nend=nlast
@@ -76,12 +116,27 @@ maxdeltav=[maxdeltav, d]
 ;print, size(tvz2)
 
 vort = getvort(vx1,vx2,x1,x2,nx1,nx2)
+debugging=0
+if ( debugging eq 0 ) then begin
+!p.multi=[0,1,3]
+window, xs=1100,ys=1100
+cgplot, x2, vort(0,*)-initvort(0,*)  , xrange=[-0.53,-0.47], linestyle=1
+cgplot, x2, vort(0,*)-initvortb(0,*) , xrange=[-0.53,-0.47], /overplot, color='blue'
+cgplot, x2, vort(0,*)-initvortb(0,*) , xrange=[-0.53,-0.47], /overplot, color='red', linestyle=2
+cgplot, x2, vort(0,*), xrange=[-0.53,-0.47], linestyle=1
+cgplot, x2, initvort(0,*)  , xrange=[-0.53,-0.47], linestyle=0, /overplot
+cgplot, x2, vx1(0,*)  , xrange=[-0.53,-0.47], linestyle=0, yrange=[0.9995, 1.0001]
+cgplot, x2, initv1(0,*)  , xrange=[-0.53,-0.47], linestyle=0, /overplot, color='red'
+!p.multi=0
+stop
+endif
 var=fltarr(6,nx1,nx2)
 rho[0,0]=rho[0,0]+1e-6
 var(0,*,*)=rho
 if ( background eq 1 ) then begin 
 var(1,*,*)=vx1-initv1
 var(2,*,*)=vx2-initv2
+;var(2,*,*)=vx1
 endif else begin
 var(1,*,*)=vx1
 var(2,*,*)=vx2
@@ -89,7 +144,7 @@ endelse
 var(3,*,*)=smooth(vort-initvort, 10,/edge_wrap)
 var(3,*,*)=vort-initvort
 ;var(4,*,*)=(1.4*prs/rho)
-var(4,*,*)=vx1
+var(4,*,*)=vx1-initv1b
 str=strarr(6,20)
 str(0,*)="density)"
 str(1,*)="V!DX!N"
