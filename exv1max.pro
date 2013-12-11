@@ -40,7 +40,7 @@ angles=findgen(7)*15*!dtor
 ;projangle=!pi/12.
 ;projangle=!pi/30.
 
-angleno=0
+angleno=6
 projangle=angles[angleno]
 for nfile=nbeg,nend,1 do begin
 pload,nfile, /silent

@@ -67,13 +67,46 @@ maxy=max([max(byarr),max(vyarr)])
 minx=min([min(bxarr),min(vxarr)]) 
 miny=min([min(byarr),min(vyarr)]) 
 
+
+
+for usingps=0,1 do begin
+
+if ( usingps ) then begin
+set_plot,'ps'
+device,filename=fname+'.eps',/encapsulated
+device, /color
+!p.font=0
+device, /times
+pxs=11.
+pys=12
+!p.charsize=1.8
+DEVICE, XSIZE=pxs, YSIZE=pys, /INCHES
+endif else begin
+!p.font=-1
+!p.color=0
+!p.charsize=1.8
+legchar=0.6
+;window, xs=1100,ys=800
+;device, Set_Resolution=[1100,800]
+if ( keyword_set(zbuf) ) then begin
+set_plot, 'z'
+device, set_resolution=[1300,1100], Decomposed=1, Set_Pixel_Depth=24
+endif else begin
+legchar=1.1
+set_plot, 'x'
+;window, xs=xs, ys=ys
+legchar=0.6
+endelse
+endelse
+
 cgplot, bxarr, byarr, psym=4,  $
+        color='red',$
 		title="Scatter plots of B!DX,Y!N and V!DX,Y!N at t="+string(nfile)+" orbits", $
 		xtitle="B!DX!N, V!DX!N",$
 		ytitle="B!DY!N, V!DY!N", $
 		xrange=[minx,maxx], $
 		yrange=[miny,maxy]
-cgplot, vxarr, vyarr, psym=16,  color='red', /overplot
+cgplot, vxarr, vyarr, psym=16,  color='blue', /overplot
 
 
 qtag='scattervxvybxby'
@@ -84,7 +117,32 @@ nts=strcompress(string(nfile),/remove_all)
 lnt=strlen(nts)
 for j=1,ll-lnt do zero=zero+'0'
            fname=qtag+zero+nts
-im=cgsnapshot(filename=fname, /nodialog, /jpeg)
+           endfor
+
+if ( usingps ) then begin
+device,/close
+;set_plot,'x'
+if ( keyword_set(zbuf) ) then begin
+set_plot, 'z'
+device, set_resolution=[1300,1100], Decomposed=1, Set_Pixel_Depth=24
+endif else begin
+set_plot, 'x'
+endelse
+endif else begin
+;set_plot,'x'
+if ( keyword_set(zbuf) ) then begin
+set_plot, 'z'
+device, set_resolution=[1300,1100], Decomposed=1, Set_Pixel_Depth=24
+endif else begin
+set_plot, 'x'
+endelse
+fname2=fname
+im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
+endelse
+
+
+
+
 
 
 
