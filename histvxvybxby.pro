@@ -69,7 +69,39 @@ miny=min([min(by),min(vy)])
 sz=size(magnetic_hist, /dimensions)
 cx=findgen(sz(0))*bn1a+mn1a
 cy=findgen(sz(1))*bn2a+mn2a
-cgcontour, alog10(magnetic_hist+1e-3),cx,cy,  color='black',  $
+
+for usingps=0,1 do begin
+
+if ( usingps ) then begin
+set_plot,'ps'
+device,filename=fname+'.eps',/encapsulated
+device, /color
+!p.font=0
+device, /times
+pxs=11.
+pys=12
+!p.charsize=1.8
+DEVICE, XSIZE=pxs, YSIZE=pys, /INCHES
+endif else begin
+!p.font=-1
+!p.color=0
+!p.charsize=1.8
+legchar=0.6
+;window, xs=1100,ys=800
+;device, Set_Resolution=[1100,800]
+if ( keyword_set(zbuf) ) then begin
+set_plot, 'z'
+device, set_resolution=[1300,1100], Decomposed=1, Set_Pixel_Depth=24
+endif else begin
+legchar=1.1
+set_plot, 'x'
+;window, xs=xs, ys=ys
+legchar=0.6
+endelse
+endelse
+
+
+cgcontour, alog10(magnetic_hist+1e-3),cx,cy,  color='green',  $
 		title="Scatter plots of B!DX,Y!N and V!DX,Y!N at t="+string(i)+" orbits", $
 		xtitle="B!DX!N, V!DX!N",$
 		ytitle="B!DY!N, V!DY!N",$
@@ -81,7 +113,7 @@ cgcontour, alog10(magnetic_hist+1e-3),cx,cy,  color='black',  $
 sz=size(velocity_hist, /dimensions)
 cx=findgen(sz(0))*bn1+mn1
 cy=findgen(sz(1))*bn2+mn2
-cgcontour, alog10(velocity_hist+1e-3), cx,cy, axiscolor='black' , /overplot, color='red'
+cgcontour, alog10(velocity_hist+1e-3), cx,cy, axiscolor='black' , /overplot, color='blue'
 
 ;cgplot, a,b, psym=1, $
 ;		title="Scatter plots of B!DX,Y!N and V!DX,Y!N at t="+string(i)+" orbits", $
@@ -97,10 +129,31 @@ nts=strcompress(string(i),/remove_all)
 lnt=strlen(nts)
 for j=1,ll-lnt do zero=zero+'0'
            fname=qtag+zero+nts
-im=cgsnapshot(filename=fname, /nodialog, /jpeg)
 endfor
 
 
+if ( usingps ) then begin
+device,/close
+;set_plot,'x'
+if ( keyword_set(zbuf) ) then begin
+set_plot, 'z'
+device, set_resolution=[1300,1100], Decomposed=1, Set_Pixel_Depth=24
+endif else begin
+set_plot, 'x'
+endelse
+endif else begin
+;set_plot,'x'
+if ( keyword_set(zbuf) ) then begin
+set_plot, 'z'
+device, set_resolution=[1300,1100], Decomposed=1, Set_Pixel_Depth=24
+endif else begin
+set_plot, 'x'
+endelse
+fname2=fname
+im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
+endelse
+
+endfor
 
 end
 
