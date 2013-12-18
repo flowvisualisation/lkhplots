@@ -10,7 +10,7 @@ colors=['red', 'blue', 'green', 'orange', 'turquoise', 'purple', 'black']
 
 maxall=max([ [ux2m] , [uy2m], [uz2m] , [bx2m] , [by2m] ,[bz2m]   ])
 
-cgplot, t, ux2m, color=colors[0], linestyle=linestyles[0], /ylog, yrange=[1e-4*max(uy2m), max(maxall)]
+cgplot, t, ux2m, color=colors[0], linestyle=linestyles[0], /ylog, yrange=[1e-4*max(maxall), max(maxall)]
 cgplot, t, uy2m, /overplot, color=colors[1], linestyle=linestyles[1]
 cgplot, t, uz2m, /overplot, color=colors[2], linestyle=linestyles[2]
 cgplot, t, bx2m, /overplot, color=colors[3], linestyle=linestyles[3]
