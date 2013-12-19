@@ -63,10 +63,10 @@ slice=0
 
 
    IF (little_endian) THEN $
-f=rf(0) ELSE $
-f=rf(0, /swap_endian)
+f=rf(0, /b,/den, /e, /vel) ELSE $
+f=rf(0, /b,/den, /e, /vel, /swap_endian)
 
-downsample=1
+downsample=10
 nx=f.s.gn[0]/downsample
 nz=f.s.gn[2]/downsample
 xx=findgen(nx)
@@ -152,8 +152,8 @@ break
 endif
 
    IF (little_endian) THEN $
-f=rf(nfile) ELSE $
-f=rf(nfile, /swap_endian)
+f=rf(nfile, /b,/den, /e, /vel) ELSE $
+f=rf(nfile, /b,/den, /e, /vel, /swap_endian)
 ;p=rp(nfile, /wrap)
 
 !p.position=0

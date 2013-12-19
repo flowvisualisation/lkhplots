@@ -15,9 +15,6 @@ b2arr=fltarr(1)
 b3arr=fltarr(1)
 tarr=fltarr(1)
 
-
-
-
 nfile=0
 pluto=0
 if  ( pluto eq 1 ) then begin
@@ -51,11 +48,9 @@ v3arr(0)=max(abs(v3))
 b1arr(0)=max(abs(b1))
 b2arr(0)=max(abs(b2))
 b3arr(0)=max(abs(b3))
-
 cgloadct,33
 nlast=99
 nstep=1
-
 for nfile=0,nlast,nstep do begin
 
 
@@ -70,7 +65,6 @@ print, 'plot',nfile
 
 pluto=0
 if  ( pluto eq 1 ) then begin
-
 pload,nfile
 mx=nx1
 my=nx2
@@ -82,11 +76,8 @@ b1=bx1
 b2=bx2
 b3=bx3
 endif else  begin
-
 path='data/proc0/'
 varfile='VAR'+str(nfile)
-; if file doesn't exzists exit
-
 if (  file_test(path+varfile)  ne 1 ) then begin
 print, varfile+' does not exist, exiting'
 break
@@ -100,13 +91,6 @@ b2=f0.bb[*,*,*,1]
 b3=f0.bb[*,*,*,2]
 endelse
 
-
-v1arr(0)=max(v1)
-v2arr(0)=max(v2)
-v3arr(0)=max(v3)
-b1arr(0)=max(b1)
-b2arr(0)=max(b2)
-b3arr(0)=max(b3)
 
 dataptr=ptrarr(18)
 titlestr=strarr(30,18)
@@ -153,40 +137,34 @@ dataptr(16)=ptr_new(reform(b3(*,my/2,*)))
 dataptr(17)=ptr_new(reform(b3(mx/2,*,*)))
 
 !p.position=0
-!p.multi=[0,3,7]
 
-v1arr=[v1arr, max(v1)]
-v2arr=[v2arr, max(v2)]
-v3arr=[v3arr, max(v3)]
-b1arr=[b1arr, max(b1)]
-b2arr=[b2arr, max(b2)]
-b3arr=[b3arr, max(b3)]
+v1arr=[v1arr, max(abs(v1))]
+v2arr=[v2arr, max(abs(v2))]
+v3arr=[v3arr, max(abs(v3))]
+b1arr=[b1arr, max(abs(b1))]
+b2arr=[b2arr, max(abs(b2))]
+b3arr=[b3arr, max(abs(b3))]
 
 maxall=max([ [v1arr], [v2arr], [v3arr], [b1arr], [b2arr], [b3arr]])
-dt=0.1
+dt=1
 tarr=[tarr, nfile*dt]
-for i=0,17 do begin
-r=*dataptr(i)
-d=scale_vector(r,1,254)
-cgloadct,33
-tag=string(max(r), format='(G9.2)')+" "+string(min(r), format='(G9.2)')
-cgimage, d
- XYOUTS, !X.Window[0] + 0.2 * (!X.Window[1]-!X.Window[0]), $
-           !Y.Window[1] - 0.2 * (!Y.Window[1]-!Y.Window[0]), $
-           titlestr(i)+tag, /Normal, charsize=2, color=cgcolor('white')
-endfor
-cgplot, tarr,  v1arr, color=colors[0], linestyle=linestyles[0],  yrange=[1e-2*max(maxall), max(maxall)], /ylog
+
+cgplot, tarr,  v1arr, color=colors[0], linestyle=linestyles[0],  yrange=[1e-4*max(maxall), max(maxall)], /ylog
 cgplot, tarr,  v2arr, /overplot,color=colors[1], linestyle=linestyles[1]
 cgplot, tarr,  v3arr, /overplot, color=colors[2], linestyle=linestyles[2]
 cgplot, tarr,  b1arr, /overplot,color=colors[3], linestyle=linestyles[3]
 cgplot, tarr,  b2arr, /overplot,color=colors[4], linestyle=linestyles[4]
 cgplot, tarr,  b3arr, /overplot,color=colors[5], linestyle=linestyles[5]
-cgplot, tarr,  v1arr[1]*exp(0.75*tarr), /overplot
+cgplot, tarr,  v1arr[0]*exp(0.75*tarr), /overplot
+fit=v1arr[0]*exp(0.75*tarr)
 
 	al_legend, items, colors=colors, linestyle=linestyles
-cgplot,  v2arr
-cgplot,  b1arr
 
+if ( nfile gt 20) then begin
+print, (alog(fit[20])- alog(fit[10]) )/(tarr[20]-tarr[10])
+print, (alog(v1arr[20])- alog(v1arr[10]) )/(tarr[20]-tarr[10])
+
+endif
 
 if ( usingps ) then begin
 device,/close
