@@ -1,6 +1,16 @@
 
+
+usingps=0
 !p.multi=0
 readcol,'data/time_series.dat', it,t,dt,ux2m,uy2m,uz2m,uxuym,rhom,rhomin,rhomax,bx2m,by2m,bz2m,bxbym,ndm,ndmin,ndmax
+
+ll=6
+zero=''
+nts=strcompress(string(nfile),/remove_all)
+lnt=strlen(nts)
+for j=1,ll-lnt do zero=zero+'0'
+    fname="timeseries"+zero+nts
+
 
 items=['v1','v2', 'v3', 'b1', 'b2', 'b3','growth=0.75' ]
 linestyles=[0,0,0,3,2,2,1]
@@ -11,7 +21,7 @@ colors=['red', 'blue', 'green', 'orange', 'turquoise', 'purple', 'black']
 maxall=max([ [sqrt(ux2m)] , [sqrt(uy2m)], [sqrt(uz2m)] , [sqrt(bx2m)] , [sqrt(by2m)] ,[sqrt(bz2m)]   ])
 minall=min([ [sqrt(ux2m)] , [sqrt(uy2m)], [sqrt(uz2m)] , [sqrt(bx2m)] , [sqrt(by2m)] ,[sqrt(bz2m)]   ])
 
-cgplot, t, sqrt(ux2m), color=colors[0], linestyle=linestyles[0], /ylog, yrange=[max(sqrt(uz2m)), max(maxall)], ystyle=1
+cgplot, t, sqrt(ux2m), color=colors[0], linestyle=linestyles[0], /ylog, yrange=[min(minall), max(maxall)], ystyle=1
 cgplot, t, sqrt(uy2m), /overplot, color=colors[1], linestyle=linestyles[1]
 cgplot, t, sqrt(uz2m), /overplot, color=colors[2], linestyle=linestyles[2]
 cgplot, t, sqrt(bx2m), /overplot, color=colors[3], linestyle=linestyles[3]
@@ -36,6 +46,17 @@ lfast=sqrt(15.d0/16.d0) *2.d0 *!PI  /omega/sqrt(rho)
 print, 1/lfast
 
 	al_legend, items, colors=colors, linestyle=linestyles
+
+
+
+if ( usingps ) then begin
+device,/close
+set_plot,'x'
+endif else begin
+;set_plot,'x'
+fname2=fname
+im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
+endelse
 
 
 

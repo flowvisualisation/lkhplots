@@ -1,5 +1,7 @@
 
+window, xs=1200,ys=1200
 usingps=0
+pluto=0
 items=['v1','v2', 'v3', 'b1', 'b2', 'b3','growth=0.75' ]
 linestyles=[0,0,0,3,2,2,1]
 psym=[0,1,2,3,4,5,6]
@@ -19,7 +21,6 @@ tarr=fltarr(1)
 
 
 nfile=0
-pluto=0
 if  ( pluto eq 1 ) then begin
 pload,nfile
 mx=nx1
@@ -34,10 +35,11 @@ b3=bx3
 endif else  begin
 path='data/proc0/'
 varfile='VAR'+str(nfile)
-if (  file_test(path+varfile)  ne 1 ) then begin
-print, varfile+' does not exist, exiting'
+if ( (pluto eq 0 )  and (file_test(path+varfile)  ne 1 )) then begin
+print, varfile+' does not exist, exiting gm'
 endif
 pc_read_var, obj=f0, varfile=varfile, /trimall, /bb
+rho=f0.rho[*,*,*]
 v1=f0.uu[*,*,*,0]
 v2=f0.uu[*,*,*,1]
 v3=f0.uu[*,*,*,2]
@@ -68,7 +70,6 @@ for j=1,ll-lnt do zero=zero+'0'
 print, 'plot',nfile
 
 
-pluto=0
 if  ( pluto eq 1 ) then begin
 
 pload,nfile
@@ -81,23 +82,42 @@ v3=vx3
 b1=bx1
 b2=bx2
 b3=bx3
+scrh=max(v1)
+xx3d=rebin(reform(x1,mx,  1,  1),mx,my,mz) 
+zz3d=rebin(reform(x3,1,1,mz ), mx, my,mz )
+vmri=scrh*sin(2*!PI*zz3d)
+sbq=1.5
+sbomega=1e-3
+sba=-0.5*sbq*sbomega
+vsh=2*sba
+eps=1e-3
+lx=2.0
+
+vshear=vsh*xx3d
+v2=v2-vshear
+nend=nlast
 endif else  begin
 
 path='data/proc0/'
 varfile='VAR'+str(nfile)
 ; if file doesn't exzists exit
 
-if (  file_test(path+varfile)  ne 1 ) then begin
-print, varfile+' does not exist, exiting'
+if (file_test(path+varfile)  ne 1  ) then begin
+print, varfile+' does not exist, exiting gm 2'
 break
 endif
+
 pc_read_var, obj=f0, varfile=varfile, /trimall, /bb
+rho=f0.rho[*,*,*]
 v1=f0.uu[*,*,*,0]
 v2=f0.uu[*,*,*,1]
 v3=f0.uu[*,*,*,2]
 b1=f0.bb[*,*,*,0]
 b2=f0.bb[*,*,*,1]
 b3=f0.bb[*,*,*,2]
+scrh=max(v1)
+zz3d=rebin(reform(z[3:mz-4],1,1,mz-6 ), mx-6, my-6,mz-6 )
+vmri=scrh*sin(2*!PI*zz3d)
 endelse
 
 
@@ -132,9 +152,17 @@ titlestr(15)='B!DZ!N(x,y)'
 titlestr(16)='B!DZ!N(x,z)'
 titlestr(17)='B!DZ!N(y,z)'
 
-dataptr(0)=ptr_new(reform(v1(*,*,mz/2)))
+
+vx0=v1
+vy0=v2
+v1=v1-vmri
+v2=v2-vmri
+
+;dataptr(0)=ptr_new(reform(v1(*,*,mz/2)))
+dataptr(0)=ptr_new(reform(vmri(*,my/2,*)))
 dataptr(1)=ptr_new(reform(v1(*,my/2,*)))
-dataptr(2)=ptr_new(reform(v1(mx/2,*,*)))
+;dataptr(2)=ptr_new(reform(v1(mx/2,*,*)))
+dataptr(2)=ptr_new(reform(vx0(*,my/2,*)))
 dataptr(3)=ptr_new(reform(v2(*,*,mz/2)))
 dataptr(4)=ptr_new(reform(v2(*,my/2,*)))
 dataptr(5)=ptr_new(reform(v2(mx/2,*,*)))
