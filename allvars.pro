@@ -79,7 +79,7 @@ time=f.s.time
 
    cgDisplay, WID=1,xs=1100, ys=1100
    cgLoadCT, 22, /Brewer, /Reverse
-   pos = cgLayout([3,4] , OXMargin=[5,5], OYMargin=[5,12], XGap=3, YGap=7)
+   pos = cglayout([3,4] , OXMargin=[5,5], OYMargin=[5,12], XGap=3, YGap=7)
    FOR j=0,11 DO BEGIN
      p = pos[*,j]
 	r=scale_vector( *dataptr(j), 1,254)
