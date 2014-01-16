@@ -1,6 +1,7 @@
 
 
-nfile=8
+nfile=16
+for nfile=0,25,2 do begin
 pload,nfile
 
 vec=vx3(*,*,0)
@@ -85,20 +86,29 @@ fftvec=fft(vec )
 ifft=fft(ffttot,  /inverse)
 ifftv=fft(fftvec,  /inverse)
 
+shiftfftvec=shift(fftvec , nx/2, ny/2)
 cgloadct,33
 ;display,(abs(shift_fft)), ims=8
 
 window, xs=2300, ys=900
 
 !p.position=0
-!p.multi=[0,7,1]
-cgimage, scale_vector(vec,1,255)
-cgimage, scale_vector(imaginary(fftvec),1,255)
-cgimage, scale_vector(imaginary(ffttot),1,255)
-cgimage, scale_vector(real_part( ifftv),1,255)
-cgimage, scale_vector(vec,1,255)
-cgimage, scale_vector(real_part( ifft),1,255)
-cgimage, scale_vector(real_part( ifft),1,255)
+;!p.multi=[0,7,1]
+!p.multi=[0,2,1]
+cgloadct,33
+cgimage, cgscalevector(vec,1,255)
+cgloadct,0, /reverse
+cgimage, cgscalevector(alog10(abs(shiftfftvec)),1,255)
+;cgimage, cgscalevector(imaginary(ffttot),1,255)
+;cgimage, cgscalevector(real_part( ifftv),1,255)
+;cgimage, cgscalevector(vec,1,255)
+;cgimage, cgscalevector(real_part( ifft),1,255)
+;cgimage, cgscalevector(real_part( ifft),1,255)
 !p.multi=0
-end
 
+im=cgsnapshot(filename="fft_"+STRING(nfile, FORMAT='(I03)'), /jpeg, /nodialog)
+
+endfor
+
+
+end
