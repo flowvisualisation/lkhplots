@@ -195,7 +195,7 @@ dt=0.1
 tarr=[tarr, nfile*dt]
 for i=0,17 do begin
 r=*dataptr(i)
-d=cgscale_vector(r,1,254)
+d=cgscalevector(r,1,254)
 cgloadct,33
 tag=string(max(r), format='(G9.2)')+" "+string(min(r), format='(G9.2)')
 cgimage, d
