@@ -40,8 +40,8 @@ yy3d=rebin(reform(x2,  1,nx2,  1),nx1,nx2,nx3)
 zz3d=rebin(reform(x3,  1,  1,nx3),nx1,nx2,nx3) 
 vshear=vsh*xx3d
 scrh=lx*sbomega*eps/8.0
-vmri=scrh*sin(2*!PI*zz3d)*exp(0.74975229*nfile)
-vmri=max(vx)*sin(2*!PI*zz3d)
+vmri=scrh*sin(2.0d*!DPI*zz3d)*exp(0.74975229d*nfile)
+vmri=max(vx)*sin(2.0d*!DPI*zz3d)
 ;; calc vorticity, x,y,z
 ;vortz=getvort(vx,vy,xx,yy,nx,ny)
 ;vorty=getvort(vx,vz,xx,zz,nx,nz)

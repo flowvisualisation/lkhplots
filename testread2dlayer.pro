@@ -1,4 +1,5 @@
 
+layerno=2
 window, xs=1200,ys=1200
 usingps=0
 pluto=0
@@ -88,8 +89,8 @@ b3=bx3
 scrh=max(v1)
 xx3d=rebin(reform(x1,mx,  1,  1),mx,my,mz) 
 zz3d=rebin(reform(x3,1,mz ), mx, mz )
-vmri=scrh*sin(2*!PI*zz3d)
-bmri=scrh*sqrt(5./3.)*cos(2*!PI*zz3d)
+vmri=scrh*sin(layerno*2*!PI*zz3d)
+bmri=scrh*sqrt(5./3.)*cos(layerno*2*!PI*zz3d)
 sbq=1.5
 sbomega=1e-3
 sba=-0.5*sbq*sbomega
@@ -124,8 +125,8 @@ a2=f0.aa[*,*,1]
 a3=f0.aa[*,*,2]
 scrh=max(v1)
 zz3d=rebin(reform(z[3:mz-4],1,mz-6 ), mx-6, mz-6 )
-vmri=scrh*sin(2*!PI*zz3d)
-bmri=scrh*sqrt(5./3.)*cos(2*!PI*zz3d)
+vmri=scrh*sin(layerno*2*!PI*zz3d)
+bmri=scrh*sqrt(5./3.)*cos(layerno*2*!PI*zz3d)
 endelse
 
 

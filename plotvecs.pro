@@ -78,7 +78,7 @@ b2growthrate=(alog(b2arr[q2]) - alog(b2arr[q1]))/(tnorm[q2]-tnorm[q1])
 
 cgplot, tnorm, v1arr,  $
 		/ylog, yrange=[1e-4,1e4], $
-		title=titlstr +' , growth rate= ' + string(b1growthrate, format='(F8.5)'),$
+		title='PLUTO '+titlstr +' , growth rate= ' + string(b1growthrate, format='(F8.5)'),$
 		xtitle="Time, t [orbits]",$
 		xstyle=1, $
 		color=colors[0], linestyle=linestyles[0]

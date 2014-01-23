@@ -98,7 +98,7 @@ window, xs=2300, ys=900
 cgloadct,33
 cgimage, cgscalevector(vec,1,255)
 cgloadct,0, /reverse
-cgimage, cgscalevector(alog10(abs(shiftfftvec)),1,255)
+cgimage, cgscalevector((abs(shiftfftvec)),1,255)
 ;cgimage, cgscalevector(imaginary(ffttot),1,255)
 ;cgimage, cgscalevector(real_part( ifftv),1,255)
 ;cgimage, cgscalevector(vec,1,255)
@@ -106,7 +106,7 @@ cgimage, cgscalevector(alog10(abs(shiftfftvec)),1,255)
 ;cgimage, cgscalevector(real_part( ifft),1,255)
 !p.multi=0
 
-im=cgsnapshot(filename="fft_"+STRING(nfile, FORMAT='(I03)'), /jpeg, /nodialog)
+im=cgsnapshot(filename="fft_pluto_128_cut_"+STRING(nfile, FORMAT='(I03)'), /jpeg, /nodialog)
 
 endfor
 
