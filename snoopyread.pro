@@ -5,17 +5,17 @@ print,fname
 openr, lun,fname, /get_lun
 header=strarr(4)
 readf, lun, header
-print,header
+;print,header
 junk=""
 nx=0
 ny=0
 nz=0
 readf, lun, junk, nx,ny,nz, format='(A10,x,I0,x,I0,x,I0)'
-print, junk, nx,ny,nz
+;print, junk, nx,ny,nz
 
 header2=strarr(5)
 readf, lun, header2
-print, header2
+;print, header2
 
 vx=fltarr(nx,ny,nz)
 vy=vx
@@ -25,12 +25,12 @@ by=vx
 bz=vx
 readu, lun, vx
 vx=swap_endian(vx)
-print, vx(0,0,0)
+;print, vx(0,0,0)
 fieldhead=strarr(1)
 field=""
 f3=""
 readf, lun,fieldhead
-print, fieldhead
+;print, fieldhead
 ;readf, lun,field, f3, num, format='(A5,x,A9,x,I0)' 
 ;print,field," ",f3, num
 print, "reading vy"
@@ -39,7 +39,7 @@ scrh=0
 nxnynz=0L
 fltvar=""
 readf, lun, varname, scrh, nxnynz, fltvar, format='(A2,x,I0,x,I0,x,A5)'
-print, varname, " " ,scrh," ",nxnynz," ", fltvar
+;print, varname, " " ,scrh," ",nxnynz," ", fltvar
 readu, lun, vy
 vy=swap_endian(vy)
 readf, lun, varname, scrh, nxnynz, fltvar, format='(A2,x,I0,x,I0,x,A5)'

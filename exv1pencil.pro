@@ -12,7 +12,7 @@ window, 0, xs=1700, ys=900
 !p.charsize=2
 nbeg=1
 ;nend=nlast
-nend=11
+nend=14
 t=findgen(nend+1)
 angles=findgen(7)*15*!dtor
 ;projangle=29*!pi/30.
@@ -257,6 +257,17 @@ cz=congrid(yqy,qy)
 ;cgimage, reform(vx0[*,0,*])
 ;cgimage, vpz
 ;cgimage, reform(vmri[*,0,*])
+
+
+for usingps=0,1 do begin
+if (usingps eq 1) then begin
+cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times'
+endif else  begin
+set_plot, 'x'
+endelse
+
+
+cgloadct,33
 cgimage,data, background='white',  pos=pos
 imin=min(data)
 imax=max(data)
@@ -266,7 +277,7 @@ cgcontour, data,xqx,yqy,/nodata,  /noerase, pos=pos, axiscolor=cgcolor('black'),
 	 ;title="Vorticity orthogonal to h , with velocity vectors", $
 	 xtitle="x ", $
 	 ytitle="z"
-velovect, cvx2,cvz2, cx,cz, /noerase, color=cgcolor('white'), thick=1.5 , len=2.5 , pos=pos
+velovect, cvx2,cvz2, cx,cz, /noerase, color=cgcolor('white'), thick=1.5 , len=2.5 , pos=pos, /overplot
 
 ll=6
 zero=''
@@ -279,7 +290,20 @@ print, t
    cgText, 0.5, 0.95, ALIGNMENT=0.5, CHARSIZE=2.25, /NORMAL, $
       'Vorticity with velocity vectors'+', t='+string(t(nfile)*omega, format='(F5.1)')+' orbits', color='black'
 
-im=cgsnapshot(filename=fname, /nodialog, /jpeg)
+
+if ( usingps ) then begin
+;device,/close
+cgps_close, /jpeg,  Width=1100
+;set_plot,'x'
+endif else begin
+;set_plot,'x'
+fname2=fname
+;im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
+endelse
+
+endfor
+
+
 endfor
 
 ;window, 7
