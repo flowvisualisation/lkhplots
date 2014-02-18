@@ -83,15 +83,16 @@ def func (theta,state, unused2):
 	amparr[11]=0.0002354
 	amparr[12]=0.0004782
 	print "state", state
-	ampdef=math.exp(.335*state)
+	ampdef=math.exp(2*.75*state)
 	DefineScalarExpression("lx","2.0" )
 	DefineScalarExpression("eps","1.0e-3" )
 	DefineScalarExpression("scrh","2.5*eps" )
 	DefineScalarExpression("amp",str(ampdef) )
+	DefineScalarExpression("amp2",str(ampdef) )
 	#DefineScalarExpression("scrh","1" )
-	#DefineScalarExpression("amp",max(vx) )
-	print "max(vx)"
-	DefineScalarExpression("vmri", "-amp*scrh*sin(2*pi*z)")
+	#print "amp", amp
+	#print "amp2", amp2
+	DefineScalarExpression("vmri", "amp*scrh*sin(2*pi*z)")
 	# simulation variables
 	DefineScalarExpression("ufull", "vx")
 	DefineScalarExpression("u", "vx-vmri")
@@ -199,10 +200,16 @@ func (theta,state, unused2)
 SetActiveWindow(2)
 AddPlot("Pseudocolor", "vmri" )
 DrawPlots()
+Query("Max")
+val = GetQueryOutputValue()
+print "Max value of 'vmri' = ", val
 ToggleLockViewMode()
 ToggleLockTime()
 SetActiveWindow(3)
 AddPlot("Pseudocolor", "ufull" )
+Query("Max")
+val = GetQueryOutputValue()
+print "Max value of 'ufull' = ", val
 DrawPlots()
 ToggleLockViewMode()
 ToggleLockTime()
@@ -212,7 +219,7 @@ DrawPlots()
 ToggleLockViewMode()
 ToggleLockTime()
 
-for state in range(1,20):
+for state in range(0,4):
 #for state in range(TimeSliderGetNStates()):
 	SetTimeSliderState(state)
 	DeleteAllPlots()

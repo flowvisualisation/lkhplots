@@ -1,7 +1,11 @@
 
 varfile='VAR0'
 pc_read_var, obj=f0, varfile=varfile, /trimall, /bb
+if tag_exist(f0,'rho' ) eq 0 then begin
+rho=f0.lnrho[*,*]
+endif else begin
 rho=f0.rho[*,*]
+endelse
 v1=f0.uu[*,*,0]
 v2=f0.uu[*,*,1]
 v3=f0.uu[*,*,2]
@@ -15,4 +19,5 @@ print, 'max, min, b1', max(b1), min(b1)
 print, 'max, min, b2', max(b2), min(b2)
 print, 'max, min, b3', max(b3), min(b3)
 
+display, rho, ims=6
 end

@@ -27,8 +27,12 @@ angleno=0
 projangle=angles[angleno]
 for nfile=nbeg,nend,1 do begin
 
-if ( pluto eq 1) then begin
+code='pluto'
+code='pencil'
+code='snoopy'
 
+switch code OF 
+'pluto': begin
 pload,nfile, /silent
 
 vx=vx1
@@ -40,7 +44,9 @@ zz=x3
 nx=nx1
 ny=nx2
 nz=nx3
-endif else begin
+end
+
+'pencil':begin
 
 
 path='data/proc0/'
@@ -65,7 +71,13 @@ xx=x[3:mx-4]
 yy=y[3:my-4]
 zz=z[3:mz-4]
 
-endelse
+end
+'snoopy':begin
+snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile
+end
+
+end
+
 
 sbq=1.5
 sbomega=1e-3

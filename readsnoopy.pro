@@ -52,6 +52,7 @@ print, '1 lfast', 1/lfast
 
 	al_legend, items, colors=colors, linestyle=linestyles
 
+print, 'Saturation level', maxall
 
 
 if ( usingps ) then begin
