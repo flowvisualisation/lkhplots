@@ -27,7 +27,12 @@ angleno=0
 projangle=angles[angleno]
 for nfile=nbeg,nend,1 do begin
 
-if ( pluto eq 1) then begin
+code='pluto'
+code='pencil'
+code='snoopy'
+
+switch code OF 
+'pluto': begin
 
 pload,nfile, /silent
 
@@ -40,8 +45,9 @@ zz=x3
 nx=nx1
 ny=nx2
 nz=nx3
-endif else begin
+end
 
+'pencil': begin
 
 path='data/proc0/'
 varfile='VAR'+str(nfile)
@@ -65,10 +71,19 @@ xx=x[3:mx-4]
 yy=y[3:my-4]
 zz=z[3:mz-4]
 
-endelse
+
+
+end
+'snoopy':begin
+snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile
+end
+
+end
+
+
 
 sbq=1.5
-sbomega=1e-3
+sbomega=1
 sba=-0.5*sbq*sbomega
 vsh=2*sba
 eps=1e-3
@@ -79,7 +94,6 @@ yy3d=rebin(reform(yy,  1,ny,  1),nx,ny,nz)
 zz3d=rebin(reform(zz,  1,  1,nz),nx,ny,nz) 
 vshear=vsh*xx3d
 scrh=lx*sbomega*eps/8.0
-scrh=1e-7
 ;scrh=max(vx)/exp(0.75)
 vmri=scrh*sin(2*!PI*zz3d)*exp(0.74975229*nfile)
 scrh=max(vx)
