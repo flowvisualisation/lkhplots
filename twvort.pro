@@ -380,7 +380,7 @@ endfor
 for i=2,2 do begin
    pos = [0.07, 0.05, 0.98, 0.91]
 localimagecopy=reform(*var(i))
- cgIMAGE, localimagecopy, POSITION=pos, /KEEP_ASPECT_RATIO ,background='white', scale=1
+ cgimage, localimagecopy, POSITION=pos, /KEEP_ASPECT_RATIO ,background='white', scale=1
  cgcontour, xx#yy, xx,yy,POSITION=pos, /NOERASE, XSTYLE=1, $
       YSTYLE=1,  NLEVELS=10, /nodata, title=titlstr(i), $
        axiscolor='black',$

@@ -17,7 +17,6 @@ CASE dirname OF
 	'3d_mri_wn_pi_wn'		: titlstr='3D MRI!DWN!N + PI !DWN!N =0 '
 	'3d_mri_pi_wn'		: titlstr='3D MRI + PI!DWN!N =0 '
    ELSE: PRINT, 'Not one through four'
-   ELSE: PRINT, 'Not one through four'
 ENDCASE
 
 x=2

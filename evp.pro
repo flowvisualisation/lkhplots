@@ -17,7 +17,7 @@ window, 0, xs=1700, ys=900
 !p.charsize=2
 nbeg=1
 ;nend=nlast
-nend=20
+nend=14
 t=findgen(nend+1)
 angles=findgen(7)*15*!dtor
 ;projangle=29*!pi/30.
@@ -34,7 +34,6 @@ for nfile=nbeg,nend,1 do begin
 
 code='pluto'
 code='pencil'
-code='snoopy'
 
 switch code OF 
 'pluto': begin
@@ -78,7 +77,7 @@ zz=z[3:mz-4]
 
 end
 'snoopy':begin
-snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
+snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile
 end
 
 end
@@ -253,8 +252,7 @@ endelse
 cgloadct,33
 pos=[0.1,0.15,0.9,0.9]
 cbarchar=0.9
-d=data[1:nx-2,*]
-cgimage,d, background='white',  pos=pos
+cgimage,data, background='white',  pos=pos
 imin=min(data)
 imax=max(data)
 cgcolorbar, Position=[pos[0], pos[1]-0.07, pos[2], pos[1]-0.06], range=[imin,imax], format='(G8.1)', charsize=cbarchar
@@ -274,7 +272,8 @@ for j=1,ll-lnt do zero=zero+'0'
 
 print, t
    cgText, 0.5, 0.95, ALIGNMENT=0.5, CHARSIZE=1.9, /NORMAL, $
-      'Vorticity with velocity vectors'+', t='+string(time, format='(F5.1)')+' orbits', color='black'
+      'Vorticity with velocity vectors'+', t='+string(t(nfile)*omega, format='(F5.1)')+' orbits', color='black'
+
 
 if ( usingps ) then begin
 cgps_close, /jpeg,  Width=1100

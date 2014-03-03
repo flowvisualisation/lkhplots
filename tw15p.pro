@@ -66,7 +66,7 @@ slice=0
 f=rf(0, /b,/den, /e, /vel) ELSE $
 f=rf(0, /b,/den, /e, /vel, /swap_endian)
 
-downsample=10
+downsample=1
 nx=f.s.gn[0]/downsample
 nz=f.s.gn[2]/downsample
 xx=findgen(nx)

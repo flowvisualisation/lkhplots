@@ -3,6 +3,11 @@ pluto=0
 nfile=1
 x=2
  
+ 
+CD, CURRENT=str & PRINT, str
+dirpath=STRSPLIT(Str,'/',  /EXTRACT) 
+ dirname=dirpath(size(dirpath, /dimensions)-2)
+
 omega=1
   !X.OMargin = [2, 6]
    !Y.OMargin = [2, 6]
@@ -12,7 +17,7 @@ window, 0, xs=1700, ys=900
 !p.charsize=2
 nbeg=1
 ;nend=nlast
-nend=11
+nend=20
 t=findgen(nend+1)
 angles=findgen(7)*15*!dtor
 ;projangle=29*!pi/30.
@@ -76,6 +81,8 @@ zz=z[3:mz-4]
 end
 'snoopy':begin
 snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile
+vx=bx
+vy=by
 end
 
 end
@@ -256,33 +263,57 @@ cz=congrid(yqy,qy)
 ;window, 2
 !p.multi=0
 ;!p.multi=[0,4,1]
-;cgimage, vpx
-;cgimage, reform(vx0[*,0,*])
-;cgimage, vpz
-;cgimage, reform(vmri[*,0,*])
-cgimage,data, background='white',  pos=pos
+
+
+
+for usingps=0,1 do begin
+if (usingps eq 1) then begin
+cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times'
+endif else  begin
+set_plot, 'x'
+endelse
+
+
+cgloadct,33
+pos=[0.1,0.15,0.9,0.9]
+cbarchar=0.9
+
+
+d=data[1:nx-2,*]
+cgimage,d, background='white',  pos=pos
 imin=min(data)
 imax=max(data)
-cgcolorbar, Position=[pos[0], pos[1]-0.05, pos[2], pos[1]-0.04], range=[imin,imax], format='(G8.1)', charsize=cbarchar
+cgcolorbar, Position=[pos[0], pos[1]-0.07, pos[2], pos[1]-0.06], range=[imin,imax], format='(G8.1)', charsize=cbarchar
 tag=string ( projangle*!radeg, format='(I02)')
 cgcontour, data,xqx,yqy,/nodata,  /noerase, pos=pos, axiscolor=cgcolor('black'), $
 	 ;title="Vorticity orthogonal to h , with velocity vectors", $
 	 xtitle="x ", $
-	 ytitle="z"
-velovect, cvx2,cvz2, cx,cz, /noerase, color=cgcolor('white'), thick=1.5 , len=2.5 , pos=pos
+	 ytitle="z", charsize=cbarchar
+velovect, cvx2,cvz2, cx,cz, /noerase, color=cgcolor('white'), thick=1.5 , len=2.5 , pos=pos, /overplot
 
 ll=6
 zero=''
 nts=strcompress(string(nfile),/remove_all)
 lnt=strlen(nts)
 for j=1,ll-lnt do zero=zero+'0'
-           fname='vorticity'+tag+"_"+zero+nts
+           fname=code+dirname+'current'+tag+"_"+zero+nts
+
 
 print, t
    cgText, 0.5, 0.95, ALIGNMENT=0.5, CHARSIZE=2.25, /NORMAL, $
-      'Vorticity with velocity vectors'+', t='+string(t(nfile)*omega, format='(F5.1)')+' orbits', color='black'
+      'Current with field lines'+', t='+string(t(nfile)*omega, format='(F5.1)')+' orbits', color='black'
 
-im=cgsnapshot(filename=fname, /nodialog, /jpeg)
+
+if ( usingps ) then begin
+cgps_close, /jpeg,  Width=1100
+endif else begin
+fname2=fname
+endelse
+
+endfor
+
+
+
 endfor
 
 ;window, 7
