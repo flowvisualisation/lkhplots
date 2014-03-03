@@ -45,7 +45,7 @@ readf, lun,fieldhead
 ;print, fieldhead
 ;readf, lun,field, f3, num, format='(A5,x,A9,x,I0)' 
 ;print,field," ",f3, num
-print, "reading vy"
+;print, "reading vy"
 varname=""
 scrh=0
 nxnynz=0L
@@ -55,19 +55,19 @@ readf, lun, varname, scrh, nxnynz, fltvar, format='(A2,x,I0,x,I0,x,A5)'
 readu, lun, vy
 vy=swap_endian(vy)
 readf, lun, varname, scrh, nxnynz, fltvar, format='(A2,x,I0,x,I0,x,A5)'
-print, varname, " " ,scrh," ",nxnynz," ", fltvar
+;print, varname, " " ,scrh," ",nxnynz," ", fltvar
 readu, lun, vz
 vz=swap_endian(vz)
 readf, lun, varname, scrh, nxnynz, fltvar, format='(A2,x,I0,x,I0,x,A5)'
-print, varname, " " ,scrh," ",nxnynz," ", fltvar
+;print, varname, " " ,scrh," ",nxnynz," ", fltvar
 readu, lun, bx
 bx=swap_endian(bx)
 readf, lun, varname, scrh, nxnynz, fltvar, format='(A2,x,I0,x,I0,x,A5)'
-print, varname, " " ,scrh," ",nxnynz," ", fltvar
+;print, varname, " " ,scrh," ",nxnynz," ", fltvar
 readu, lun, by
 by=swap_endian(by)
 readf, lun, varname, scrh, nxnynz, fltvar, format='(A2,x,I0,x,I0,x,A5)'
-print, varname, " " ,scrh," ",nxnynz," ", fltvar
+;print, varname, " " ,scrh," ",nxnynz," ", fltvar
 readu, lun, bz
 bz=swap_endian(bz)
 
