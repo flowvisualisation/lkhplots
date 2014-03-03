@@ -7,12 +7,11 @@ OpenDatabase("localhost:./data.*.vtk database", 2)
 
 pi=3.141592
 theta=-pi/4.0
-#theta=pi/2.0
 sliceq1 = math.cos(theta)
 sliceq2 = math.sin(theta)
-
 DefineScalarExpression("pi", "3.141592")
 DefineScalarExpression("theta", "pi/4.0")
+
 DefineScalarExpression("x", "coord(mesh)[0]")
 DefineScalarExpression("y", "coord(mesh)[1]")
 DefineScalarExpression("z", "coord(mesh)[2]")
@@ -115,63 +114,44 @@ AnnotationAtts = AnnotationAttributes()
 AnnotationAtts.databaseInfoFlag = 0
 AnnotationAtts.userInfoFlag = 0
 SetAnnotationAttributes(AnnotationAtts)
+theta=0.0
+sliceq1 = math.cos(theta)
+sliceq2 = math.sin(theta)
+DefineScalarExpression("pi", "3.141592")
+DefineScalarExpression("theta", "0.0")
 
-AddPlot("Pseudocolor", "u", 1, 1)
-SliceAtts.normal = (sliceq1,sliceq2 , 0)
-SliceAtts.originPoint = (1, 1, 1)
-SliceAtts.project2d = 0
-AddOperator("Slice", 1)
-SetOperatorOptions(SliceAtts, 1)
-DrawPlots()
-ToggleLockViewMode()
-ToggleLockTime()
-
-SetActiveWindow(2)
-text = CreateAnnotationObject("Text2D")
-text.visible = 1
-text.active = 1
-text.position = (0.2, 0.88)
-#text.width = 0.25
-text.textColor = (0, 0, 0, 255)
-text.useForegroundForTextColor = 1
-text.text = "vy"
-text.fontFamily = text.Times  # Arial, Courier, Times
-text.fontBold = 0
-text.fontItalic = 0
-text.fontShadow = 0
-AnnotationAtts = AnnotationAttributes()
-AnnotationAtts.databaseInfoFlag = 0
-AnnotationAtts.userInfoFlag = 0
-SetAnnotationAttributes(AnnotationAtts)
-AddPlot("Pseudocolor", "v", 1, 1)
-AddOperator("Slice", 1)
-SliceAtts.normal = (1, 1, 0)
-SliceAtts.normal = (sliceq1,sliceq2 , 0)
-SliceAtts.originPoint = (1, 1, 1)
-SliceAtts.project2d = 0
-SetOperatorOptions(SliceAtts, 1)
-DrawPlots()
-ToggleLockViewMode()
-ToggleLockTime()
-
-SetActiveWindow(3)
-text = CreateAnnotationObject("Text2D")
-text.visible = 1
-text.active = 1
-text.position = (0.2, 0.88)
-#text.width = 0.25
-text.textColor = (0, 0, 0, 255)
-text.useForegroundForTextColor = 1
-text.text = "vz"
-text.fontFamily = text.Times  # Arial, Courier, Times
-text.fontBold = 0
-text.fontItalic = 0
-text.fontShadow = 0
-AnnotationAtts = AnnotationAttributes()
-AnnotationAtts.databaseInfoFlag = 0
-AnnotationAtts.userInfoFlag = 0
-SetAnnotationAttributes(AnnotationAtts)
-AddPlot("Pseudocolor", "w", 1, 1)
+DefineScalarExpression("x", "coord(mesh)[0]")
+DefineScalarExpression("y", "coord(mesh)[1]")
+DefineScalarExpression("z", "coord(mesh)[2]")
+DefineVectorExpression("velocity", "{u,v,w}")
+DefineScalarExpression("sbq", "1.5")
+DefineScalarExpression("sbomega", "1e-3")
+DefineScalarExpression("sba", "-0.5*sbq*sbomega")
+DefineScalarExpression("vsh", "2.0*sba")
+DefineScalarExpression("vshear", "vsh*x")
+DefineScalarExpression("vmri", "sin(pi*z)")
+# simulation initial condition variables
+DefineScalarExpression("u", "sin(pi*z)")
+DefineScalarExpression("v", "sin(pi*z)")
+DefineScalarExpression("w", "sin(pi*x)+sin(pi*y)")
+DefineScalarExpression("u", "3D_Velocity_Field[0]")
+DefineScalarExpression("v", "(3D_Velocity_Field[1]-vshear)")
+DefineScalarExpression("w", "3D_Velocity_Field[2]")
+# test variables
+#DefineScalarExpression("u", "-cos(pi*z)*sin(pi*x)")
+#DefineScalarExpression("v", "0*sin(pi*z)*cos(pi*x)")
+#DefineScalarExpression("w", "sin(pi*z)*cos(pi*x)")
+#DefineScalarExpression("v", "vshear")
+DefineScalarExpression("cos_theta", "cos(theta)*point_constant(mesh, 1.)")
+DefineScalarExpression("sin_theta", "sin(theta)*point_constant(mesh, 1.)")
+DefineScalarExpression("kz", "0*point_constant(mesh, 1.)")
+DefineVectorExpression("kh", "{cos_theta,sin_theta,kz}")
+DefineVectorExpression("kperp", "{-sin_theta,cos_theta,kz}")
+DefineScalarExpression("vortproj", "dot(curlv,kperp)")
+DefineScalarExpression("uhp", "dot(velocity,kh)")
+DefineScalarExpression("vhp", "dot(velocity,kperp)")
+DefineVectorExpression("velproj", "{uhp,vhp,w}")
+AddPlot("Pseudocolor", "vortproj", 1, 1)
 AddOperator("Slice", 1)
 SliceAtts.normal = (1, 1, 0)
 SliceAtts.normal = (sliceq1,sliceq2 , 0)
@@ -182,61 +162,9 @@ DrawPlots()
 ToggleLockViewMode()
 ToggleLockTime()
 
-SetActiveWindow(4)
-text = CreateAnnotationObject("Text2D")
-text.visible = 1
-text.active = 1
-text.position = (0.2, 0.88)
-#text.width = 0.25
-text.textColor = (0, 0, 0, 255)
-text.useForegroundForTextColor = 1
-text.text = "vortx"
-text.fontFamily = text.Times  # Arial, Courier, Times
-text.fontBold = 0
-text.fontItalic = 0
-text.fontShadow = 0
-AnnotationAtts = AnnotationAttributes()
-AnnotationAtts.databaseInfoFlag = 0
-AnnotationAtts.userInfoFlag = 0
-SetAnnotationAttributes(AnnotationAtts)
-AddPlot("Pseudocolor", "curlvx", 1, 1)
-AddOperator("Slice", 1)
-SliceAtts.normal = (1, 1, 0)
-SliceAtts.normal = (sliceq1,sliceq2 , 0)
-SliceAtts.originPoint = (1, 1, 1)
-SliceAtts.project2d = 0
-SetOperatorOptions(SliceAtts, 1)
-DrawPlots()
-ToggleLockViewMode()
-ToggleLockTime()
-
-SetActiveWindow(5)
-text = CreateAnnotationObject("Text2D")
-text.visible = 1
-text.active = 1
-text.position = (0.2, 0.88)
-#text.width = 0.25
-text.textColor = (0, 0, 0, 255)
-text.useForegroundForTextColor = 1
-text.text = "vorty"
-text.fontFamily = text.Times  # Arial, Courier, Times
-text.fontBold = 0
-text.fontItalic = 0
-text.fontShadow = 0
-AnnotationAtts = AnnotationAttributes()
-AnnotationAtts.databaseInfoFlag = 0
-AnnotationAtts.userInfoFlag = 0
-SetAnnotationAttributes(AnnotationAtts)
-AddPlot("Pseudocolor", "curlvy", 1, 1)
-AddOperator("Slice", 1)
-SliceAtts.normal = (1, 1, 0)
-SliceAtts.normal = (sliceq1,sliceq2 , 0)
-SliceAtts.originPoint = (1, 1, 1)
-SliceAtts.project2d = 0
-SetOperatorOptions(SliceAtts, 1)
-AddPlot("Vector", "velocity", 1, 1)
+AddPlot("Vector", "velproj", 1, 1)
 VectorAtts = VectorAttributes()
-VectorAtts.glyphLocation = VectorAtts.UniformInSpace  # AdaptsToMeshResolution, UniformInSpace
+VectorAtts.glyphLocation = VectorAtts.AdaptsToMeshResolution  # AdaptsToMeshResolution, UniformInSpace
 VectorAtts.useStride = 0
 VectorAtts.stride = 1
 VectorAtts.nVectors = 400
@@ -263,12 +191,329 @@ VectorAtts.geometryQuality = VectorAtts.Fast  # Fast, High
 VectorAtts.stemWidth = 0.08
 VectorAtts.origOnly = 1
 VectorAtts.glyphType = VectorAtts.Arrow  # Arrow, Ellipsoid
+VectorAtts.nVectors = 400
 SetPlotOptions(VectorAtts)
 #AddOperator("Slice", 1)
 DrawPlots()
+
+
+SetActiveWindow(2)
+text = CreateAnnotationObject("Text2D")
+text.visible = 1
+text.active = 1
+text.position = (0.2, 0.88)
+#text.width = 0.25
+text.textColor = (0, 0, 0, 255)
+text.useForegroundForTextColor = 1
+text.text = "vy"
+text.fontFamily = text.Times  # Arial, Courier, Times
+text.fontBold = 0
+text.fontItalic = 0
+text.fontShadow = 0
+AnnotationAtts = AnnotationAttributes()
+AnnotationAtts.databaseInfoFlag = 0
+AnnotationAtts.userInfoFlag = 0
+SetAnnotationAttributes(AnnotationAtts)
+#set2
+theta=-pi/6.0
+sliceq1 = math.cos(theta)
+sliceq2 = math.sin(theta)
+DefineScalarExpression("pi", "3.141592")
+DefineScalarExpression("theta", "pi/6.0")
+
+DefineScalarExpression("x", "coord(mesh)[0]")
+DefineScalarExpression("y", "coord(mesh)[1]")
+DefineScalarExpression("z", "coord(mesh)[2]")
+DefineVectorExpression("velocity", "{u,v,w}")
+DefineScalarExpression("sbq", "1.5")
+DefineScalarExpression("sbomega", "1e-3")
+DefineScalarExpression("sba", "-0.5*sbq*sbomega")
+DefineScalarExpression("vsh", "2.0*sba")
+DefineScalarExpression("vshear", "vsh*x")
+DefineScalarExpression("vmri", "sin(pi*z)")
+# simulation initial condition variables
+DefineScalarExpression("u", "sin(pi*z)")
+DefineScalarExpression("v", "sin(pi*z)")
+DefineScalarExpression("w", "sin(pi*x)+sin(pi*y)")
+DefineScalarExpression("u", "3D_Velocity_Field[0]")
+DefineScalarExpression("v", "(3D_Velocity_Field[1]-vshear)")
+DefineScalarExpression("w", "3D_Velocity_Field[2]")
+# test variables
+#DefineScalarExpression("u", "-cos(pi*z)*sin(pi*x)")
+#DefineScalarExpression("v", "0*sin(pi*z)*cos(pi*x)")
+#DefineScalarExpression("w", "sin(pi*z)*cos(pi*x)")
+#DefineScalarExpression("v", "vshear")
+DefineScalarExpression("cos_theta", "cos(theta)*point_constant(mesh, 1.)")
+DefineScalarExpression("sin_theta", "sin(theta)*point_constant(mesh, 1.)")
+DefineScalarExpression("kz", "0*point_constant(mesh, 1.)")
+DefineVectorExpression("kh", "{cos_theta,sin_theta,kz}")
+DefineVectorExpression("kperp", "{-sin_theta,cos_theta,kz}")
+DefineScalarExpression("vortproj", "dot(curlv,kperp)")
+DefineScalarExpression("uhp", "dot(velocity,kh)")
+DefineScalarExpression("vhp", "dot(velocity,kperp)")
+DefineVectorExpression("velproj", "{uhp,vhp,w}")
+AddPlot("Pseudocolor", "vortproj", 1, 1)
+AddOperator("Slice", 1)
+SliceAtts.normal = (1, 1, 0)
+SliceAtts.normal = (sliceq1,sliceq2 , 0)
+SliceAtts.originPoint = (1, 1, 1)
+SliceAtts.project2d = 0
+SetOperatorOptions(SliceAtts, 1)
 DrawPlots()
 ToggleLockViewMode()
 ToggleLockTime()
+
+AddPlot("Vector", "velproj", 1, 1)
+VectorAtts = VectorAttributes()
+VectorAtts.glyphLocation = VectorAtts.AdaptsToMeshResolution  # AdaptsToMeshResolution, UniformInSpace
+VectorAtts.useStride = 0
+VectorAtts.stride = 1
+VectorAtts.nVectors = 400
+VectorAtts.lineStyle = VectorAtts.SOLID  # SOLID, DASH, DOT, DOTDASH
+VectorAtts.lineWidth = 0
+VectorAtts.scale = 0.25
+VectorAtts.scaleByMagnitude = 1
+VectorAtts.autoScale = 1
+VectorAtts.headSize = 0.25
+VectorAtts.headOn = 1
+VectorAtts.colorByMag = 1
+VectorAtts.useLegend = 1
+VectorAtts.vectorColor = (0, 0, 0, 255)
+VectorAtts.colorTableName = "Default"
+VectorAtts.invertColorTable = 0
+VectorAtts.vectorOrigin = VectorAtts.Tail  # Head, Middle, Tail
+VectorAtts.minFlag = 0
+VectorAtts.maxFlag = 0
+VectorAtts.limitsMode = VectorAtts.OriginalData  # OriginalData, CurrentPlot
+VectorAtts.min = 0
+VectorAtts.max = 1
+VectorAtts.lineStem = 1
+VectorAtts.geometryQuality = VectorAtts.Fast  # Fast, High
+VectorAtts.stemWidth = 0.08
+VectorAtts.origOnly = 1
+VectorAtts.glyphType = VectorAtts.Arrow  # Arrow, Ellipsoid
+VectorAtts.nVectors = 400
+SetPlotOptions(VectorAtts)
+#AddOperator("Slice", 1)
+DrawPlots()
+
+SetActiveWindow(3)
+text = CreateAnnotationObject("Text2D")
+text.visible = 1
+text.active = 1
+text.position = (0.2, 0.88)
+#text.width = 0.25
+text.textColor = (0, 0, 0, 255)
+text.useForegroundForTextColor = 1
+text.text = "vz"
+text.fontFamily = text.Times  # Arial, Courier, Times
+text.fontBold = 0
+text.fontItalic = 0
+text.fontShadow = 0
+AnnotationAtts = AnnotationAttributes()
+AnnotationAtts.databaseInfoFlag = 0
+AnnotationAtts.userInfoFlag = 0
+SetAnnotationAttributes(AnnotationAtts)
+#set3
+theta=-pi/5.0
+sliceq1 = math.cos(theta)
+sliceq2 = math.sin(theta)
+DefineScalarExpression("pi", "3.141592")
+DefineScalarExpression("theta", "pi/5.0")
+
+DefineScalarExpression("x", "coord(mesh)[0]")
+DefineScalarExpression("y", "coord(mesh)[1]")
+DefineScalarExpression("z", "coord(mesh)[2]")
+DefineVectorExpression("velocity", "{u,v,w}")
+DefineScalarExpression("sbq", "1.5")
+DefineScalarExpression("sbomega", "1e-3")
+DefineScalarExpression("sba", "-0.5*sbq*sbomega")
+DefineScalarExpression("vsh", "2.0*sba")
+DefineScalarExpression("vshear", "vsh*x")
+DefineScalarExpression("vmri", "sin(pi*z)")
+# simulation initial condition variables
+DefineScalarExpression("u", "sin(pi*z)")
+DefineScalarExpression("v", "sin(pi*z)")
+DefineScalarExpression("w", "sin(pi*x)+sin(pi*y)")
+DefineScalarExpression("u", "3D_Velocity_Field[0]")
+DefineScalarExpression("v", "(3D_Velocity_Field[1]-vshear)")
+DefineScalarExpression("w", "3D_Velocity_Field[2]")
+# test variables
+#DefineScalarExpression("u", "-cos(pi*z)*sin(pi*x)")
+#DefineScalarExpression("v", "0*sin(pi*z)*cos(pi*x)")
+#DefineScalarExpression("w", "sin(pi*z)*cos(pi*x)")
+#DefineScalarExpression("v", "vshear")
+DefineScalarExpression("cos_theta", "cos(theta)*point_constant(mesh, 1.)")
+DefineScalarExpression("sin_theta", "sin(theta)*point_constant(mesh, 1.)")
+DefineScalarExpression("kz", "0*point_constant(mesh, 1.)")
+DefineVectorExpression("kh", "{cos_theta,sin_theta,kz}")
+DefineVectorExpression("kperp", "{-sin_theta,cos_theta,kz}")
+DefineScalarExpression("vortproj", "dot(curlv,kperp)")
+DefineScalarExpression("uhp", "dot(velocity,kh)")
+DefineScalarExpression("vhp", "dot(velocity,kperp)")
+DefineVectorExpression("velproj", "{uhp,vhp,w}")
+AddPlot("Pseudocolor", "vortproj", 1, 1)
+AddOperator("Slice", 1)
+SliceAtts.normal = (1, 1, 0)
+SliceAtts.normal = (sliceq1,sliceq2 , 0)
+SliceAtts.originPoint = (1, 1, 1)
+SliceAtts.project2d = 0
+SetOperatorOptions(SliceAtts, 1)
+DrawPlots()
+ToggleLockViewMode()
+ToggleLockTime()
+
+AddPlot("Vector", "velproj", 1, 1)
+VectorAtts = VectorAttributes()
+VectorAtts.glyphLocation = VectorAtts.AdaptsToMeshResolution  # AdaptsToMeshResolution, UniformInSpace
+VectorAtts.useStride = 0
+VectorAtts.stride = 1
+VectorAtts.nVectors = 400
+VectorAtts.lineStyle = VectorAtts.SOLID  # SOLID, DASH, DOT, DOTDASH
+VectorAtts.lineWidth = 0
+VectorAtts.scale = 0.25
+VectorAtts.scaleByMagnitude = 1
+VectorAtts.autoScale = 1
+VectorAtts.headSize = 0.25
+VectorAtts.headOn = 1
+VectorAtts.colorByMag = 1
+VectorAtts.useLegend = 1
+VectorAtts.vectorColor = (0, 0, 0, 255)
+VectorAtts.colorTableName = "Default"
+VectorAtts.invertColorTable = 0
+VectorAtts.vectorOrigin = VectorAtts.Tail  # Head, Middle, Tail
+VectorAtts.minFlag = 0
+VectorAtts.maxFlag = 0
+VectorAtts.limitsMode = VectorAtts.OriginalData  # OriginalData, CurrentPlot
+VectorAtts.min = 0
+VectorAtts.max = 1
+VectorAtts.lineStem = 1
+VectorAtts.geometryQuality = VectorAtts.Fast  # Fast, High
+VectorAtts.stemWidth = 0.08
+VectorAtts.origOnly = 1
+VectorAtts.glyphType = VectorAtts.Arrow  # Arrow, Ellipsoid
+VectorAtts.nVectors = 400
+SetPlotOptions(VectorAtts)
+#AddOperator("Slice", 1)
+DrawPlots()
+
+SetActiveWindow(4)
+text = CreateAnnotationObject("Text2D")
+text.visible = 1
+text.active = 1
+text.position = (0.2, 0.88)
+#text.width = 0.25
+text.textColor = (0, 0, 0, 255)
+text.useForegroundForTextColor = 1
+text.text = "vortx"
+text.fontFamily = text.Times  # Arial, Courier, Times
+text.fontBold = 0
+text.fontItalic = 0
+text.fontShadow = 0
+AnnotationAtts = AnnotationAttributes()
+AnnotationAtts.databaseInfoFlag = 0
+AnnotationAtts.userInfoFlag = 0
+SetAnnotationAttributes(AnnotationAtts)
+#set4
+theta=-pi/4.5
+sliceq1 = math.cos(theta)
+sliceq2 = math.sin(theta)
+DefineScalarExpression("pi", "3.141592")
+DefineScalarExpression("theta", "pi/4.5")
+
+DefineScalarExpression("x", "coord(mesh)[0]")
+DefineScalarExpression("y", "coord(mesh)[1]")
+DefineScalarExpression("z", "coord(mesh)[2]")
+DefineVectorExpression("velocity", "{u,v,w}")
+DefineScalarExpression("sbq", "1.5")
+DefineScalarExpression("sbomega", "1e-3")
+DefineScalarExpression("sba", "-0.5*sbq*sbomega")
+DefineScalarExpression("vsh", "2.0*sba")
+DefineScalarExpression("vshear", "vsh*x")
+DefineScalarExpression("vmri", "sin(pi*z)")
+# simulation initial condition variables
+DefineScalarExpression("u", "sin(pi*z)")
+DefineScalarExpression("v", "sin(pi*z)")
+DefineScalarExpression("w", "sin(pi*x)+sin(pi*y)")
+DefineScalarExpression("u", "3D_Velocity_Field[0]")
+DefineScalarExpression("v", "(3D_Velocity_Field[1]-vshear)")
+DefineScalarExpression("w", "3D_Velocity_Field[2]")
+# test variables
+#DefineScalarExpression("u", "-cos(pi*z)*sin(pi*x)")
+#DefineScalarExpression("v", "0*sin(pi*z)*cos(pi*x)")
+#DefineScalarExpression("w", "sin(pi*z)*cos(pi*x)")
+#DefineScalarExpression("v", "vshear")
+DefineScalarExpression("cos_theta", "cos(theta)*point_constant(mesh, 1.)")
+DefineScalarExpression("sin_theta", "sin(theta)*point_constant(mesh, 1.)")
+DefineScalarExpression("kz", "0*point_constant(mesh, 1.)")
+DefineVectorExpression("kh", "{cos_theta,sin_theta,kz}")
+DefineVectorExpression("kperp", "{-sin_theta,cos_theta,kz}")
+DefineScalarExpression("vortproj", "dot(curlv,kperp)")
+DefineScalarExpression("uhp", "dot(velocity,kh)")
+DefineScalarExpression("vhp", "dot(velocity,kperp)")
+DefineVectorExpression("velproj", "{uhp,vhp,w}")
+AddPlot("Pseudocolor", "vortproj", 1, 1)
+AddOperator("Slice", 1)
+SliceAtts.normal = (1, 1, 0)
+SliceAtts.normal = (sliceq1,sliceq2 , 0)
+SliceAtts.originPoint = (1, 1, 1)
+SliceAtts.project2d = 0
+SetOperatorOptions(SliceAtts, 1)
+DrawPlots()
+ToggleLockViewMode()
+ToggleLockTime()
+
+AddPlot("Vector", "velproj", 1, 1)
+VectorAtts = VectorAttributes()
+VectorAtts.glyphLocation = VectorAtts.AdaptsToMeshResolution  # AdaptsToMeshResolution, UniformInSpace
+VectorAtts.useStride = 0
+VectorAtts.stride = 1
+VectorAtts.nVectors = 400
+VectorAtts.lineStyle = VectorAtts.SOLID  # SOLID, DASH, DOT, DOTDASH
+VectorAtts.lineWidth = 0
+VectorAtts.scale = 0.25
+VectorAtts.scaleByMagnitude = 1
+VectorAtts.autoScale = 1
+VectorAtts.headSize = 0.25
+VectorAtts.headOn = 1
+VectorAtts.colorByMag = 1
+VectorAtts.useLegend = 1
+VectorAtts.vectorColor = (0, 0, 0, 255)
+VectorAtts.colorTableName = "Default"
+VectorAtts.invertColorTable = 0
+VectorAtts.vectorOrigin = VectorAtts.Tail  # Head, Middle, Tail
+VectorAtts.minFlag = 0
+VectorAtts.maxFlag = 0
+VectorAtts.limitsMode = VectorAtts.OriginalData  # OriginalData, CurrentPlot
+VectorAtts.min = 0
+VectorAtts.max = 1
+VectorAtts.lineStem = 1
+VectorAtts.geometryQuality = VectorAtts.Fast  # Fast, High
+VectorAtts.stemWidth = 0.08
+VectorAtts.origOnly = 1
+VectorAtts.glyphType = VectorAtts.Arrow  # Arrow, Ellipsoid
+VectorAtts.nVectors = 400
+SetPlotOptions(VectorAtts)
+#AddOperator("Slice", 1)
+DrawPlots()
+
+SetActiveWindow(5)
+text = CreateAnnotationObject("Text2D")
+text.visible = 1
+text.active = 1
+text.position = (0.2, 0.88)
+#text.width = 0.25
+text.textColor = (0, 0, 0, 255)
+text.useForegroundForTextColor = 1
+text.text = "vorty"
+text.fontFamily = text.Times  # Arial, Courier, Times
+text.fontBold = 0
+text.fontItalic = 0
+text.fontShadow = 0
+AnnotationAtts = AnnotationAttributes()
+AnnotationAtts.databaseInfoFlag = 0
+AnnotationAtts.userInfoFlag = 0
+SetAnnotationAttributes(AnnotationAtts)
 
 SetActiveWindow(6)
 text = CreateAnnotationObject("Text2D")
@@ -287,7 +532,45 @@ AnnotationAtts = AnnotationAttributes()
 AnnotationAtts.databaseInfoFlag = 0
 AnnotationAtts.userInfoFlag = 0
 SetAnnotationAttributes(AnnotationAtts)
-AddPlot("Pseudocolor", "curlvz", 1, 1)
+#set5
+theta=-pi/4.0
+sliceq1 = math.cos(theta)
+sliceq2 = math.sin(theta)
+DefineScalarExpression("pi", "3.141592")
+DefineScalarExpression("theta", "pi/4.0")
+
+DefineScalarExpression("x", "coord(mesh)[0]")
+DefineScalarExpression("y", "coord(mesh)[1]")
+DefineScalarExpression("z", "coord(mesh)[2]")
+DefineVectorExpression("velocity", "{u,v,w}")
+DefineScalarExpression("sbq", "1.5")
+DefineScalarExpression("sbomega", "1e-3")
+DefineScalarExpression("sba", "-0.5*sbq*sbomega")
+DefineScalarExpression("vsh", "2.0*sba")
+DefineScalarExpression("vshear", "vsh*x")
+DefineScalarExpression("vmri", "sin(pi*z)")
+# simulation initial condition variables
+DefineScalarExpression("u", "sin(pi*z)")
+DefineScalarExpression("v", "sin(pi*z)")
+DefineScalarExpression("w", "sin(pi*x)+sin(pi*y)")
+DefineScalarExpression("u", "3D_Velocity_Field[0]")
+DefineScalarExpression("v", "(3D_Velocity_Field[1]-vshear)")
+DefineScalarExpression("w", "3D_Velocity_Field[2]")
+# test variables
+#DefineScalarExpression("u", "-cos(pi*z)*sin(pi*x)")
+#DefineScalarExpression("v", "0*sin(pi*z)*cos(pi*x)")
+#DefineScalarExpression("w", "sin(pi*z)*cos(pi*x)")
+#DefineScalarExpression("v", "vshear")
+DefineScalarExpression("cos_theta", "cos(theta)*point_constant(mesh, 1.)")
+DefineScalarExpression("sin_theta", "sin(theta)*point_constant(mesh, 1.)")
+DefineScalarExpression("kz", "0*point_constant(mesh, 1.)")
+DefineVectorExpression("kh", "{cos_theta,sin_theta,kz}")
+DefineVectorExpression("kperp", "{-sin_theta,cos_theta,kz}")
+DefineScalarExpression("vortproj", "dot(curlv,kperp)")
+DefineScalarExpression("uhp", "dot(velocity,kh)")
+DefineScalarExpression("vhp", "dot(velocity,kperp)")
+DefineVectorExpression("velproj", "{uhp,vhp,w}")
+AddPlot("Pseudocolor", "vortproj", 1, 1)
 AddOperator("Slice", 1)
 SliceAtts.normal = (1, 1, 0)
 SliceAtts.normal = (sliceq1,sliceq2 , 0)
@@ -297,6 +580,40 @@ SetOperatorOptions(SliceAtts, 1)
 DrawPlots()
 ToggleLockViewMode()
 ToggleLockTime()
+
+AddPlot("Vector", "velproj", 1, 1)
+VectorAtts = VectorAttributes()
+VectorAtts.glyphLocation = VectorAtts.AdaptsToMeshResolution  # AdaptsToMeshResolution, UniformInSpace
+VectorAtts.useStride = 0
+VectorAtts.stride = 1
+VectorAtts.nVectors = 400
+VectorAtts.lineStyle = VectorAtts.SOLID  # SOLID, DASH, DOT, DOTDASH
+VectorAtts.lineWidth = 0
+VectorAtts.scale = 0.25
+VectorAtts.scaleByMagnitude = 1
+VectorAtts.autoScale = 1
+VectorAtts.headSize = 0.25
+VectorAtts.headOn = 1
+VectorAtts.colorByMag = 1
+VectorAtts.useLegend = 1
+VectorAtts.vectorColor = (0, 0, 0, 255)
+VectorAtts.colorTableName = "Default"
+VectorAtts.invertColorTable = 0
+VectorAtts.vectorOrigin = VectorAtts.Tail  # Head, Middle, Tail
+VectorAtts.minFlag = 0
+VectorAtts.maxFlag = 0
+VectorAtts.limitsMode = VectorAtts.OriginalData  # OriginalData, CurrentPlot
+VectorAtts.min = 0
+VectorAtts.max = 1
+VectorAtts.lineStem = 1
+VectorAtts.geometryQuality = VectorAtts.Fast  # Fast, High
+VectorAtts.stemWidth = 0.08
+VectorAtts.origOnly = 1
+VectorAtts.glyphType = VectorAtts.Arrow  # Arrow, Ellipsoid
+VectorAtts.nVectors = 400
+SetPlotOptions(VectorAtts)
+#AddOperator("Slice", 1)
+DrawPlots()
 
 
 SetActiveWindow(7)
@@ -316,16 +633,6 @@ AnnotationAtts = AnnotationAttributes()
 AnnotationAtts.databaseInfoFlag = 0
 AnnotationAtts.userInfoFlag = 0
 SetAnnotationAttributes(AnnotationAtts)
-AddPlot("Vector", "kh", 1, 1)
-VectorAtts.glyphLocation = VectorAtts.UniformInSpace  # AdaptsToMeshResolution, UniformInSpace
-VectorAtts.nVectors = 20
-VectorAtts.scale = 2
-VectorAtts.lineWidth = 3
-VectorAtts.headSize = 0.1
-SetPlotOptions(VectorAtts)
-DrawPlots()
-ToggleLockViewMode()
-ToggleLockTime()
 
 
 SetActiveWindow(8)
