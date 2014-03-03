@@ -33,10 +33,6 @@ vshear=vsh*xx3d
 scrh=lx*sbomega*eps/8.0
 vmri=scrh*sin(2*!PI*zz3d)*exp(0.74975229*nfile)
 vmri=max(vx)*sin(2*!PI*zz3d)
-;; calc vorticity, x,y,z
-;vortz=getvort(vx,vy,xx,yy,nx,ny)
-;vorty=getvort(vx,vz,xx,zz,nx,nz)
-;vortx1getvort(vy,vz,yy,zz,ny,nz)
 
 vx=vx -vmri
 vy=vy-vshear -vmri
@@ -46,14 +42,13 @@ Ly=2.0
 x2d=rebin(reform(x1,nx1,1),nx1,nx2)
 y2d=rebin(reform(x2,1,nx2),nx1,nx2)
 a=dist(nx1)
-;vec=sin(10 *2*!PI* (x2d+y2d)/nx1)+ sin( 2*!PI* (x2d+y2d)/nx1  ) 
-;vec=sin(2*!PI* (x2d)/nx1 ) 
 
 ffttot=complexarr(nx1,nx2)
 
 
 x2d=rebin(reform( x1, nx1,1), nx1,nx2)
 
+; setting up variables for FFT
 q=1.5d
 omega=1.0d-3
 S=q*omega
@@ -64,13 +59,12 @@ qomegat_Ly=q*omega*time/Ly
 fft3d=complexarr(nx1,nx2,nx3)
 fft3d2=complexarr(nx1,nx2,nx3)
 datshift=fltarr(nx1,nx2,nx3)
+
 for k=0, nx3-1 do begin
 
 vec=vx3(*,*,k)
-;vec=getvort(vx1(*,*,0),vx2(*,*,0),x1,x2,nx1,nx2)
  shearfft2d, vec, ffttot, qomegat_Ly, x2d, nx1,nx2,x1
  fft3d(*,*,k)=ffttot
-
  datshift(*,*,k)=real_part(fft(ffttot, /inverse))
 
 endfor

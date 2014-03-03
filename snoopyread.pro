@@ -1,10 +1,22 @@
-pro snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile
+pro snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
 
 fname= 'v'+string(nfile,format='(I04)')+'.vtk'
 print,fname
 openr, lun,fname, /get_lun
-header=strarr(4)
-readf, lun, header
+header1=strarr(1)
+readf, lun, header1
+header2=strarr(1)
+;readf, lun, header2
+junk=""
+junk2=""
+time=1.0d
+readf, lun, junk, time, junk2,format='(A2,x,E21.15,x,A10)'
+;print, time
+help, time
+header3=strarr(1)
+readf, lun, header3
+header4=strarr(1)
+readf, lun, header4
 ;print,header
 junk=""
 nx=0

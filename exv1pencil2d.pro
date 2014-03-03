@@ -105,8 +105,6 @@ vpz=vzsl
 mvpx=max(vpx)
 
 vorty=getvort(vpx,vpz,xx,zz,nx,nz)
-;!p.position=0
-pos=[0.1,0.1,0.9,0.9]
 
 xbeg=0
 xend=nx-1
@@ -122,16 +120,6 @@ datptr[1]=ptr_new(vysl)
 datptr[2]=ptr_new(vzsl)
 datptr[3]=ptr_new(data)
 
-;!p.position=0
-;window, 0
-;!p.multi=[0,2,2]
-;!p.multi=[0]
-for i=0,3 do begin
-;cgimage, *datptr(i),  background='white',  multimargin=0.9
-;cgimage, vpy,  background='white',  position=pos
-;cgimage, vpz,  background='white',  position=pos
-;cgimage,data, background='white',  pos=pos
-endfor
 
 
 datptr[0]=ptr_new(vpx)
@@ -139,17 +127,7 @@ datptr[1]=ptr_new(vpy)
 datptr[2]=ptr_new(vpz)
 datptr[3]=ptr_new(data)
 !p.position=0
-;window, 1
-;!p.multi=[0,2,2]
-;!p.multi=[0]
-for i=0,3 do begin
-;cgimage, *datptr(i),  background='white',  multimargin=0.9
-;cgimage, vpy,  background='white',  position=pos
-;cgimage, vpz,  background='white',  position=pos
-;cgimage,data, background='white',  pos=pos
-endfor
 
-;cgcontour, data, /nodata, /overplot
 cvx=vpx[xbeg:xend,ybeg:yend]
 cvy=vpz[xbeg:xend,ybeg:yend]
 
@@ -171,16 +149,32 @@ cz=congrid(yqy,qy)
 ;cgimage, reform(vx0[*,0,*])
 ;cgimage, vpz
 ;cgimage, reform(vmri[*,0,*])
+
+
+
+
+for usingps=0,1 do begin
+if (usingps eq 1) then begin
+cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times'
+endif else  begin
+set_plot, 'x'
+endelse
+
+
+
+cgloadct,33
+pos=[0.1,0.15,0.9,0.9]
 cgimage,data, background='white',  pos=pos
 imin=min(data)
 imax=max(data)
+cbarchar=0.9
 cgcolorbar, Position=[pos[0], pos[1]-0.05, pos[2], pos[1]-0.04], range=[imin,imax], format='(G8.1)', charsize=cbarchar
 tag=string ( !radeg, format='(I02)')
 cgcontour, data,xqx,yqy,/nodata,  /noerase, pos=pos, axiscolor=cgcolor('black'), $
 	 ;title="Vorticity orthogonal to h , with velocity vectors", $
 	 xtitle="x ", $
-	 ytitle="z"
-velovect, cvx2,cvz2, cx,cz, /noerase, color=cgcolor('white'), thick=1.5 , len=2.5 , pos=pos
+	 ytitle="z", charsize=cbarchar
+velovect, cvx2,cvz2, cx,cz, /noerase, color=cgcolor('white'), thick=1.5 , len=2.5 , pos=pos, /overplot
 
 ll=6
 zero=''
@@ -193,7 +187,18 @@ print, t
    cgText, 0.5, 0.95, ALIGNMENT=0.5, CHARSIZE=2.25, /NORMAL, $
       'Vorticity with velocity vectors'+', t='+string(t(nfile)*omega, format='(F5.1)')+' orbits', color='black'
 
-im=cgsnapshot(filename=fname, /nodialog, /jpeg)
+
+
+if ( usingps ) then begin
+cgps_close, /jpeg,  Width=1100
+endif else begin
+fname2=fname
+endelse
+
+endfor
+
+
+
 endfor
 
 ;window, 7
