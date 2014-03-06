@@ -32,8 +32,8 @@ angleno=0
 projangle=angles[angleno]
 for nfile=nbeg,nend,1 do begin
 
-code='pluto'
 code='pencil'
+code='pluto'
 code='snoopy'
 
 switch code OF 
@@ -49,6 +49,7 @@ zz=x3
 nx=nx1
 ny=nx2
 nz=nx3
+break;
 end
 
 'pencil':begin
