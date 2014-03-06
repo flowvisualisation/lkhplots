@@ -2,8 +2,9 @@
 ; load some sheared data
 
 nfile=2
-nend=30
-for nfile=0,nend do begin
+nstart=200
+nend=202
+for nfile=nstart,nend do begin
 snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
 nx1=nx
 nx2=ny
