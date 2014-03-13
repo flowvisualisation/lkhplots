@@ -1,5 +1,5 @@
-nbeg=1
-nend=149
+nbeg=150
+nend=160
 ;nbeg=78
 ;nend=83
 ;pro exvort9, nfile, vx1,vx2,vx3, rho, prs, t , nlast, nx1,nx2,nx3,x1,x2,x3, dx1,dx2, vorty, vpx,vpz, vmri, vshear, vx,vy,vz, vxsl, vysl
