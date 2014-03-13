@@ -2,17 +2,17 @@
 
 usingps=0
 !p.multi=0
-readcol,'timevar', t,ev,em,vxmax,vxmin,vymax,vymin,vzmax,vzmin,vxvy,bxmax,bxmin,bymax,bymin,bzmax,bzmin,bxby,thmax,thmin,w2,j2,hm
+readcol,'id0/CylNewtZ8.hst' ,t      ,dt         ,mass       ,x1Mom    ,x2Mom    ,x3Mom    ,x1KE      ,x2KE      ,x3KE      ,x1ME      ,x2ME      ,x3ME      ,AngMom  ,Br  ,Bp  ,Bz  ,Mrp  ,Trp  ,MdotR1  ,MdotR2  ,MdotR3  ,MdotR4  ,Msub  ,Mrpsub  ,Bpsub  ,Bzsub  ,Pbsub 
 
 ; it,t,dt,ux2m,uy2m,uz2m,uxuym,rhom,rhomin,rhomax,bx2m,by2m,bz2m,bxbym,ndm,ndmin,ndmax
     fname="timeseries"
 
-ux2m=vxmax^2
-uy2m=vymax^2
-uz2m=vzmax^2
-bx2m=bxmax^2
-by2m=bymax^2
-bz2m=bzmax^2
+ux2m=x1KE
+uy2m=x2KE
+uz2m=x3KE
+bx2m=x1ME
+by2m=x2ME
+bz2m=x3ME
 
 items=['v1','v2', 'v3', 'b1', 'b2', 'b3','growth=0.75' ]
 linestyles=[0,0,0,3,2,2,1]
@@ -22,7 +22,7 @@ colors=['red', 'blue', 'green', 'orange', 'turquoise', 'purple', 'black']
 
 maxall=max([ [sqrt(ux2m)] , [sqrt(uy2m)], [sqrt(uz2m)] , [sqrt(bx2m)] , [sqrt(by2m)] ,[sqrt(bz2m)]   ])
 minall=min([ [sqrt(ux2m)] , [sqrt(uy2m)], [sqrt(uz2m)] , [sqrt(bx2m)] , [sqrt(by2m)] ,[sqrt(bz2m)]   ])
-ymin=1e-7*maxall
+ymin=minall
 
 
 fname="timeseries_"
@@ -42,7 +42,7 @@ cgplot, t, sqrt(bx2m), /overplot, color=colors[3], linestyle=linestyles[3]
 cgplot, t, sqrt(by2m), /overplot, color=colors[4], linestyle=linestyles[4]
 cgplot, t, sqrt(bz2m), /overplot, color=colors[5], linestyle=linestyles[5]
 cgplot, t, sqrt(ux2m[0])*exp(0.75*t), /overplot, color=colors[6], linestyle=linestyles[6]
-cgplot, t, abs(bzmax-0.1643751), /overplot, color=colors[5], linestyle=linestyles[5]
+cgplot, t, abs(bz2m-0.1643751^2), /overplot, color=colors[5], linestyle=linestyles[5]
 
 
 fit=sqrt(ux2m[0])*exp(0.75*t)
