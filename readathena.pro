@@ -7,12 +7,16 @@ readcol,'id0/CylNewtZ8.hst' ,t      ,dt         ,mass       ,x1Mom    ,x2Mom    
 ; it,t,dt,ux2m,uy2m,uz2m,uxuym,rhom,rhomin,rhomax,bx2m,by2m,bz2m,bxbym,ndm,ndmin,ndmax
     fname="timeseries"
 
+ux2m=(x1KE/x1Mom)^2
+uy2m=(x2KE/x2Mom)^2
+uz2m=(x3KE/x3Mom)^2
 ux2m=x1KE
 uy2m=x2KE
 uz2m=x3KE
 bx2m=x1ME
 by2m=x2ME
 bz2m=x3ME
+t=t/2.0d/!DPI
 
 items=['v1','v2', 'v3', 'b1', 'b2', 'b3','growth=0.75' ]
 linestyles=[0,0,0,3,2,2,1]
@@ -22,7 +26,7 @@ colors=['red', 'blue', 'green', 'orange', 'turquoise', 'purple', 'black']
 
 maxall=max([ [sqrt(ux2m)] , [sqrt(uy2m)], [sqrt(uz2m)] , [sqrt(bx2m)] , [sqrt(by2m)] ,[sqrt(bz2m)]   ])
 minall=min([ [sqrt(ux2m)] , [sqrt(uy2m)], [sqrt(uz2m)] , [sqrt(bx2m)] , [sqrt(by2m)] ,[sqrt(bz2m)]   ])
-ymin=minall
+ymin=1e-3*maxall
 
 
 fname="timeseries_"
@@ -41,8 +45,8 @@ cgplot, t, sqrt(uz2m), /overplot, color=colors[2], linestyle=linestyles[2]
 cgplot, t, sqrt(bx2m), /overplot, color=colors[3], linestyle=linestyles[3]
 cgplot, t, sqrt(by2m), /overplot, color=colors[4], linestyle=linestyles[4]
 cgplot, t, sqrt(bz2m), /overplot, color=colors[5], linestyle=linestyles[5]
-cgplot, t, sqrt(ux2m[0])*exp(0.75*t), /overplot, color=colors[6], linestyle=linestyles[6]
-cgplot, t, abs(bz2m-0.1643751^2), /overplot, color=colors[5], linestyle=linestyles[5]
+cgplot, t, sqrt(ux2m[1])*exp(0.75*t), /overplot, color=colors[6], linestyle=linestyles[6]
+cgplot, t, abs(bz2m-bx2m[0]), /overplot, color=colors[5], linestyle=linestyles[5]
 
 
 fit=sqrt(ux2m[0])*exp(0.75*t)
@@ -61,7 +65,7 @@ va=0.16437451
 lfast=sqrt(15.d0/16.d0) *2.d0 *!DPI  /omega/sqrt(rho) 
 print, '1 lfast', 1/lfast
 
-	al_legend, items, colors=colors, linestyle=linestyles, charsize=0.9
+	al_legend, items, colors=colors, linestyle=linestyles, charsize=0.9, /right
 
 print, 'Saturation level', maxall
 
