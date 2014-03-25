@@ -1,10 +1,8 @@
-pro reystressanisotropytensor, u1,u2,u3, rey
+pro reystressanisotropytensor, rey, reyanis
 
-a=[u1, u2, u3]
-rey=a#a
 ; turbulent kinetic energy
-ke=total(a*a)
+ke=trace(rey)
 iden3=identity(3)/3.0d
-rey=rey/ke-iden3
+reyanis=rey/ke-iden3
 
 end
