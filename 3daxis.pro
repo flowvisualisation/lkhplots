@@ -1,7 +1,7 @@
 
 cgdisplay, xs=1600, ys=800
 nfile=16
-for nfile=2,18,2 do begin
+for nfile=8,128,2 do begin
 snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
 
 
@@ -34,7 +34,7 @@ data=vfft
 
 
 fname="fft_comparison"+string(nfile, format='(I03)')
-for usingps=0,1 do begin
+for usingps=0,0 do begin
 if (usingps eq 1) then begin
 cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times', /quiet
 endif else  begin
@@ -73,21 +73,21 @@ SURFACE, Dist(10,10), XRANGE=[0,n1] ,YRANGE=[0,n2], $
 
       ; Redraw the axes.
    
-   cgloadct,0
+   cgloadct,0, /reverse
    SURFACE, Dist(10,10), XRANGE=[-n1/2,n1/2], YRANGE=[-n2/2,n2/2], $
       ZRANGE=[-n3/2,n3/2], /SAVE, /NODATA, XSTYLE=1, YSTYLE=1, $
       ZSTYLE=1, XTITLE='kx', YTITLE='ky', $
-      ZTITLE='kx', $
-     ; title='surf='+string(surf[qq]), $
       /NOERASE
+      ZTITLE='kx';, $
+     ; title='surf='+string(surf[qq]), $
 
-cgText, -10.1, 20.56,   'surf='+string(surf[qq]),  Charsize=cgDefCharsize()*1.25, color='black'
+cgText, -10.1, 20.56,   'surf='+string(surf[qq]),  Charsize=cgDefCharsize()*0.8, color='black'
 
 
 
       endfor
 
-cgText, 0.5, 0.96, /Normal,  '3D FFT of v, t='+string(nfile), Alignment=0.5, Charsize=cgDefCharsize()*1.25, color='black'
+cgText, 0.5, 0.96, /Normal,  '3D FFT of v, t='+string(nfile), Alignment=0.5, Charsize=cgDefCharsize()*0.8, color='black'
 
 
 
@@ -98,7 +98,7 @@ cgps_close, /jpeg,  Width=1100
 endif else begin
 ;set_plot,'x'
 fname2=fname
-;im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
+im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
 endelse
 
 endfor
