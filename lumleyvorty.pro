@@ -21,6 +21,10 @@ break;
 end
 'snoopy':begin
 snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
+
+
+curl, vx, vy, vz, cx, cy, cz
+
 sbq=1.5
 sbomega=1
 sba=-0.5*sbq*sbomega
@@ -48,9 +52,9 @@ reyave(*,*)=0.0d
 
 for j=0,ny-1 do begin
     dens=rho(i,j,k)
-    u1=u1+vx(i,j,k)
-    u2=u2+vy(i,j,k)
-    u3=u3+vz(i,j,k)
+    u1=u1+cx(i,j,k)
+    u2=u2+cy(i,j,k)
+    u3=u3+cz(i,j,k)
     a=[u1,u2,u3]
     rey=a#a
  reyave=reyave+rey
@@ -78,8 +82,8 @@ print, mean(-invii, /double), mean(inviii, /double), format='(F27.24,  F27.24)'
 ;cgplot, xbin, pdf    
 
 ;cgplot, inviii, -invii, psym=2
-tag="lumley2dy"
-tag2="Reynolds"
+tag="lumleyvorty"
+tag2="vorticity"
 histlumley2, invii, inviii, nfile, tag, tag2
 
 
