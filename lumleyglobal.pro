@@ -89,7 +89,8 @@ b=mean(inviii, /double)
 ;cgplot, xbin, pdf    
 
 ;cgplot, inviii, -invii, psym=2
-histlumley2, invii, inviii, nfile
+tag="lumley_b"
+histlumley, invii, inviii, nfile, tag
 
 
 endfor

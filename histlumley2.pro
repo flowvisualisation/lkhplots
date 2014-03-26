@@ -1,29 +1,23 @@
 
-pro histlumley2, invii,inviii, nfile, tag
-device, decomposed=0, true=24, retain=2
+pro histlumley2, invii,inviii, nfile, tag, tag2
+;device, decomposed=0, true=24, retain=2
+;cgwindow, xs=1600,ys=800
 fname=tag+string(nfile, format='(I03)')
 
 
 
-for usingps=0,1 do begin
-if (usingps eq 1) then begin
-cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times', /quiet
-endif else  begin
-set_plot, 'x'
-endelse
 
-
-invii=sqrt(-invii/3)
+invii_sqrt=sqrt(abs(invii)/3)
 inviii=sign(inviii)*(abs(inviii)/2)^(1./3.)
 
 
 sz=size(invii, /dimensions)
 
 if ( n_elements(sz) eq 2) then begin 
-var1=reform(invii, sz(0)*sz(1))
+var1=reform(invii_sqrt, sz(0)*sz(1))
 var2=reform(inviii, sz(0)*sz(1))
 endif else begin
-var1=reform(invii, sz(0)*sz(1)*sz(2))
+var1=reform(invii_sqrt, sz(0)*sz(1)*sz(2))
 var2=reform(inviii, sz(0)*sz(1)*sz(2))
 endelse
 mnv1= min(var1)
@@ -54,21 +48,38 @@ cgloadct,33
 d=congrid(lumleyhist,800,800)
 x1=congrid(cy,800)
 x2=congrid(cx,800)
+;d=lumleyhist
+;x1=cx
+;x2=cy
 
 pos=[0.1,0.1,0.9,0.9]
 dat=alog10(transpose(d)+1e-1)
 r=cgscalevector(dat,0,254 )
+rad=r
+
+
+
+for usingps=0,1 do begin
+if (usingps eq 1) then begin
+Set_Plot, 'PS'
+Device, DECOMPOSED=0, COLOR=1, BITS_PER_PIXEL=8
+cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times', /quiet
+endif else  begin
+set_plot, 'x'
+endelse
 
 tvlct,255,255,255,0
-cgimage, r, pos=pos
+;cgerase
+cgimage, r , pos=pos
 imin=min(dat)
 imax=max(dat)
  cgColorBar, position=[pos[2]+0.03, pos[1], pos[2]+0.05, pos[3]],range=[imin-1e-6,imax+1e-6], Charsize=cgDefCharsize()*0.5, /vertical
-cgcontour, d,x1,x2, /nodata, /noerase, pos=pos, $ 
-    xtitle='III',$
-    ytitle='II',$
+cgcontour, dat,x1,x2,/nodata,  /noerase, pos=pos, $ 
+    xtitle='(III/2)!U1/3!N',$
+    ytitle='(II/3)!U1/2!N',$
 Charsize=cgDefCharsize()*0.5,  $
-    title='II,III invariants of Reynolds stress anisotropy, t='+string(nfile, format='(I3)')
+    color='black', $
+    title='II,III invariants of '+tag2+' stress anisotropy, t='+string(nfile, format='(I3)')
     
     cgText, 0.3, 0.3,   '1D turbulence', Alignment=0.9, Charsize=cgDefCharsize()*.5
     cgText, 0.02, 0.2,   '2D turbulence', Alignment=0.5, Charsize=cgDefCharsize()*.5
@@ -79,7 +90,11 @@ Charsize=cgDefCharsize()*0.5,  $
 if ( usingps ) then begin
 ;device,/close
 cgps_close, /jpeg,  Width=2048
-;set_plot,'x'
+
+;cgps_open, "test.eps"
+;cgimage,rad
+;cgps_close, /jpeg
+set_plot,'x'
 endif else begin
 ;set_plot,'x'
 fname2=fname
@@ -89,6 +104,6 @@ endelse
 endfor
 
 
-im=cgsnapshot(filename=fname, /jpeg, /nodialog)
+;im=cgsnapshot(filename=fname, /jpeg, /nodialog)
 
 end

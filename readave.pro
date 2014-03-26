@@ -1,4 +1,4 @@
-pro readave
+;pro readave
 readcol,'averages.dat',t,dt,rho,vx2,vy2,vz2,vy,rhovy,Ebxby
 cgplot,t, vx2/vx2(0), /ylog, yrange=[1e-4,1], PSym=-15, Color='red', xtitle='k!Dh!N', ytitle='growth rate', linestyle=0
 cgplot, t, vy2/vx2(0), /overplot,  PSym=-16, Color='dodger blue', linestyle=2

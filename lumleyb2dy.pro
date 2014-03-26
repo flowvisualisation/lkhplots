@@ -78,7 +78,9 @@ print, mean(-invii, /double), mean(inviii, /double), format='(F27.24,  F27.24)'
 ;cgplot, xbin, pdf    
 
 ;cgplot, inviii, -invii, psym=2
-histlumley2, invii, inviii, nfile, "lumley_b"
+tag="lumley_b"
+tag2="Maxwell"
+histlumley2, invii, inviii, nfile, tag, tag2
 
 
 endfor
