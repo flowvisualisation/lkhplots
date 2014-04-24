@@ -15,9 +15,9 @@ window, 0, xs=1700, ys=900
 ;!p.multi=[0,3,2]
 
 !p.charsize=2
-nbeg=1
+nbeg=60
 ;nend=nlast
-nend=20
+nend=170
 t=findgen(nend+1)
 angles=findgen(7)*15*!dtor
 ;projangle=29*!pi/30.
@@ -80,7 +80,7 @@ zz=z[3:mz-4]
 
 end
 'snoopy':begin
-snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile
+snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
 vx=bx
 vy=by
 end
@@ -301,7 +301,8 @@ for j=1,ll-lnt do zero=zero+'0'
 
 print, t
    cgText, 0.5, 0.95, ALIGNMENT=0.5, CHARSIZE=2.25, /NORMAL, $
-      'Current with field lines'+', t='+string(t(nfile)*omega, format='(F5.1)')+' orbits', color='black'
+      'Current with field lines'+', t='+string(time, format='(F5.1)')+' orbits', color='black'
+
 
 
 if ( usingps ) then begin

@@ -4,8 +4,10 @@
 nfile=1
 nend=2000
 nstart=13
+nstart=1000
 nend=nstart+1
 nend=152
+nend=1170
 
 vshear=1.0
 for nfile=nstart,nend do begin
@@ -80,7 +82,7 @@ print, mean(-invii, /double), mean(inviii, /double), format='(F27.24,  F27.24)'
 ;cgplot, inviii, -invii, psym=2
 tag="lumley_b"
 tag2="Maxwell"
-histlumley2, invii, inviii, nfile, tag, tag2
+histlumley3, invii, inviii, nfile, tag, tag2, time
 
 
 endfor

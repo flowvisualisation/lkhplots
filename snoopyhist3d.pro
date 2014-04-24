@@ -1,29 +1,30 @@
 
-set_plot, 'x'
 window, xs=1200, ys=1200
-for i=0,nlast do begin
-pload,i , /silent
+nbeg=60
+nend=68
+for i=nbeg,nend do begin
+sload,i ;, /silent
 sbq=1.5
 sbomega=1e-3
 sba=-0.5*sbq*sbomega
 vsh=2*sba
 
-xx=rebin(reform(x1,nx1,  1,  1),nx1,nx2,nx3) 
-yy=rebin(reform(x2,  1,nx2,  1),nx1,nx2,nx3) 
-zz=rebin(reform(x3,  1,  1,nx3),nx1,nx2,nx3) 
+;xx=rebin(reform(x1,nx1,  1,  1),nx1,nx2,nx3) 
+;yy=rebin(reform(x2,  1,nx2,  1),nx1,nx2,nx3) 
+;zz=rebin(reform(x3,  1,  1,nx3),nx1,nx2,nx3) 
 vshear=vsh*xx
 
-vx=vx1
-vy=vx2-vshear
-bx=bx1
-by=bx2
+;vx=vx1
+;vy=vx2-vshear
+;bx=bx1
+;by=bx2
 
-vec1=bx1
-vec2=bx2
+vec1=bx
+vec2=by
 qtag='histvxvybxby'
 
-a=reform(vec1, long(nx1)*long(nx2)*long(nx3))
-b=reform(vec2, long(nx1)*long(nx2)*long(nx3))
+a=reform(vec1, long(nx)*long(ny)*long(nz))
+b=reform(vec2, long(nx)*long(ny)*long(nz))
 mn1a=min(vec1)
 mx1a=max(vec1)
 mn2a=min(vec2)
@@ -32,10 +33,10 @@ nsize=512
 bn1a=(mx1a-mn1a)/(nsize)
 bn2a=(mx2a-mn2a)/(nsize)
 
-vec1=vx1
-vec2=vx2-vshear
-c=reform(vec1, long(nx1)*long(nx2)*long(nx3)) 
-d=reform(vec2, long(nx1)*long(nx2)*long(nx3))
+vec1=vx
+vec2=vy
+c=reform(vec1, long(nx)*long(ny)*long(nz))
+d=reform(vec2, long(nx)*long(ny)*long(nz))
 
 
 mn1=double(-6e-7)	
@@ -71,12 +72,18 @@ sz=size(magnetic_hist, /dimensions)
 cx=findgen(sz(0))*bn1a+mn1a
 cy=findgen(sz(1))*bn2a+mn2a
 
-fname="plutohistvxvybxby"+string(i, format='(I04)')
 for usingps=0,1 do begin
 
 if ( usingps ) then begin
 set_plot,'ps'
-cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times';, /quiet
+device,filename=fname+'.eps',/encapsulated
+device, /color
+!p.font=0
+device, /times
+pxs=11.
+pys=12
+!p.charsize=1.8
+DEVICE, XSIZE=pxs, YSIZE=pys, /INCHES
 endif else begin
 !p.font=-1
 !p.color=0
@@ -97,7 +104,7 @@ endelse
 
 
 cgcontour, alog10(magnetic_hist+1e-3),cx,cy,  color='green',  $
-		title="Scatter plots of B!Dr,!9f!X!N and V!Dr,!9f!X!N at t="+string(i, format='(I2)')+" orbits", $
+		title="Scatter plots of B!Dr,!9f!X!N and V!Dr,!9f!X!N at t="+string(time, format='(F4.1)')+" orbits", $
 		xtitle="B!Dr!N, V!Dr!N",$
 		ytitle="B!D!9f!X!N, V!D!9f!X!N",$
 	   xrange=[minx,maxx], $
@@ -123,17 +130,36 @@ al_legend, items,linestyle=lines, colors=color
 
 ;stop
 
+ll=6
+zero=''
+nts=strcompress(string(i),/remove_all)
+lnt=strlen(nts)
+for j=1,ll-lnt do zero=zero+'0'
+           fname=qtag+zero+nts
+endfor
 
 
 if ( usingps ) then begin
-cgps_close, /jpeg,  Width=2048
-print, 'in ps'
-set_plot, 'x'
+device,/close
+;set_plot,'x'
+if ( keyword_set(zbuf) ) then begin
+set_plot, 'z'
+device, set_resolution=[1300,1100], Decomposed=1, Set_Pixel_Depth=24
 endif else begin
-print, 'in x'
+set_plot, 'x'
+endelse
+endif else begin
+;set_plot,'x'
+if ( keyword_set(zbuf) ) then begin
+set_plot, 'z'
+device, set_resolution=[1300,1100], Decomposed=1, Set_Pixel_Depth=24
+endif else begin
+set_plot, 'x'
+endelse
+fname2=fname
+im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
 endelse
 
-endfor
 endfor
 
 end

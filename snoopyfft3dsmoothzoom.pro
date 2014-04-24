@@ -1,10 +1,17 @@
-   cgDisplay, WID=1,xs=1800, ys=700, xpos=100, ypos=700
+   cgDisplay, WID=1,xs=900, ys=900, xpos=100, ypos=700
 ; load some sheared data
 
 nfile=2
 nstart=1070
+;nstart=900
 nend=1140
-for nfile=nstart,nend,10 do begin
+nstep=10
+if ( 0 ) then begin
+nstart=64
+nend=68
+nstep=1
+endif
+for nfile=nstart,nend,nstep do begin
 snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
 nx1=nx
 nx2=ny
@@ -15,7 +22,7 @@ x3=zz
 
 t=findgen(nfile+1)
 mytime=time
-vec=vz
+vec=vz^2
 xx=x1
 yy=x2
 xx2d=rebin(reform(xx,nx1,1),nx1,nx2)
@@ -57,17 +64,29 @@ ffttot=complexarr(nx1,nx2)
  shearfft2d, vec, ffttot, qomegat_Ly,x2d, nx1,nx2, x1
 
 
-ifftmy=fft(cfft2, -1)
+ifftmy=fft(cfft3, -1)
  rcfft2=real_part(ifftmy)
- final=shift(rcfft2,nx1/2,nx2/2,nx3/2)
+ final=rcfft2
 
 ifftshear=fft(ffttot,-1)
 ;final=real_part(ifftshear)
 
 dataptr=ptrarr(18)
 
-dataptr[ 0]=ptr_new(final(*,*,0) )
-dataptr[ 1]=ptr_new(shift(abs(cfft2(*,*,0)),nx1/2,nx2/2))
+
+fsl=reform(smooth(shift(abs(cfft2(*,*,0)),nx1/2,nx2/2),2, /edge_wrap))
+zmn=0.4
+zmx=0.6
+zmn=0.3
+zmx=0.7
+fslzoom=fsl[nx1*zmn:nx1*zmx, nx2*zmn:nx2*zmx]
+
+sz=size(fslzoom, /dimensions)
+k1=findgen(sz(0))-sz(0)/2
+k2=findgen(sz(1))-sz(1)/2
+
+dataptr[ 0]=ptr_new(final(*,*,nz/2) )
+dataptr[ 0]=ptr_new(fslzoom)
 dataptr[ 2]=ptr_new(vfft)
 dataptr[ 3]=ptr_new(pf1)
 dataptr[ 4]=ptr_new(pf2)
@@ -87,7 +106,7 @@ pos=[0.2,0.1,0.9,0.9]
 
 titlestr=strarr(18,30)
 titlestr[ 0,*]='vz'
-titlestr[ 1,*]='DFT(vz)'
+titlestr[ 0,*]='Fourier spectrum V!Dz!N(k!Dr!N,k!D!9f!X!N)'
 titlestr[ 2,*]='fft(vz)'
 titlestr[ 3,*]='fft dimension 1'
 titlestr[ 4,*]='fft dimension 2'
@@ -103,7 +122,13 @@ titlestr[10,*]='bz'
 titlestr[10,*]='bz'
 titlestr[10,*]='bz(z,t)'
 
+xtitlestr=strarr(18,30)
+xtitlestr[ 0,*]='r'
+xtitlestr[ 0,*]='k!Dr!N'
 
+ytitlestr=strarr(18,30)
+ytitlestr[ 0,*]='z'
+ytitlestr[ 0,*]='k!D!9f!X!N'
   
 fname="sheartest"+string(nfile, format='(I04)')
 for usingps=0,1 do begin
@@ -118,18 +143,27 @@ endelse
 
 
    cgLoadCT, 33
-   pos = cglayout([2,1] , OXMargin=[4,12], OYMargin=[5,6], XGap=9, YGap=2)
-   FOR j=0,1 DO BEGIN
+   pos = cglayout([1,1] , OXMargin=[4,7], OYMargin=[5,5], XGap=2, YGap=2)
+   FOR j=0,0 DO BEGIN
      p = pos[*,j]
      d= *dataptr(j)
 	r=cgscalevector(d, 1,254)
 	imin=min(*dataptr[j])
 	imax=max(*dataptr[j])
-     cgImage, r, NoErase=j NE 0, Position=p
-  cgcontour,xx#yy, xx,yy , /nodata, /noerase, xtitle='x', pos=p, title=titlestr(j), Charsize=cgDefCharsize()*0.5
-     cgColorBar, position=[p[2]+0.06, p[1], p[2]+0.07, p[3]],range=[imin-1e-6,imax+1e-6], Charsize=cgDefCharsize()*0.5 , /vertical
+    ; cgimage, r, NoErase=j NE 0, Position=p
+  cgcontour,d, k1,k2 , $
+  ;/nodata, /noerase, $ 
+    ;/c_Colors,$
+    nlev=20,$
+    /fill, $
+    xtitle=xtitlestr(j), $
+    ytitle=ytitlestr(j), $
+    pos=p,$
+    title=titlestr(j)+', t='+string(mytime,format='(F5.1)')+' orbits',$
+    Charsize=cgDefCharsize()*0.7
+     cgcolorBar, position=[p[2]+0.06, p[1], p[2]+0.07, p[3]],range=[imin-1e-6,imax+1e-6], Charsize=cgDefCharsize()*0.5 , /vertical
    ENDFOR
-   cgText, 0.5, 0.9, /Normal,  'vz and DFT(vz), t='+string(mytime), Alignment=0.5, Charsize=cgDefCharsize()*1.25
+   ;cgText, 0.5, 0.9, /Normal,  'vz and DFT(vz), t='+string(mytime), Alignment=0.5, Charsize=cgDefCharsize()*1.25
 
 
 if ( usingps ) then begin

@@ -1,3 +1,5 @@
+nbeg=1
+nend=170
 ;pro exvort9, nfile, vx1,vx2,vx3, rho, prs, t , nlast, nx1,nx2,nx3,x1,x2,x3, dx1,dx2, vorty, vpx,vpz, vmri, vshear, vx,vy,vz, vxsl, vysl
 pluto=0
 nfile=1
@@ -15,9 +17,6 @@ window, 0, xs=1700, ys=900
 ;!p.multi=[0,3,2]
 
 !p.charsize=2
-nbeg=1
-;nend=nlast
-nend=20
 t=findgen(nend+1)
 angles=findgen(7)*15*!dtor
 ;projangle=29*!pi/30.
@@ -30,6 +29,7 @@ angles=findgen(7)*15*!dtor
 
 angleno=0
 projangle=angles[angleno]
+;projangle=!DPI/4.0d
 for nfile=nbeg,nend,1 do begin
 
 code='pencil'
@@ -185,8 +185,8 @@ unitvec1(*,*)=cos( projangle)
 unitvec2(*,*)=sin( projangle)
 unitvec3(*,*)=cos( projangle)
 
-vpx=vxsl ;*unitvec1 + vysl*unitvec2
-vpy=vxsl ;*unitvec2 - vysl*unitvec1
+vpx=vxsl *unitvec1 + vysl*unitvec2
+vpy=vxsl *unitvec2 - vysl*unitvec1
 vpz=vzsl
 
 mvpx=max(vpx)
@@ -245,7 +245,7 @@ cz=congrid(yqy,qy)
 
 for usingps=0,1 do begin
 if (usingps eq 1) then begin
-cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times'
+cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times', /quiet
 endif else  begin
 set_plot, 'x'
 endelse
@@ -273,12 +273,12 @@ lnt=strlen(nts)
 for j=1,ll-lnt do zero=zero+'0'
            fname=code+dirname+'vorticity'+tag+"_"+zero+nts
 
-print, t
+;print, t
    cgText, 0.5, 0.95, ALIGNMENT=0.5, CHARSIZE=1.9, /NORMAL, $
       'Vorticity with velocity vectors'+', t='+string(time, format='(F5.1)')+' orbits', color='black'
 
 if ( usingps ) then begin
-cgps_close, /jpeg,  Width=1100
+cgps_close, /jpeg,  Width=1100, /nomessage
 endif else begin
 fname2=fname
 endelse

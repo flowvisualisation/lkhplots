@@ -198,7 +198,7 @@ r2=var(2*i+1,*)
 n1=n_elements(r1)
 grid=fltarr(nqx,nqy)
 bin2d, r1,r2,n1, grid, nqx,nqy
-r=scale_vector(grid,1,254)
+r=cgscalevector(grid,1,254)
 xq=findgen(nqx)* (max(r1)-min(r1))/nqx + min(r1)
 yq=findgen(nqy)* (max(r2)-min(r2))/nqy + min(r2)
 ;contour, grid, xq,yq,/nodata, xtitle='xpos',  ytitle='px',   

@@ -1,14 +1,14 @@
-cgdisplay, xs=1600, ys=800
 
 
-nstart=1000
-nend=1170
-;nend=1010
+
+nfile=1
+nend=27
+nstart=27
 ;nend=nstart+1
 ;nend=nstart
 
 vshear=1.0
-for nfile=nstart,nend,10 do begin
+for nfile=nstart,nend do begin
 
 
 code='pluto'
@@ -80,7 +80,7 @@ print, mean(-invii, /double), mean(inviii, /double), format='(F27.24,  F27.24)'
 ;cgplot, inviii, -invii, psym=2
 tag="lumley2dy"
 tag2="Reynolds"
-histlumley3, invii, inviii, nfile, tag, tag2, time
+histlumley2, invii, inviii, nfile, tag, tag2, time
 
 
 endfor

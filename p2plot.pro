@@ -75,14 +75,16 @@ endif
 for usingps=0,1 do begin
 
 if ( usingps ) then begin
-set_plot,'ps'
-device,filename=fname+'.eps',/encapsulated
-device, /color
+;set_plot,'ps'
+;device,filename=fname+'.eps',/encapsulated
+;device, /color
 !p.font=0
-device, /times
+;device, /times
 xs=8.
 ys=4
-DEVICE, XSIZE=xs, YSIZE=ys, /INCHES
+;DEVICE, XSIZE=xs, YSIZE=ys, /INCHES
+
+cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times', /quiet
 !p.charsize=0.9
 cbarchar=0.9
 xyout=0.9
@@ -171,8 +173,8 @@ growth=(gam2[1]-gam2[0])/(tam2[1]-tam2[0])
 
 if ( dogrowth ) then begin
 ;oplot,t,exp(growth*t/0.1)*gam2[0]/exp(growth*tam2[0]/0.1)
-cgplot, tnorm, (growth*(tnorm-tam2[0]))+(gam2[0]) ,  /overplot
-cgplot, tam2, (gam2), psym=-18, /overplot
+;cgplot, tnorm, (growth*(tnorm-tam2[0]))+(gam2[0]) ,  /overplot
+;cgplot, tam2, (gam2), psym=-18, /overplot
 endif
 
 
@@ -191,13 +193,14 @@ endif
 
 
 if ( usingps ) then begin
-device,/close
+;device,/close
+cgps_close, /jpeg,  Width=1100
 set_plot,'x'
 
 endif else begin
 ;set_plot,'x'
-fname2=fname
-im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
+;fname2=fname
+;im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
 endelse
 
 endfor
