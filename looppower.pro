@@ -8,16 +8,17 @@ titlarr(2)='vz'
 titlarr(3)='bx'
 titlarr(4)='by'
 titlarr(5)='bz'
-spec=fltarr(6,32)
-wns=fltarr(6,32)
+sizesp=32
+spec=fltarr(6,sizesp)
+wns=fltarr(6,sizesp)
 
-pos = cglayout([3,2] , OXMargin=[5,5], OYMargin=[5,7], XGap=3, YGap=7)
-for nfile=1,150 do begin
+pos = cglayout([3,2] , OXMargin=[7,5], OYMargin=[5,7], XGap=7, YGap=7)
+for nfile=1090,1170 do begin
 
 
 
 code='pluto'
-;code='snoopy'
+code='snoopy'
 switch code OF 
 'pluto': begin
 pload,nfile
@@ -35,6 +36,17 @@ datptr[2]=ptr_new(vz)
 datptr[3]=ptr_new(bx)
 datptr[4]=ptr_new(by)
 datptr[5]=ptr_new(bz)
+fname="psd_"+string(nfile, format='(I04)')
+
+for usingps=0,1 do begin
+if (usingps eq 1) then begin
+Set_Plot, 'PS'
+Device, DECOMPOSED=0, COLOR=1, BITS_PER_PIXEL=8
+cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times', /quiet
+endif else  begin
+set_plot, 'x'
+endelse
+
 
 for i=0,5 do begin
 r=*datptr[i]
@@ -43,12 +55,22 @@ spec(i,*)=spec_t
 wns(i,*)=wns_t
 endfor
 cgerase
-cgText, 0.5, 0.96, /Normal,  'PSD testing, t='+string(nfile), Alignment=0.5, Charsize=cgDefCharsize()*1.25
+cgText, 0.5, 0.96, /Normal,  'PSD testing, t='+string(time), Alignment=0.5, Charsize=cgDefCharsize()*1.25
 for i=0,5 do begin
-cgplot, wns(i,*),spec(i,*), /xlog, /ylog, xrange=[1,100], title=titlarr(i), pos=pos(*,i), /noerase
+cgplot, wns(i,*),spec(i,*), /xlog, /ylog, xrange=[1,100], title=titlarr(i), pos=pos(*,i), /noerase, Charsize=cgDefCharsize()*0.7
 endfor
-fname="psd_"+string(nfile, format='(I04)')
-im=cgsnapshot(filename=fname, /nodialog, /jpeg)
+
+
+
+if ( usingps ) then begin
+cgps_close, /jpeg,  Width=2048
+set_plot,'x'
+endif else begin
+;im=cgsnapshot(filename=fname, /nodialog, /jpeg)
+endelse
+endfor
+
+
 endfor
 
 

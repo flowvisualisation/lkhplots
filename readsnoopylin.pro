@@ -14,7 +14,7 @@ bx2m=bxmax^2
 by2m=bymax^2
 bz2m=bzmax^2
 
-items=['v1','v2', 'v3', 'b1', 'b2', 'b3','growth=0.75' ]
+items=['v!Dr!N','v!D!9f!X!N', 'v!Dz!N', 'b!Dr!N', 'b!D!9f!X!N', 'b!Dz!N','0.75' ]
 linestyles=[0,0,0,3,2,2,1]
 psym=[0,1,2,3,4,5,6]
 colors=['red', 'blue', 'green', 'orange', 'turquoise', 'purple', 'black']
@@ -24,7 +24,21 @@ maxall=max([ [sqrt(ux2m)] , [sqrt(uy2m)], [sqrt(uz2m)] , [sqrt(bx2m)] , [sqrt(by
 minall=min([ [sqrt(ux2m)] , [sqrt(uy2m)], [sqrt(uz2m)] , [sqrt(bx2m)] , [sqrt(by2m)] ,[sqrt(bz2m)]   ])
 ymin=1e-8*maxall
 
-cgplot, t, sqrt(ux2m), color=colors[0], linestyle=linestyles[0], /ylog, yrange=[ymin, max(maxall)], ystyle=1, title="Incompressible spectral code SNOOPY growth rates", xrange=[0,20]
+
+
+fname="snoopylineargrowth"
+for usingps=0,1 do begin
+if (usingps eq 1) then begin
+cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times', /quiet
+endif else  begin
+set_plot, 'x'
+endelse
+
+
+
+cgplot, t, sqrt(ux2m), color=colors[0], linestyle=linestyles[0], /ylog, yrange=[ymin, max(maxall)], ystyle=1, $
+    xrange=[0,6.5], $
+    xtitle="time (orbits)"
 cgplot, t, sqrt(uy2m), /overplot, color=colors[1], linestyle=linestyles[1]
 cgplot, t, sqrt(uz2m), /overplot, color=colors[2], linestyle=linestyles[2]
 cgplot, t, sqrt(bx2m), /overplot, color=colors[3], linestyle=linestyles[3]
@@ -50,20 +64,23 @@ va=0.16437451
 lfast=sqrt(15.d0/16.d0) *2.d0 *!DPI  /omega/sqrt(rho) 
 print, '1 lfast', 1/lfast
 
-	al_legend, items, colors=colors, linestyle=linestyles
+	al_legend, items, colors=colors, linestyle=linestyles, charsize=1.6, /bottom ;pos=[6.25,1e-1]
 
 print, 'Saturation level', maxall
 
 
+
 if ( usingps ) then begin
-device,/close
-set_plot,'x'
+;device,/close
+cgps_close, /jpeg,  Width=2048
+;set_plot,'x'
 endif else begin
 ;set_plot,'x'
 fname2=fname
-im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
+;im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
 endelse
 
+endfor
 
 
 

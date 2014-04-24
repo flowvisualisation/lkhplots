@@ -3,9 +3,9 @@
 
 nfile=1
 nend=2000
-nstart=10
-nend=nstart+1
-nend=152
+nstart=1100
+nend=nstart
+nend=1170
 inviiarr=fltarr(nend)
 inviiiarr=fltarr(nend)
 
@@ -34,10 +34,19 @@ rho(*,*,*)=1.0
 end
 end
 
-invii=fltarr(nx/2,ny/2,nz/2)
-inviii=fltarr(nx/2,ny/2,nz/2)
-
 ndown=4
+invii=fltarr(nx/ndown,ny/ndown,nz/ndown)
+inviii=fltarr(nx/ndown,ny/ndown,nz/ndown)
+
+invii(*,*,*)=0
+rey1=invii
+rey2=invii
+rey3=invii
+rey4=invii
+rey5=invii
+rey6=invii
+reyaveten=fltarr(nx/ndown,ny/ndown,nz/ndown,6)
+
 
 
 for i=0,nx-1,ndown do begin
@@ -67,6 +76,22 @@ for kk=k,k+ndown-1 do begin
  reystressanisotropytensor,  reyave,reyanis
 
 
+rey1(i/ndown,j/ndown,k/ndown)=reyanis(0,0)
+rey2(i/ndown,j/ndown,k/ndown)=reyanis(0,1)
+rey3(i/ndown,j/ndown,k/ndown)=reyanis(0,2)
+rey4(i/ndown,j/ndown,k/ndown)=reyanis(1,1)
+rey5(i/ndown,j/ndown,k/ndown)=reyanis(1,2)
+rey6(i/ndown,j/ndown,k/ndown)=reyanis(2,2)
+
+reyaveten(i/ndown,j/ndown,k/ndown,0)=reyave(0,0)
+reyaveten(i/ndown,j/ndown,k/ndown,1)=reyave(0,1)
+reyaveten(i/ndown,j/ndown,k/ndown,2)=reyave(0,2)
+reyaveten(i/ndown,j/ndown,k/ndown,3)=reyave(1,1)
+reyaveten(i/ndown,j/ndown,k/ndown,4)=reyave(1,2)
+reyaveten(i/ndown,j/ndown,k/ndown,5)=reyave(2,2)
+  
+
+
 invariants, reyanis, traa, det
 invii(i/ndown,j/ndown,k/ndown)=traa
 inviii(i/ndown,j/ndown,k/ndown)=determ(reyanis)
@@ -91,8 +116,13 @@ b=mean(inviii, /double)
 ;cgplot, inviii, -invii, psym=2
 tag="lumleyglobal_"
 tag2="Reynolds"
-histlumley2, invii,inviii, nfile, tag, tag2, time
+;histlumley2, invii,inviii, nfile, tag, tag2, time
 
+
+    tag="reyanis"
+ write_rey, nfile,tag,rey1, rey2, rey3, rey4, rey5, rey6
+    tag="reyave"
+ ;write_rey, nfile,tag,reyaveten[*,*,*,0], reyaveten[*,*,*,1], reyaveten[*,*,*,2], reyaveten[*,*,*,3], reyaveten[*,*,*,4], reyaveten[*,*,*,5]
 
 
 endfor

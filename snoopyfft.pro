@@ -1,5 +1,5 @@
-nend=20
-nstart=20
+nend=44
+nstart=1
    cgDisplay, WID=1,xs=1800, ys=700, xpos=100, ypos=700
 ; load some sheared data
 
@@ -97,6 +97,12 @@ titlestr[10,*]='bz'
 titlestr[10,*]='bz(z,t)'
 
 
+xtitlestr=strarr(18,30)
+xtitlestr[ 0,*]='x'
+xtitlestr[ 1,*]='k!Dx!N'
+ytitlestr=strarr(18,30)
+ytitlestr[ 0,*]='y'
+ytitlestr[ 1,*]='k!Dy!N'
   
 fname="sheartest"+string(nfile, format='(I03)')
 for usingps=0,1 do begin
@@ -119,7 +125,10 @@ endelse
 	imin=min(*dataptr[j])
 	imax=max(*dataptr[j])
      cgImage, r, NoErase=j NE 0, Position=p
-  cgcontour,xx#yy, xx,yy , /nodata, /noerase, xtitle='x', pos=p, title=titlestr(j), Charsize=cgDefCharsize()*0.5
+  cgcontour,xx#yy, xx,yy , /nodata, /noerase, $
+  xtitle=xtitlestr(j),$ 
+  ytitle=ytitlestr(j),$ 
+  pos=p, title=titlestr(j), Charsize=cgDefCharsize()*0.5
      cgColorBar, position=[p[2]+0.06, p[1], p[2]+0.07, p[3]],range=[imin-1e-6,imax+1e-6], Charsize=cgDefCharsize()*0.5 , /vertical
    ENDFOR
    cgText, 0.5, 0.9, /Normal,  'vz and DFT(vz), t='+string(mytime), Alignment=0.5, Charsize=cgDefCharsize()*1.25

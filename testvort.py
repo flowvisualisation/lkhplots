@@ -5,7 +5,7 @@ num=3
 
 import math
 #OpenDatabase("mri3d.vtk")
-OpenDatabase("localhost:./data.*.vtk database", 9)
+OpenDatabase("localhost:./*.vtk database", 60)
 
 theta=-math.pi/4.0
 sliceq1 = math.cos(theta)

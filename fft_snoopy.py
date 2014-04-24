@@ -1,5 +1,5 @@
 
-OpenDatabase("localhost:/Users/gmurphy/Documents/results/snoopy_3d/3d_mri_kx_ky_128/data/ffftvzbz*.vtk database", 0)
+OpenDatabase("localhost:./ffftvzbz*.vtk database", 0)
 DeleteActivePlots()
 AddPlot("Contour", "fftvz", 1, 1)
 SetActivePlots(0)
