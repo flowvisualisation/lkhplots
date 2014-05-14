@@ -1,5 +1,5 @@
 
-window, xs=1200, ys=1200
+cgdisplay, xs=800, ys=1200
 nbeg=60
 nend=68
 for i=nbeg,nend do begin
@@ -72,18 +72,14 @@ sz=size(magnetic_hist, /dimensions)
 cx=findgen(sz(0))*bn1a+mn1a
 cy=findgen(sz(1))*bn2a+mn2a
 
+fname="snoopyhistvxvybxby"+string(i, format='(I04)')
+
 for usingps=0,1 do begin
 
 if ( usingps ) then begin
 set_plot,'ps'
-device,filename=fname+'.eps',/encapsulated
-device, /color
-!p.font=0
-device, /times
-pxs=11.
-pys=12
-!p.charsize=1.8
-DEVICE, XSIZE=pxs, YSIZE=pys, /INCHES
+cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times', /nomatch, xsize=4, ysize=4;, /quiet
+!p.charsize=0.9
 endif else begin
 !p.font=-1
 !p.color=0
@@ -130,35 +126,19 @@ al_legend, items,linestyle=lines, colors=color
 
 ;stop
 
-ll=6
-zero=''
-nts=strcompress(string(i),/remove_all)
-lnt=strlen(nts)
-for j=1,ll-lnt do zero=zero+'0'
-           fname=qtag+zero+nts
-endfor
+
 
 
 if ( usingps ) then begin
-device,/close
-;set_plot,'x'
-if ( keyword_set(zbuf) ) then begin
-set_plot, 'z'
-device, set_resolution=[1300,1100], Decomposed=1, Set_Pixel_Depth=24
-endif else begin
+cgps_close, /jpeg,  Width=2048
+print, 'in ps'
 set_plot, 'x'
-endelse
 endif else begin
-;set_plot,'x'
-if ( keyword_set(zbuf) ) then begin
-set_plot, 'z'
-device, set_resolution=[1300,1100], Decomposed=1, Set_Pixel_Depth=24
-endif else begin
-set_plot, 'x'
+print, 'in x'
 endelse
-fname2=fname
-im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
-endelse
+
+endfor
+
 
 endfor
 

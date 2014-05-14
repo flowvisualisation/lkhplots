@@ -5,15 +5,16 @@ nfile=2
 nstart=1070
 nstart=1130
 nend=1140
+nend=1240
 nstep=10
 
-if ( 1 ) then begin
+if ( 0 ) then begin
 nstart=64
 nend=68
 nstep=1
 endif
 
-if ( 1 ) then begin
+if ( 0 ) then begin
 nstart=60
 nend=180
 nstep=1
@@ -31,7 +32,7 @@ x3=zz
 
 t=findgen(nfile+1)
 mytime=time
-vec=vz^2
+vec=vz
 xx=x1
 yy=x2
 xx2d=rebin(reform(xx,nx1,1),nx1,nx2)
@@ -77,7 +78,7 @@ ifftmy=fft(cfft3, -1)
  rcfft2=real_part(ifftmy)
  final=rcfft2
 
-ifftshear=fft(cfft3,-1)
+ifftshear=fft(cfft3, /inverse)
 unshear=real_part(ifftshear)
 
 dataptr=ptrarr(18)
@@ -94,7 +95,7 @@ sz=size(fslzoom, /dimensions)
 k1=findgen(sz(0))-sz(0)/2
 k2=findgen(sz(1))-sz(1)/2
 
-dataptr[ 0]=ptr_new(final(*,*,nz/2) )
+dataptr[ 0]=ptr_new(final(*,*,nz/2)^2 )
 dataptr[ 0]=ptr_new(fslzoom)
 dataptr[ 2]=ptr_new(vfft)
 dataptr[ 3]=ptr_new(pf1)

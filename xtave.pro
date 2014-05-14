@@ -4,6 +4,7 @@ snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile
 
 nend=370
 nend=370
+nend=182
 xt=fltarr(nend,nx,6)
 yt=fltarr(nend,ny,6)
 zt=fltarr(nend,nz,6)

@@ -15,7 +15,7 @@ endelse
 ;loadct,33
 ;tvlct, 0,0,0,0
 ;tvlct, 255,255,255,1
-pload,0
+pload,0, /quiet
 help, vx1
 
 initvort= 0.0
@@ -33,7 +33,7 @@ endif
 nstart=1
 nend=nlast
 nstep=1
-pload,0
+pload,0, /quiet
 totalke0=total(vx1^2+vx2^2)
 gamma=fltarr(1)
 tvx2=fltarr(1)
@@ -49,7 +49,7 @@ lnt=strlen(nts)
 for j=1,ll-lnt do zero=zero+'0'
            fname=tag+zero+nts
 
-pload,nfile
+pload,nfile, /quiet
 
 !p.position=0
 nx = nx1
@@ -149,7 +149,7 @@ for i=3,3 do begin
 
 
 ;r=scale_vector(var(i,*,*),4,255)
-r=var(i,*,*)
+r=reform(var(i,*,*))
 ;contour, r, xx,yy,/nodata, title=str(i), xtitle='x', ytitle='y'
 p = [0.08, 0.3, 0.98, 0.95]
   ;cgIMAGE, r, POSITION=p, /KEEP_ASPECT_RATIO ;, MISSING_INDEX=3 , scale=4, bottom=190, top=254, background='white'

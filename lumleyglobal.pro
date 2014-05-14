@@ -1,4 +1,4 @@
-
+cgdisplay, xs=1600, ys=800
 
 
 nfile=1
@@ -6,11 +6,14 @@ nend=2000
 nstart=10
 nend=nstart+1
 nend=152
+nstart=63
+nend=69
+nstep=1
 inviiarr=fltarr(nend)
 inviiiarr=fltarr(nend)
 
 vshear=1.0
-for nfile=nstart,nend do begin
+for nfile=nstart,nend, nstep do begin
 
 
 code='pluto'
@@ -91,7 +94,7 @@ b=mean(inviii, /double)
 ;cgplot, inviii, -invii, psym=2
 tag="lumleyglobal_"
 tag2="Reynolds"
-histlumley2, invii,inviii, nfile, tag, tag2, time
+histlumley3, invii,inviii, nfile, tag, tag2, time
 
 
 

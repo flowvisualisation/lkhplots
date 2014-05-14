@@ -17,6 +17,14 @@ maxall=max([ [sqrt(ux2m)] , [sqrt(uy2m)], [sqrt(uz2m)] , [sqrt(bx2m)] , [sqrt(by
 minall=min([ [sqrt(ux2m)] , [sqrt(uy2m)], [sqrt(uz2m)] , [sqrt(bx2m)] , [sqrt(by2m)] ,[sqrt(bz2m)]   ])
 ymin=1e-6*maxall
 
+
+for usingps=0,1 do begin
+if (usingps eq 1) then begin
+cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times'
+endif else  begin
+set_plot, 'x'
+endelse
+
 cgplot, t, sqrt(ux2m), color=colors[0], linestyle=linestyles[0], /ylog, yrange=[ymin, max(maxall)], ystyle=1, title="Compressible finite difference PENCIL growth rates"
 cgplot, t, sqrt(uy2m), /overplot, color=colors[1], linestyle=linestyles[1]
 cgplot, t, sqrt(uz2m), /overplot, color=colors[2], linestyle=linestyles[2]
@@ -46,16 +54,14 @@ print, 1/lfast
 
 
 
+
 if ( usingps ) then begin
-device,/close
-set_plot,'x'
+cgps_close, /jpeg,  Width=1100
 endif else begin
-;set_plot,'x'
 fname2=fname
-im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
 endelse
 
-
+endfor
 
 
 end

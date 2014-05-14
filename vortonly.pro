@@ -112,7 +112,7 @@ device, /times
 xs=7
 ys=3.7
 DEVICE, XSIZE=xs, YSIZE=ys, /INCHES
-!p.charsize=1.9
+!p.charsize=1.2
 cbarchar=1.9
 xyout=1.9
 endif else begin
@@ -164,8 +164,10 @@ p = [0.05, 0.1, 0.98, 0.97]
 ;cgaxis, /xaxis, xRANGE=[0, 100], $
 ;MINOR=0, MAJOR=3
   cgcontour, r, xx,yy,POSITION=p, /NOERASE, XSTYLE=1, $
-      YSTYLE=1,  NLEVELS=10, /nodata, title=str(i)+string(min(r), format='(G8.2)')+' '+string(max(r), format='(G8.2)'), $
-         xtitle='K!DX!NX', ytitle='K!DZ!NZ', $
+      YSTYLE=1,  NLEVELS=10, /nodata, $
+      ;title=str(i)+string(min(r), format='(G8.2)')+' '+string(max(r), format='(G8.2)'), $
+        ; xtitle='K!DX!NX', $
+        ; ytitle='K!DZ!NZ', $
       color='white'
 imin=min(r)-1e-6
 imax=max(r)+1e-6
