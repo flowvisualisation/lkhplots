@@ -3,12 +3,18 @@ cgdisplay, xs=1600, ys=800
 
 nstart=1000
 nend=1170
+nstep=10
+;nstart=64
+;nend=68
+;nstart=1
+;nend=182
+;nstep=1
 ;nend=1010
 ;nend=nstart+1
 ;nend=nstart
 
 vshear=1.0
-for nfile=nstart,nend,10 do begin
+for nfile=nstart,nend,nstep do begin
 
 
 code='pluto'

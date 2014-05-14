@@ -8,9 +8,12 @@ nstart=1000
 nend=nstart+1
 nend=152
 nend=1170
+nstart=63
+nend=69
+nstep=1
 
 vshear=1.0
-for nfile=nstart,nend do begin
+for nfile=nstart,nend,nstep do begin
 
 
 code='pluto'

@@ -86,8 +86,8 @@ cgcontour, dat,x1,x2,$
    ; /nodata,$
    ; /noerase,$
     pos=pos, $ 
-    xtitle='III',$
-    ytitle='II',$
+    xtitle='Third Invariant',$
+    ytitle='Second Invariant',$
 Charsize=cgDefCharsize()*0.9,  $
    ; nlev=10,$
    ; xrange=[0.05,0.07],$

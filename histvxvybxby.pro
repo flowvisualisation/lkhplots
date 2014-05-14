@@ -1,6 +1,6 @@
 
 set_plot, 'x'
-window, xs=1200, ys=1200
+cgdisplay, xs=800, ys=1200
 for i=0,nlast do begin
 pload,i , /silent
 sbq=1.5
@@ -76,7 +76,9 @@ for usingps=0,1 do begin
 
 if ( usingps ) then begin
 set_plot,'ps'
-cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times';, /quiet
+cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times', /nomatch, xsize=4, ysize=4;, /quiet
+!p.charsize=0.9
+
 endif else begin
 !p.font=-1
 !p.color=0
