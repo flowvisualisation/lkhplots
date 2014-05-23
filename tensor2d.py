@@ -204,7 +204,7 @@ AnnotationAtts.axesArray.axes.tickMarks.majorSpacing = 0.2
 AnnotationAtts.axesArray.axes.grid = 0
 SetAnnotationAttributes(AnnotationAtts)
 
-DefineTensorExpression("rey", "{{rey1, rey2, rey3}, {rey2, rey4, rey5}, {rey3, rey5, rey6}}")
+DefineTensorExpression("rey", "{{rey1, rey2, 1e-6}, {rey2, rey4, 1e-6}, {1e-6, 1e-6, 1e-6}}")
 
 
 DeleteActivePlots()

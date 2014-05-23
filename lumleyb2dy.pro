@@ -11,6 +11,8 @@ nend=1170
 nstart=63
 nend=69
 nstep=1
+nstart=12
+nend=152
 
 vshear=1.0
 for nfile=nstart,nend,nstep do begin

@@ -144,8 +144,8 @@ vorty=getvort(vpx,vpz,xslice,xslice2,nslice,nslice2)
 ;!p.position=0
 pos=[0.1,0.1,0.9,0.9]
 
-xbeg=0
-xend=nslice-1
+xbeg=1
+xend=nslice-2
 ybeg=30 ;+angleno/3
 yend=nslice2-3 ;+angleno/3
 data=vorty[xbeg:xend,ybeg:yend]

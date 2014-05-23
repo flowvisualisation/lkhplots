@@ -6,10 +6,8 @@ nend=2000
 nstart=1100
 nend=nstart
 nend=1170
-nstart=0
-nend=20
-;nstart=61
-;nend=68
+nstart=20
+nend=152
 inviiarr=fltarr(nend)
 inviiiarr=fltarr(nend)
 
@@ -77,15 +75,15 @@ for kk=k,k+ndown-1 do begin
     endfor
     endfor
 
- reystressanisotropytensor,  reyave,reyanis
+; reystressanisotropytensor,  reyave,reyanis
 
 
-rey1(i/ndown,j/ndown,k/ndown)=reyanis(0,0)
-rey2(i/ndown,j/ndown,k/ndown)=reyanis(0,1)
-rey3(i/ndown,j/ndown,k/ndown)=reyanis(0,2)
-rey4(i/ndown,j/ndown,k/ndown)=reyanis(1,1)
-rey5(i/ndown,j/ndown,k/ndown)=reyanis(1,2)
-rey6(i/ndown,j/ndown,k/ndown)=reyanis(2,2)
+rey1(i/ndown,j/ndown,k/ndown)=reyave(0,0)
+rey2(i/ndown,j/ndown,k/ndown)=reyave(0,1)
+rey3(i/ndown,j/ndown,k/ndown)=reyave(0,2)
+rey4(i/ndown,j/ndown,k/ndown)=reyave(1,1)
+rey5(i/ndown,j/ndown,k/ndown)=reyave(1,2)
+rey6(i/ndown,j/ndown,k/ndown)=reyave(2,2)
 
 reyaveten(i/ndown,j/ndown,k/ndown,0)=reyave(0,0)
 reyaveten(i/ndown,j/ndown,k/ndown,1)=reyave(0,1)
@@ -96,9 +94,9 @@ reyaveten(i/ndown,j/ndown,k/ndown,5)=reyave(2,2)
   
 
 
-invariants, reyanis, traa, det
-invii(i/ndown,j/ndown,k/ndown)=traa
-inviii(i/ndown,j/ndown,k/ndown)=determ(reyanis)
+;invariants, reyanis, traa, det
+;invii(i/ndown,j/ndown,k/ndown)=traa
+;inviii(i/ndown,j/ndown,k/ndown)=determ(reyanis)
 
 ;print, trace(rey)^2-trace(rey^2), det
 
@@ -123,9 +121,8 @@ tag2="Reynolds"
 ;histlumley2, invii,inviii, nfile, tag, tag2, time
 
 
-    tag="reyanis"
- write_rey, nfile,tag,rey1, rey2, rey3, rey4, rey5, rey6
     tag="reyave"
+ write_rey, nfile,tag,rey1, rey2, rey3, rey4, rey5, rey6
  ;write_rey, nfile,tag,reyaveten[*,*,*,0], reyaveten[*,*,*,1], reyaveten[*,*,*,2], reyaveten[*,*,*,3], reyaveten[*,*,*,4], reyaveten[*,*,*,5]
 
 

@@ -4,14 +4,17 @@ cgdisplay, xs=1600, ys=800
 nstart=1000
 nend=1170
 nstep=10
-;nstart=64
-;nend=68
-;nstart=1
 ;nend=182
 ;nstep=1
 ;nend=1010
 ;nend=nstart+1
 ;nend=nstart
+nstart=1
+nend=152
+nstep=1
+;nstart=62
+;nend=68
+;nstart=1
 
 vshear=1.0
 for nfile=nstart,nend,nstep do begin
@@ -19,11 +22,11 @@ for nfile=nstart,nend,nstep do begin
 
 code='pluto'
 code='snoopy'
-switch code OF 
+case code OF 
 'pluto': begin
 pload,1
 plutoread, dens, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
-break;
+time=time/1000.
 end
 'snoopy':begin
 snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time

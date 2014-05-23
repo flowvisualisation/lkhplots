@@ -1,5 +1,26 @@
 
-OpenDatabase("localhost:./reyanis*.vtk database", 0)
+OpenDatabase("localhost:./reyave*.vtk database", 0)
+
+DefineTensorExpression("rey", "{{rey1, rey2, rey3}, {rey2, rey4, rey5}, {rey3, rey5, rey6}}")
+
+
+DeleteActivePlots()
+HideActivePlots()
+DeleteActivePlots()
+AddPlot("Tensor", "rey", 1, 1)
+TensorAtts = TensorAttributes()
+TensorAtts.useStride = 0
+TensorAtts.stride = 1
+TensorAtts.nTensors = 400
+TensorAtts.scale = 0.001
+TensorAtts.scaleByMagnitude = 1
+TensorAtts.autoScale = 0
+TensorAtts.colorByEigenvalues = 1
+TensorAtts.useLegend = 1
+TensorAtts.tensorColor = (0, 0, 0, 255)
+TensorAtts.colorTableName = "Default"
+TensorAtts.invertColorTable = 0
+SetPlotOptions(TensorAtts)
 
 # Logging for SetAnnotationObjectOptions is not implemented yet.
 AnnotationAtts = AnnotationAttributes()
@@ -203,19 +224,4 @@ AnnotationAtts.axesArray.axes.tickMarks.minorSpacing = 0.02
 AnnotationAtts.axesArray.axes.tickMarks.majorSpacing = 0.2
 AnnotationAtts.axesArray.axes.grid = 0
 SetAnnotationAttributes(AnnotationAtts)
-
-DefineTensorExpression("rey", "{{rey1, rey2, rey3}, {rey2, rey4, rey5}, {rey3, rey5, rey6}}")
-
-
-DeleteActivePlots()
-AddPlot("Tensor", "rey", 1, 1)
-SetActivePlots(0)
-AddOperator("ThreeSlice", 1)
-ThreeSliceAtts = ThreeSliceAttributes()
-ThreeSliceAtts.x = 0
-ThreeSliceAtts.y = 0
-ThreeSliceAtts.z = 31
-ThreeSliceAtts.interactive = 1
-SetOperatorOptions(ThreeSliceAtts, 1)
-DrawPlots()
 

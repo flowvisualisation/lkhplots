@@ -1,5 +1,5 @@
-nbeg=1
-nend=170
+nbeg=62
+nend=68
 ;pro exvort9, nfile, vx1,vx2,vx3, rho, prs, t , nlast, nx1,nx2,nx3,x1,x2,x3, dx1,dx2, vorty, vpx,vpz, vmri, vshear, vx,vy,vz, vxsl, vysl
 pluto=0
 nfile=1
@@ -36,10 +36,9 @@ code='pencil'
 code='pluto'
 code='snoopy'
 
-switch code OF 
+case code OF 
 'pluto': begin
-pload,nfile, /silent
-
+pload,nfile ;, /silent
 vx=vx1
 vy=vx2
 vz=vx3
@@ -49,12 +48,10 @@ zz=x3
 nx=nx1
 ny=nx2
 nz=nx3
-break;
+omega=1000.0
+time=t(nfile)/omega
 end
-
 'pencil':begin
-
-
 path='data/proc0/'
 varfile='VAR'+str(nfile)
 if ( (pluto eq 0 )  and (file_test(path+varfile)  ne 1 )) then begin
@@ -82,7 +79,7 @@ end
 snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
 end
 
-end
+endcase
 
 
 sbq=1.5
