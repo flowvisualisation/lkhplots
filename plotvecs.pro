@@ -23,43 +23,15 @@ ENDCASE
 
 fname="growthrates"+dirname
 for usingps=0,1 do begin
-if ( usingps ) then begin
-set_plot,'ps'
-device,filename=fname+'.eps',/encapsulated
-device, /color
-!p.font=0
-device, /times
-;xs=12.-ar*6
-;ys=6+ar*4
-xsize=9
-aspect_ratio=1.5 ;rectangle
-device, xsize=xsize, ysize=xsize/aspect_ratio
-!p.charsize=0.6
-cbarchar=0.9
-alchar=0.9
-xyout=0.9
-endif else begin
-if ( keyword_set (zbuf) ) then begin
-set_plot,'z'
-ys=1200
-xs=1800
-!p.charsize=1.8
-cbarchar=1.8
-xyout=1.8
-device, set_resolution=[xs,ys]
-endif else begin
-set_plot,'x'
-!p.font=-1
-!p.charsize=1.8
-cbarchar=1.8
-xyout=1.8
-endelse
-;device, set_resolution=[1100,800]
+if (usingps eq 1) then begin
+cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times'
+endif else  begin
+set_plot, 'x'
 endelse
 
 
 
-items=['v1','v2', 'v3', 'b1', 'b2', 'b3','growth=0.75' ]
+items=['v!Dr!N','v!D!9f!X!N', 'v!Dz!N', 'b!Dr!N', 'b!D!9f!X!N', 'b!Dz!N','0.75' ]
 linestyles=[0,0,0,3,2,2,1]
 psym=[0,1,2,3,4,5,6]
 colors=['red', 'blue', 'green', 'orange', 'turquoise', 'purple', 'black']
@@ -103,14 +75,10 @@ print,'b1 growth',  b1growthrate
 print,'b2 growth',  b2growthrate
 
 if ( usingps ) then begin
-device,/close
-set_plot,'x'
+cgps_close, /jpeg,  Width=1100
 endif else begin
-;set_plot,'x'
 fname2=fname
-im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
 endelse
-
 
 
 endfor

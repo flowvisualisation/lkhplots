@@ -6,10 +6,10 @@ nend=2000
 nstart=1100
 nend=nstart
 nend=1170
-nstart=0
-nend=20
-;nstart=61
-;nend=68
+nstart=1
+nend=152
+nstart=62
+nend=68
 inviiarr=fltarr(nend)
 inviiiarr=fltarr(nend)
 
@@ -67,15 +67,16 @@ for ii=i,i+ndown-1 do begin
 for jj=j,j+ndown-1 do begin
 for kk=k,k+ndown-1 do begin
     dens=rho(ii,jj,kk)
-    u1=u1+vx(ii,jj,kk)
-    u2=u2+vy(ii,jj,kk)
-    u3=u3+vz(ii,jj,kk)
+    u1=u1+bx(ii,jj,kk)
+    u2=u2+by(ii,jj,kk)
+    u3=u3+bz(ii,jj,kk)
     a=[u1,u2,u3]
     rey=a#a
  reyave=reyave+rey
     endfor
     endfor
     endfor
+
 
  reystressanisotropytensor,  reyave,reyanis
 
@@ -96,9 +97,9 @@ reyaveten(i/ndown,j/ndown,k/ndown,5)=reyave(2,2)
   
 
 
-invariants, reyanis, traa, det
-invii(i/ndown,j/ndown,k/ndown)=traa
-inviii(i/ndown,j/ndown,k/ndown)=determ(reyanis)
+;invariants, reyanis, traa, det
+;invii(i/ndown,j/ndown,k/ndown)=traa
+;inviii(i/ndown,j/ndown,k/ndown)=determ(reyanis)
 
 ;print, trace(rey)^2-trace(rey^2), det
 
@@ -123,9 +124,8 @@ tag2="Reynolds"
 ;histlumley2, invii,inviii, nfile, tag, tag2, time
 
 
-    tag="reyanis"
+    tag="maxanis"
  write_rey, nfile,tag,rey1, rey2, rey3, rey4, rey5, rey6
-    tag="reyave"
  ;write_rey, nfile,tag,reyaveten[*,*,*,0], reyaveten[*,*,*,1], reyaveten[*,*,*,2], reyaveten[*,*,*,3], reyaveten[*,*,*,4], reyaveten[*,*,*,5]
 
 

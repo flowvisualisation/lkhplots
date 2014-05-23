@@ -84,7 +84,7 @@ growtharr=[  [ v1arr] , [ v2arr] , [ v3arr] , [ b2arr] , [ b2arr] , [ b3arr]  , 
 idstr=[  " v1arr" , " v2arr" , " v3arr" , " b1arr" , " b2arr" , " b3arr"  , "tnorm" ]
 
  ;; add to hdf5 file
-  h5growth, growtharr, idstr
+  ;h5growth, growtharr, idstr
 
 
 end

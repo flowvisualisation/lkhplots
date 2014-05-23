@@ -23,7 +23,8 @@ colors=['red', 'blue', 'green', 'orange', 'turquoise', 'purple', 'black']
 maxall=max([ [sqrt(ux2m)] , [sqrt(uy2m)], [sqrt(uz2m)] , [sqrt(bx2m)] , [sqrt(by2m)] ,[sqrt(bz2m)]   ])
 minall=min([ [sqrt(ux2m)] , [sqrt(uy2m)], [sqrt(uz2m)] , [sqrt(bx2m)] , [sqrt(by2m)] ,[sqrt(bz2m)]   ])
 ymin=1e-6
-ymax=1e2
+ymax=3e2
+ymax=maxall
 
 
 fname="timeseries_"
@@ -36,7 +37,7 @@ endelse
 
 
 
-cgplot, t, sqrt(ux2m), color=colors[0], linestyle=linestyles[0], /ylog, yrange=[ymin, ymax], ystyle=1, title="MRI + PI" , xrange=[0,18]
+cgplot, t, sqrt(ux2m), color=colors[0], linestyle=linestyles[0], /ylog, yrange=[ymin, ymax], ystyle=1, title="MRI + PI" ;, xrange=[0,18]
 cgplot, t, sqrt(uy2m), /overplot, color=colors[1], linestyle=linestyles[1]
 cgplot, t, sqrt(uz2m), /overplot, color=colors[2], linestyle=linestyles[2]
 cgplot, t, sqrt(bx2m), /overplot, color=colors[3], linestyle=linestyles[3]
