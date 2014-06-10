@@ -18,10 +18,10 @@ for nfile=nstart,nend do begin
 
 
 code='pluto'
-code='snoopy'
+;code='snoopy'
 switch code OF 
 'pluto': begin
-pload,1
+;pload,1
 plutoread, dens, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
 break;
 end

@@ -44,6 +44,11 @@ cy=findgen(nsize+1)*bn2+mnv2
 
 
 lumleyhist=hist_2d(var1, var2, min1=mnv1, max1=mxv1, min2=mnv2, max2=mxv2, bin1=bn1, bin2=bn2)
+
+idstr=['lumley','spare']
+arr2=fltarr(2,2)
+ h5_2darr, lumleyhist, arr2, tag+string(nfile, format='(I04)'), idstr
+
 ;help,lumleyhist
 print, max(lumleyhist)
 lumleyhist[0,0]=1e3

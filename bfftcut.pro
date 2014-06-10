@@ -18,10 +18,12 @@ nend=68
 nstep=1
 endif
 
-if ( 0 ) then begin
-nstart=12
+if ( 1 ) then begin
+nstart=24
 nend=152
-nstep=1
+nstart=115
+nend=2000
+nstep=20
 endif
 
 
@@ -36,8 +38,7 @@ x3=zz
 
 t=findgen(nfile+1)
 mytime=time
-vec=vz
-vec=sqrt(vx^2+vy^2+vz^2)
+vec=sqrt(bx^2+by^2+bz^2)
 xx=x1
 yy=x2
 xx2d=rebin(reform(xx,nx1,1),nx1,nx2)
@@ -148,7 +149,7 @@ ytitlestr=strarr(18,30)
 ytitlestr[ 0,*]='z'
 ytitlestr[ 0,*]='k!Dy!N'
   
-fname="sheartest"+string(nfile, format='(I04)')
+fname="bsheartest"+string(nfile, format='(I04)')
 for usingps=0,1 do begin
 if (usingps eq 1) then begin
 cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times', /quiet
@@ -177,7 +178,7 @@ endelse
     xtitle=xtitlestr(j), $
     ytitle=ytitlestr(j), $
     pos=p,$
-    title=titlestr(j)+', t='+string(mytime,format='(F5.2)')+' orbits',$
+    title=titlestr(j)+', t='+string(mytime,format='(F6.2)')+' orbits',$
     Charsize=cgDefCharsize()*0.6
     gft=gauss2dfit(d, aa,/tilt)
     cgloadct,33

@@ -18,10 +18,13 @@ nend=68
 nstep=1
 endif
 
-if ( 0 ) then begin
-nstart=12
+if ( 1 ) then begin
+nstart=13
 nend=152
 nstep=1
+;nstart=115
+;nend=2000
+;nstep=20
 endif
 
 
@@ -36,8 +39,10 @@ x3=zz
 
 t=findgen(nfile+1)
 mytime=time
-vec=vz
-vec=sqrt(vx^2+vy^2+vz^2)
+vec=sqrt(bx^2+by^2+bz^2)
+vtag='b'
+;vec=sqrt(vx^2+vy^2+vz^2)
+;vtag='v'
 xx=x1
 yy=x2
 xx2d=rebin(reform(xx,nx1,1),nx1,nx2)
@@ -90,22 +95,54 @@ unshear=real_part(ifftshear)
 dataptr=ptrarr(18)
 
 
-qxq=abs(cfft2(*,*,0))+1e-3
-qxq=qxq^2
-fsl=reform(smooth(shift(qxq,nx1/2,nx2/2),1, /edge_wrap))
+qxq=reform(abs(cfft3(nx-1,*,*)))
+sl2=reform(abs(cfft3(*,0,*)))
+sl3=reform(abs(cfft3(*,*,0)))
+
+for i=0,nx-1 do begin
+    qxq(i,*)=abs(cfft3(i,i,*))
+endfor
+
+    qcfft=shift(cfft3,-1,0,0)
+for i=0,nx-1 do begin
+    sl2(i,*)=abs(qcfft(i,nx-i-1,*))
+endfor
+
+;qxq=qxq^2
+fsl=reform(smooth(shift(qxq,nx2/2,nx3/2),1, /edge_wrap))
+fsl2=reform(smooth(shift(sl2,nx1/2,nx3/2),1, /edge_wrap))
+fsl3=reform(smooth(shift(sl3,nx1/2,nx2/2),1, /edge_wrap))
 zmn=0.4
 zmx=0.6
 zmn=0.3
 zmx=0.7
-fslzoom=fsl[nx1*zmn:nx1*zmx, nx2*zmn:nx2*zmx]
+fslzoom=fsl[nx2*zmn:nx2*zmx, nx3*zmn:nx3*zmx]
+fsl2zoom=fsl2[nx1*zmn:nx1*zmx, nx3*zmn:nx3*zmx]
+fsl3zoom=fsl3[nx1*zmn:nx1*zmx, nx2*zmn:nx2*zmx]
 
 sz=size(fslzoom, /dimensions)
 k1=findgen(sz(0))-sz(0)/2
 k2=findgen(sz(1))-sz(1)/2
+k3=findgen(sz(1))-sz(1)/2
+sz=size(fsl2zoom, /dimensions)
+;k1=findgen(sz(0))-sz(0)/2
+;k3=findgen(sz(1))-sz(1)/2
+
+k1arr=ptrarr(3)
+k1arr[0]=ptr_new(k1)
+k1arr[1]=ptr_new(k1)
+k1arr[2]=ptr_new(k1)
+
+k2arr=ptrarr(3)
+k2arr[0]=ptr_new(k3)
+k2arr[1]=ptr_new(k3)
+k2arr[2]=ptr_new(k1)
+
 
 dataptr[ 0]=ptr_new(final(*,*,nz/2) )
 dataptr[ 0]=ptr_new(fslzoom)
-dataptr[ 2]=ptr_new(vfft)
+dataptr[ 1]=ptr_new(fsl2zoom)
+dataptr[ 2]=ptr_new(fsl3zoom)
 dataptr[ 3]=ptr_new(pf1)
 dataptr[ 4]=ptr_new(pf2)
 dataptr[ 5]=ptr_new(ky2d)
@@ -122,10 +159,12 @@ dataptr[15]=ptr_new(final)
 
 pos=[0.2,0.1,0.9,0.9]
 
+
+
 titlestr=strarr(18,30)
-titlestr[ 0,*]='vz'
-titlestr[ 0,*]='Fourier spectrum V!Dz!N(k!Dx!N,k!Dy!N)'
-titlestr[ 2,*]='fft(vz)'
+titlestr[ 0,*]='DFT V(k!Dp!N,k!Dz!N)'
+titlestr[ 1,*]='DFT V(k!Dh!N,k!Dz!N)'
+titlestr[ 2,*]='DFT V(k!Dx!N,k!Dy!N)'
 titlestr[ 3,*]='fft dimension 1'
 titlestr[ 4,*]='fft dimension 2'
 titlestr[ 5,*]='ky2d'
@@ -141,14 +180,22 @@ titlestr[10,*]='bz'
 titlestr[10,*]='bz(z,t)'
 
 xtitlestr=strarr(18,30)
-xtitlestr[ 0,*]='r'
-xtitlestr[ 0,*]='k!Dx!N'
+xtitlestr[ 0,*]='k!Dp!N'
+xtitlestr[ 1,*]='k!Dh!N'
+xtitlestr[ 2,*]='k!Dx!N'
 
 ytitlestr=strarr(18,30)
-ytitlestr[ 0,*]='z'
-ytitlestr[ 0,*]='k!Dy!N'
+ytitlestr[ 0,*]='k!Dz!N'
+ytitlestr[ 1,*]='k!Dz!N'
+ytitlestr[ 2,*]='k!Dy!N'
   
-fname="sheartest"+string(nfile, format='(I04)')
+
+posarr=fltarr(4,3)
+posarr[*,0]=[0.1,0.12,0.45,0.43]
+posarr[*,1]=[0.1,0.56,0.45,0.9]
+posarr[*,2]=[0.55,0.12,0.9,0.9]
+
+fname=vtag+"dft3cuts"+string(nfile, format='(I04)')
 for usingps=0,1 do begin
 if (usingps eq 1) then begin
 cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times', /quiet
@@ -161,29 +208,37 @@ endelse
 
 
    cgLoadCT, 33
-   pos = cglayout([2,1] , OXMargin=[4,7], OYMargin=[5,5], XGap=8, YGap=2)
-   FOR j=0,0 DO BEGIN
+   pos = cglayout([3,1] , OXMargin=[4,7], OYMargin=[5,5], XGap=8, YGap=2)
+   FOR j=0,2 DO BEGIN
      p = pos[*,j]
+     p = posarr[*,j]
      d= alog10(*dataptr(j))
 	r=cgscalevector(d, 1,254)
 	imin=min(*dataptr[j])
 	imax=max(*dataptr[j])
     ; cgimage, r, NoErase=j NE 0, Position=p
-  cgcontour,d, k1,k2 , $
-  ;/nodata, /noerase, $ 
+    ttag='                         '
+    if ( j eq 2 ) then begin
+    ttag=', t='+string(mytime,format='(F6.2)')+' orbits'
+    endif
+
+  cgcontour,d, $
+  *k1arr[j],*k2arr[j] , $
+  ;/nodata,
+   /noerase, $ 
     ;/c_Colors,$
     nlev=20,$
     /fill, $
     xtitle=xtitlestr(j), $
     ytitle=ytitlestr(j), $
     pos=p,$
-    title=titlestr(j)+', t='+string(mytime,format='(F5.2)')+' orbits',$
+    title=titlestr(j)+ttag,$
     Charsize=cgDefCharsize()*0.6
     gft=gauss2dfit(d, aa,/tilt)
     cgloadct,33
     tvlct,255,255,255,255
-    cgcontour, gft, k1,k2, /overplot, pos=p, color='Antique White'
-     cgcolorBar, position=[p[2]+0.06, p[1], p[2]+0.07, p[3]],range=[imin-1e-6,imax+1e-6], Charsize=cgDefCharsize()*0.5 , /vertical
+    cgcontour, gft, *k1arr[j],*k2arr[j], /overplot, pos=p, color='Black'
+     cgcolorBar, position=[p[2]+0.03, p[1], p[2]+0.04, p[3]],range=[imin-1e-6,imax+1e-6], Charsize=cgDefCharsize()*0.5 , /vertical
    ENDFOR
    ;cgText, 0.5, 0.9, /Normal,  'vz and DFT(vz), t='+string(mytime), Alignment=0.5, Charsize=cgDefCharsize()*1.25
 
@@ -204,8 +259,8 @@ endelse
 
 
     for  zi = 0,qx/2-1 do begin
-        spec1(zi) = qq(qx/2+zi, qy/2+zi)
-        spec2(zi) = qq(qx/2+zi, qy/2-zi)
+;        spec1(zi) = qq(qx/2+zi, qy/2+zi)
+;        spec2(zi) = qq(qx/2+zi, qy/2-zi)
     endfor
 
     for i=0, qx-1 do begin
@@ -230,10 +285,10 @@ radave(int_disp)= radave(int_disp)+qq(i,j)/2/!DPI/kr(i,j)
 
 ymin=min(spec1)
 ymax=max(spec1)
-    cgplot,wns, smooth(spec1,2), pos=pos[*,1], /noerase,  xrange=[0.9,37], xtitle="k!DR!N", ytitle="V!DZ!N" , /xlog, Charsize=cgDefCharsize()*0.6, /ylog, yrange=[ymin,ymax], color=colors[0]
-    cgplot,wns, smooth(spec2,2), pos=pos[*,1], /noerase, /overplot, color=colors[1]
-    cgplot, wns , 0.01*wns^(-7./3.), pos=pos[*,1], /noerase, /overplot, color=colors[2], linestyle=lines[2]
-    cgplot, wns , 0.01*wns^(-5./3.), pos=pos[*,1], /noerase, /overplot, color=colors[3], linestyle=lines[3]
+    ;cgplot,wns, smooth(spec1,2), pos=pos[*,1], /noerase,  xrange=[0.9,37], xtitle="k!DR!N", ytitle="V!DZ!N" , /xlog, Charsize=cgDefCharsize()*0.6, /ylog, yrange=[ymin,ymax], color=colors[0]
+    ;cgplot,wns, smooth(spec2,2), pos=pos[*,1], /noerase, /overplot, color=colors[1]
+    ;cgplot, wns , 0.01*wns^(-7./3.), pos=pos[*,1], /noerase, /overplot, color=colors[2], linestyle=lines[2]
+    ;cgplot, wns , 0.01*wns^(-5./3.), pos=pos[*,1], /noerase, /overplot, color=colors[3], linestyle=lines[3]
 ;    cgplot, wns , 0.001*wns^(-4./3.), pos=pos[*,1], /noerase, /overplot, color=colors[4], linestyle=lines[4]
     ;cgplot, wns , max(spec1)*spec/max(spec), pos=pos[*,1], /noerase, /overplot, color=colors[5], linestyle=lines[5]
 ;    cgplot, wns , spec, pos=pos[*,1], /noerase, /overplot, color=colors[5], linestyle=lines[5]
@@ -241,7 +296,7 @@ ymax=max(spec1)
 
 
 
-    al_legend, items[0:3], colors=colors[0:3], linestyle=lines[0:3], Charsize=cgDefCharsize()*0.4, /right
+;    al_legend, items[0:3], colors=colors[0:3], linestyle=lines[0:3], Charsize=cgDefCharsize()*0.4, /right
 
 if ( usingps ) then begin
 cgps_close, /jpeg,  Width=2048, /nomessage

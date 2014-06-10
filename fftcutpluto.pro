@@ -13,8 +13,8 @@ nstart=12
 nend=152
 
 if ( 1 ) then begin
-nstart=61
-nend=68
+nstart=1
+nend=25
 nstep=1
 endif
 
@@ -26,7 +26,29 @@ endif
 
 
 for nfile=nstart,nend,nstep do begin
-snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
+pload,nfile, /silent
+
+rho=rho
+vx=vx1
+vy=vx2
+vz=vx3
+bx=bx1
+by=bx2
+bz=bx3
+xx=x1
+yy=x2
+zz=x3
+nx=nx1
+ny=nx2
+nz=nx3
+
+
+xx3d=rebin(reform(xx,nx,  1,  1),nx,ny,nz) 
+yy3d=rebin(reform(yy,  1,ny,  1),nx,ny,nz) 
+zz3d=rebin(reform(zz,  1,  1,nz),nx,ny,nz) 
+
+time=t(nfile)
+
 nx1=nx
 nx2=ny
 nx3=nz
@@ -54,7 +76,7 @@ ky3d=rebin(reform(ky,1,nx2,1),nx1,nx2,nx3)
 
 
 q=1.5d
-omega=1.0
+omega=1000.0
 S=q*omega
 time=mytime
 ; dt is difference in time between this, and the nearest shear periodic point

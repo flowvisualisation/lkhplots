@@ -86,7 +86,7 @@ PRO PIC_data2vtk
 n = 200    ; number of snapshots to be written to vtk files
 ;------------------------------------------------------------------------
 
-for j = 0,n,2 do begin  
+for j = 60,68,1 do begin  
   r=snapshot_rf2vtk_test(j)
 endfor
 

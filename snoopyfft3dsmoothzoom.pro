@@ -3,9 +3,11 @@
 
 nfile=2
 nstart=1070
-;nstart=900
 nend=1140
 nstep=10
+nstart=60
+nend=68
+nstep=1
 if ( 0 ) then begin
 nstart=64
 nend=68
