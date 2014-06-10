@@ -78,9 +78,13 @@ print, mean(-invii, /double), mean(inviii, /double), format='(F27.24,  F27.24)'
 ;cgplot, xbin, pdf    
 
 ;cgplot, inviii, -invii, psym=2
-tag="lumley2d"
-histlumley, invii, inviii, nfile, tag
 
+tag="lumley2dz"
+tag2="Reynolds"
+histlumley3, invii, inviii, nfile, tag, tag2, time
+
+
+idstr=['invii','inviii']
 
 endfor
 

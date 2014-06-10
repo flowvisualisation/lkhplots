@@ -29,6 +29,12 @@ minall=min([ [sqrt(ux2m)] , [sqrt(uy2m)], [sqrt(uz2m)] , [sqrt(bx2m)] , [sqrt(by
 ymin=1e-2*maxall
 ymin=1
 ymax=10
+ymax=15
+ymax=15
+ymin=5
+ymax=maxall
+ymin=minall
+ymin=1e-1
 
 cgdisplay, xs=1200, ys=600
 
@@ -44,7 +50,7 @@ endelse
 
 cgplot, t, sqrt(smooth(ux2m,10)), color=colors[0], linestyle=linestyles[0], /ylog, yrange=[ymin, ymax], ystyle=1 $
     , xtitle="time (orbits)" $
-    , xrange=[30,53]
+    , xrange=[20,30]
 cgplot, t, sqrt(smooth(uz2m,10)), /overplot, color=colors[1], linestyle=linestyles[1]
 ;cgplot, t, sqrt(smooth(uz2m,5)), /overplot, color=colors[2], linestyle=linestyles[2]
 ;cgplot, t, sqrt(bx2m), /overplot, color=colors[3], linestyle=linestyles[3]

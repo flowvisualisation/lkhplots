@@ -4,6 +4,10 @@
 nfile=2
 nstart=1070
 nend=1140
+nstart=62
+nend=68
+;nstart=1
+;nend=7
 for nfile=nstart,nend do begin
 snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
 nx1=nx
@@ -16,6 +20,7 @@ x3=zz
 t=findgen(nfile+1)
 mytime=time
 vec=vy
+vec=bz
 xx=x1
 yy=x2
 xx2d=rebin(reform(xx,nx1,1),nx1,nx2)
@@ -67,7 +72,7 @@ ifftshear=fft(ffttot,-1)
 dataptr=ptrarr(18)
 
 dataptr[ 0]=ptr_new(final(*,*,nz/2) )
-dataptr[ 1]=ptr_new(shift(smooth(abs(cfft2(*,*,0)),2),nx1/2,nx2/2))
+dataptr[ 1]=ptr_new(shift(smooth(abs(cfft2(*,*,0)),2, /edge_wrap),nx1/2,nx2/2))
 dataptr[ 2]=ptr_new(vfft)
 dataptr[ 3]=ptr_new(pf1)
 dataptr[ 4]=ptr_new(pf2)

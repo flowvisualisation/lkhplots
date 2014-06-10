@@ -8,6 +8,8 @@ nend=nstart
 nend=1170
 nstart=20
 nend=152
+nstart=60
+nend=68
 inviiarr=fltarr(nend)
 inviiiarr=fltarr(nend)
 

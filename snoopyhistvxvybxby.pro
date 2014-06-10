@@ -99,12 +99,13 @@ endelse
 endelse
 
 
+smax=max([maxx,maxy])
 cgcontour, alog10(magnetic_hist+1e-3),cx,cy,  color='green',  $
 		title="Scatter plots of B!Dr,!9f!X!N and V!Dr,!9f!X!N at t="+string(time, format='(F4.1)')+" orbits", $
 		xtitle="B!Dr!N, V!Dr!N",$
 		ytitle="B!D!9f!X!N, V!D!9f!X!N",$
-	   xrange=[minx,maxx], $
-		yrange=[miny,maxy], $
+	   xrange=[-smax,smax], $
+		yrange=[-smax,smax], $
 		xstyle=1,$
 		ystyle=1
 

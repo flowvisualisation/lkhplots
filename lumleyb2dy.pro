@@ -8,11 +8,11 @@ nstart=1000
 nend=nstart+1
 nend=152
 nend=1170
-nstart=63
-nend=69
 nstep=1
 nstart=12
 nend=152
+nstart=61
+nend=68
 
 vshear=1.0
 for nfile=nstart,nend,nstep do begin

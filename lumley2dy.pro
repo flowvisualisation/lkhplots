@@ -9,12 +9,12 @@ nstep=10
 ;nend=1010
 ;nend=nstart+1
 ;nend=nstart
-nstart=1
+nstart=13
 nend=152
 nstep=1
-;nstart=62
-;nend=68
-;nstart=1
+nstart=61
+nend=68
+;nstart=0
 
 vshear=1.0
 for nfile=nstart,nend,nstep do begin
@@ -24,7 +24,7 @@ code='pluto'
 code='snoopy'
 case code OF 
 'pluto': begin
-pload,1
+pload,0
 plutoread, dens, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
 time=time/1000.
 end
@@ -90,6 +90,10 @@ print, mean(-invii, /double), mean(inviii, /double), format='(F27.24,  F27.24)'
 tag="lumley2dy"
 tag2="Reynolds"
 histlumley3, invii, inviii, nfile, tag, tag2, time
+
+
+idstr=['invii','inviii']
+;h5_2darr, invii, inviii, tag+string(nfile, format='(I04)'), idstr 
 
 
 endfor
