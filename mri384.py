@@ -2,20 +2,19 @@
 
 import math
 DeleteActivePlots()
-OpenDatabase("localhost:./v*.vtk database", 10)
-SetWindowArea(800, 100 ,2200, 800)
+ttag=10
+OpenDatabase("localhost:./v*.vtk database", ttag)
+DefineScalarExpression ("amp", "9.*exp(%d*0.07/2.)" %ttag)
+xsize=1800
+ysize=800
+ResizeWindow(1, xsize, ysize)
 DefineScalarExpression("x", "coord(mesh)[0]")
 DefineScalarExpression("y", "coord(mesh)[1]")
 DefineScalarExpression("z", "coord(mesh)[2]")
-DefineScalarExpression("amp", "24.33")
 DefineScalarExpression("pi", "3.141592741012573242187500")
-#defn = "%f  *  conn_cmfe(volume(<[0]i:mesh_3d>), mesh_3d)" %(t1)
-#DefineScalarExpression("vtmri", "0.25*exp(timestep()*0.75/10.)*sin(2*pi*z)")
-DefineScalarExpression("vtmri", "exp(cycle()*0.075)*0.25*sin(2*pi*z)")
-DefineScalarExpression("amp", "24.33")
 DefineScalarExpression("vxmri", "amp*sin(2*pi*z)")
-DefineScalarExpression("amp2", "26.45")
-DefineScalarExpression("vymri", "amp2*sin(2*pi*z)")
+DefineScalarExpression("amp2", "9.*exp(cycle()*0.07/2.)")
+DefineScalarExpression("vymri", "amp*sin(2*pi*z)")
 DefineScalarExpression("bxamp", "33.86")
 DefineScalarExpression("bxmri", "bxamp*cos(2*pi*z)")
 DefineScalarExpression("byamp", "31.10")
@@ -66,9 +65,9 @@ PseudocolorAtts = PseudocolorAttributes()
 PseudocolorAtts.scaling = PseudocolorAtts.Linear  # Linear, Log, Skew
 PseudocolorAtts.skewFactor = 1
 PseudocolorAtts.limitsMode = PseudocolorAtts.OriginalData  # OriginalData, CurrentPlot
-PseudocolorAtts.minFlag = 1
+PseudocolorAtts.minFlag = 0
 PseudocolorAtts.min = -2
-PseudocolorAtts.maxFlag = 1
+PseudocolorAtts.maxFlag = 0
 PseudocolorAtts.max = 2
 PseudocolorAtts.centering = PseudocolorAtts.Natural  # Natural, Nodal, Zonal
 PseudocolorAtts.colorTableName = "hot"
@@ -393,7 +392,21 @@ SetAnnotationAttributes(AnnotationAtts)
 DrawPlots()
 
 
+sw=SaveWindowAttributes()
+sw.saveTiled=0
+sw.progressive=1
+sw.family = 0
+sw.width = 2048
+sw.height = 768
+sw.resConstraint = sw.NoConstraint
+sw.outputToCurrentDirectory = 1
+sw.fileName = "sl_movie%d" %(ttag)
+#sw.family = 0
+SetSaveWindowAttributes(sw)
+SaveWindow()
+
 #ChangeActivePlotsVar("vort2")
 #ChangeActivePlotsVar("vort2")
 #ChangeActivePlotsVar("vort1")
 
+exit()

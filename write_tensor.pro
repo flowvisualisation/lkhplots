@@ -18,7 +18,7 @@ for nfile=nstart,nend do begin
 
 
 code='pluto'
-;code='snoopy'
+code='snoopy'
 switch code OF 
 'pluto': begin
 ;pload,1

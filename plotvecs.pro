@@ -31,7 +31,8 @@ endelse
 
 
 
-items=['v!Dr!N','v!D!9f!X!N', 'v!Dz!N', 'b!Dr!N', 'b!D!9f!X!N', 'b!Dz!N','0.75' ]
+;items=['v!Dr!N','v!D!9f!X!N', 'v!Dz!N', 'b!Dr!N', 'b!D!9f!X!N', 'b!Dz!N','0.75' ]
+items=['v!Dx!N','v!Dy!N', 'v!Dz!N', 'b!Dx!N', 'b!Dy!N', 'b!Dz!N','0.75' ]
 linestyles=[0,0,0,3,2,2,1]
 psym=[0,1,2,3,4,5,6]
 colors=['red', 'blue', 'green', 'orange', 'turquoise', 'purple', 'black']
@@ -49,9 +50,9 @@ b2growthrate=(alog(b2arr[q2]) - alog(b2arr[q1]))/(tnorm[q2]-tnorm[q1])
 
 
 cgplot, tnorm, v1arr,  $
-		/ylog, yrange=[1e-4,1e4], $
-		title='PLUTO '+titlstr +' , growth rate= ' + string(b1growthrate, format='(F8.5)'),$
-		xtitle="Time, t [orbits]",$
+		/ylog, yrange=[1e-6,1e2], $
+		;title='PLUTO '+titlstr +' , growth rate= ' + string(b1growthrate, format='(F8.5)'),$
+		xtitle="time, (orbits)",$
 		xstyle=1, $
 		color=colors[0], linestyle=linestyles[0]
 
@@ -64,9 +65,11 @@ cgplot, tnorm, v1arr,  $
 	cgplot, tnorm, b3totarr, /overplot, color=colors[5], linestyle=linestyles[5]
 
 	
-	cgplot, tnorm, 0.2*exp(0.75*tnorm), /overplot, color=colors[6], linestyle=linestyles[6]
+	cgplot, tnorm, v1arr(0)*exp(0.75*tnorm), /overplot, color=colors[6], linestyle=linestyles[6]
 
-	al_legend, items, colors=colors, linestyle=linestyles
+	al_legend, items, colors=colors, linestyle=linestyles, $ 
+       ; position=[10,1e-1], $
+        charsize=1.4, /left
 
 
 print,'v1 growth', v1growthrate

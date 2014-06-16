@@ -19,7 +19,7 @@ linestyles=[0,0,0,3,2,2,1]
 psym=[0,1,2,3,4,5,6]
 colors=['red', 'blue', 'green', 'orange', 'turquoise', 'purple', 'black']
 
-items=['v!Dr!N',  'v!Dz!N' ]
+items=['v!Dx!N',  'v!Dz!N' ]
 linestyles=[0,0]
 psym=[0,2]
 colors=['red','green']
@@ -31,6 +31,7 @@ ymin=1
 ymax=5
 
 cgdisplay, xs=1200, ys=600
+pos=[0.1,0.2,0.9,0.9]
 
 fname="timeseriessatall"
 for usingps=0,1 do begin
@@ -42,9 +43,10 @@ endelse
 
 
 
-cgplot, t, sqrt(smooth(ux2m,50)), color=colors[0], linestyle=linestyles[0],  yrange=[ymin, ymax], ystyle=1 $
-    , xtitle="time (orbits)" $
-    , xrange=[200,400]
+cgplot, t, sqrt(smooth(ux2m,50)), color=colors[0], linestyle=linestyles[0],  yrange=[ymin, ymax], ystyle=1, $
+pos=pos,$
+     xtitle="time (orbits)", $
+     xrange=[200,400]
 cgplot, t, sqrt(smooth(uz2m,50)), /overplot, color=colors[1], linestyle=linestyles[1]
 ;cgplot, t, sqrt(smooth(uz2m,5)), /overplot, color=colors[2], linestyle=linestyles[2]
 ;cgplot, t, sqrt(bx2m), /overplot, color=colors[3], linestyle=linestyles[3]
@@ -70,7 +72,7 @@ va=0.16437451
 lfast=sqrt(15.d0/16.d0) *2.d0 *!DPI  /omega/sqrt(rho) 
 print, '1 lfast', 1/lfast
 
-	al_legend, items, colors=colors, linestyle=linestyles, charsize=0.9, /right
+	al_legend, items, colors=colors, linestyle=linestyles, charsize=1.3, /left
 
 print, 'Saturation level', maxall
 

@@ -1,26 +1,9 @@
    cgDisplay, WID=1,xs=1600, ys=800, xpos=900, ypos=700
 ; load some sheared data
 
-nfile=2
-nstart=1070
-nstart=1130
-nend=1140
-nstep=10
-nstart=62
-nend=68
-nstep=1
-nstart=12
-nend=152
-
 if ( 1 ) then begin
-nstart=61
-nend=68
-nstep=1
-endif
-
-if ( 1 ) then begin
-nstart=13
-nend=152
+nstart=4
+nend=22
 nstep=1
 ;nstart=115
 ;nend=2000
@@ -41,8 +24,8 @@ t=findgen(nfile+1)
 mytime=time
 vec=sqrt(bx^2+by^2+bz^2)
 vtag='b'
-;vec=sqrt(vx^2+vy^2+vz^2)
-;vtag='v'
+vec=sqrt(vx^2+vy^2+vz^2)
+vtag='v'
 xx=x1
 yy=x2
 xx2d=rebin(reform(xx,nx1,1),nx1,nx2)
@@ -162,9 +145,9 @@ pos=[0.2,0.1,0.9,0.9]
 
 
 titlestr=strarr(18,30)
-titlestr[ 0,*]='DFT V(k!Dp!N,k!Dz!N)'
-titlestr[ 1,*]='DFT V(k!Dh!N,k!Dz!N)'
-titlestr[ 2,*]='DFT V(k!Dx!N,k!Dy!N)'
+titlestr[ 0,*]='DFT '+vtag+'(k!Dp!N,k!Dz!N)'
+titlestr[ 1,*]='DFT '+vtag+'(k!Dh!N,k!Dz!N)'
+titlestr[ 2,*]='DFT '+vtag+'(k!Dx!N,k!Dy!N)'
 titlestr[ 3,*]='fft dimension 1'
 titlestr[ 4,*]='fft dimension 2'
 titlestr[ 5,*]='ky2d'
@@ -191,8 +174,8 @@ ytitlestr[ 2,*]='k!Dy!N'
   
 
 posarr=fltarr(4,3)
-posarr[*,0]=[0.1,0.12,0.45,0.43]
-posarr[*,1]=[0.1,0.56,0.45,0.9]
+posarr[*,0]=[0.1,0.11,0.45,0.44]
+posarr[*,1]=[0.1,0.57,0.45,0.9]
 posarr[*,2]=[0.55,0.12,0.9,0.9]
 
 fname=vtag+"dft3cuts"+string(nfile, format='(I04)')
@@ -204,6 +187,7 @@ set_plot, 'x'
 endelse
 
 
+cgerase
 
 
 

@@ -20,6 +20,7 @@ by2m=by2
 bz2m=bz2
 
 items=['v!Dr!N','v!D!9f!X!N', 'v!Dz!N', 'b!Dr!N', 'b!D!9f!X!N', 'b!Dz!N','0.75' ]
+items=['v!Dx!N','v!Dy!N', 'v!Dz!N', 'b!Dx!N', 'b!Dy!N', 'b!Dz!N','0.75' ]
 linestyles=[0,0,0,3,2,2,1]
 psym=[0,1,2,3,4,5,6]
 colors=['red', 'blue', 'green', 'orange', 'turquoise', 'purple', 'black']
@@ -45,9 +46,12 @@ endelse
 
 
 
-cgplot, t, sqrt(ux2m), color=colors[0], linestyle=linestyles[0], /ylog, yrange=[ymin, ymax], ystyle=1, title="PLUTO linear stage", $
-    xtitle="time (orbits)",$
-    xrange=[0,24]
+cgplot, t, sqrt(ux2m), color=colors[0], linestyle=linestyles[0], $
+    /ylog, $
+    yrange=[ymin, ymax], $
+    ystyle=1, title="PLUTO linear stage", $
+    ;xrange=[0,24],$
+    xtitle="time (orbits)"
         
 cgplot, t, sqrt(uy2m), /overplot, color=colors[1], linestyle=linestyles[1]
 cgplot, t, sqrt(uz2m), /overplot, color=colors[2], linestyle=linestyles[2]
@@ -55,7 +59,7 @@ cgplot, t, sqrt(bx2m), /overplot, color=colors[3], linestyle=linestyles[3]
 cgplot, t, sqrt(by2m), /overplot, color=colors[4], linestyle=linestyles[4]
 cgplot, t, sqrt(bz2m), /overplot, color=colors[5], linestyle=linestyles[5]
 cgplot, t, sqrt(uy2m[0])*exp(0.75*t), /overplot, color=colors[6], linestyle=linestyles[6]
-cgplot, t, abs(sqrt(bz2)+0.00154), /overplot, color=colors[5], linestyle=linestyles[5]
+cgplot, t, sqrt(bz2m+0.16437451^2), /overplot, color=colors[5], linestyle=linestyles[5]
 
 
 fit=sqrt(uy2m[0])*exp(0.75*t)
@@ -74,7 +78,7 @@ va=0.16437451
 lfast=sqrt(15.d0/16.d0) *2.d0 *!DPI  /omega/sqrt(rho) 
 print, '1 lfast', 1/lfast
 
-	al_legend, items, colors=colors, linestyle=linestyles, charsize=1.5, /right
+	al_legend, items, colors=colors, linestyle=linestyles, charsize=1.5, /left
 
 print, 'Saturation level', maxall
 

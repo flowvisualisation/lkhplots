@@ -1,7 +1,7 @@
 
-cgdisplay, xs=800, ys=1200
-nbeg=60
-nend=68
+cgdisplay, xs=1200, ys=1200
+nbeg=1
+nend=15
 for i=nbeg,nend do begin
 sload,i ;, /silent
 sbq=1.5
@@ -100,10 +100,11 @@ endelse
 
 
 smax=max([maxx,maxy])
+smax=30
 cgcontour, alog10(magnetic_hist+1e-3),cx,cy,  color='green',  $
-		title="Scatter plots of B!Dr,!9f!X!N and V!Dr,!9f!X!N at t="+string(time, format='(F4.1)')+" orbits", $
-		xtitle="B!Dr!N, V!Dr!N",$
-		ytitle="B!D!9f!X!N, V!D!9f!X!N",$
+		;title="Scatter plots of B!Dr,!9f!X!N and V!Dr,!9f!X!N at t="+string(time, format='(F4.1)')+" orbits", $
+		xtitle="B!Dx!N, V!Dx!N",$
+		ytitle="B!Dy!N, V!Dy!N",$
 	   xrange=[-smax,smax], $
 		yrange=[-smax,smax], $
 		xstyle=1,$
