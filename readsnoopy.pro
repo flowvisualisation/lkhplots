@@ -1,3 +1,4 @@
+cgdisplay, xs=800,ys=800
 
 
 usingps=0
@@ -14,7 +15,7 @@ bx2m=bxmax^2
 by2m=bymax^2
 bz2m=bzmax^2
 
-items=['v1','v2', 'v3', 'b1', 'b2', 'b3','0.75' ]
+items=['v!Dx!N','v!Dy!N', 'v!Dz!N', 'b!Dx!N', 'b!Dy!N', 'b!Dz!N','0.75' ]
 linestyles=[0,0,0,3,2,2,1]
 psym=[0,1,2,3,4,5,6]
 colors=['red', 'blue', 'green', 'orange', 'turquoise', 'purple', 'black']

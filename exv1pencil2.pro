@@ -1,6 +1,8 @@
+nbeg=62
+nend=68
 ;pro exvort9, nfile, vx1,vx2,vx3, rho, prs, t , nlast, nx1,nx2,nx3,x1,x2,x3, dx1,dx2, vorty, vpx,vpz, vmri, vshear, vx,vy,vz, vxsl, vysl
 pluto=0
-nfile=63
+nfile=1
 x=2
 
 
@@ -15,9 +17,6 @@ window, 0, xs=1700, ys=900
 ;!p.multi=[0,3,2]
 
 !p.charsize=2
-nbeg=0
-;nend=nlast
-nend=20
 t=findgen(nend+1)
 angles=findgen(7)*15*!dtor
 ;projangle=29*!pi/30.
@@ -30,16 +29,16 @@ angles=findgen(7)*15*!dtor
 
 angleno=0
 projangle=angles[angleno]
+;projangle=!DPI/4.0d
 for nfile=nbeg,nend,1 do begin
 
 code='pencil'
-code='pluto'
-code='snoopy'
+;code='pluto'
+;code='snoopy'
 
-switch code OF 
+case code OF 
 'pluto': begin
-pload,nfile, /silent
-
+pload,nfile ;, /silent
 vx=vx1
 vy=vx2
 vz=vx3
@@ -49,12 +48,10 @@ zz=x3
 nx=nx1
 ny=nx2
 nz=nx3
-break;
+omega=1000.0
+time=t(nfile)/omega
 end
-
 'pencil':begin
-
-
 path='data/proc0/'
 varfile='VAR'+str(nfile)
 if ( (pluto eq 0 )  and (file_test(path+varfile)  ne 1 )) then begin
@@ -76,13 +73,14 @@ zz=dindgen(nz)/(nz)*Lz-Lz/2.d0+Lz/nz/2.d0
 xx=x[3:mx-4]
 yy=y[3:my-4]
 zz=z[3:mz-4]
+break;
 
 end
 'snoopy':begin
 snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
 end
 
-end
+endcase
 
 
 sbq=1.5
@@ -185,8 +183,8 @@ unitvec1(*,*)=cos( projangle)
 unitvec2(*,*)=sin( projangle)
 unitvec3(*,*)=cos( projangle)
 
-vpx=vxsl ;*unitvec1 + vysl*unitvec2
-vpy=vxsl ;*unitvec2 - vysl*unitvec1
+vpx=vxsl *unitvec1 + vysl*unitvec2
+vpy=vxsl *unitvec2 - vysl*unitvec1
 vpz=vzsl
 
 mvpx=max(vpx)
@@ -245,7 +243,7 @@ cz=congrid(yqy,qy)
 
 for usingps=0,1 do begin
 if (usingps eq 1) then begin
-cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times'
+cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times', /quiet
 endif else  begin
 set_plot, 'x'
 endelse
@@ -273,12 +271,12 @@ lnt=strlen(nts)
 for j=1,ll-lnt do zero=zero+'0'
            fname=code+dirname+'vorticity'+tag+"_"+zero+nts
 
-print, t
+;print, t
    cgText, 0.5, 0.95, ALIGNMENT=0.5, CHARSIZE=1.9, /NORMAL, $
       'Vorticity with velocity vectors'+', t='+string(time, format='(F5.1)')+' orbits', color='black'
 
 if ( usingps ) then begin
-cgps_close, /jpeg,  Width=1100
+cgps_close, /jpeg,  Width=1100, /nomessage
 endif else begin
 fname2=fname
 endelse

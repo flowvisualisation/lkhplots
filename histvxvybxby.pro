@@ -1,6 +1,6 @@
 
 set_plot, 'x'
-cgdisplay, xs=800, ys=1200
+cgdisplay, xs=1200, ys=1200
 for i=0,nlast do begin
 pload,i , /silent
 sbq=1.5
@@ -98,12 +98,13 @@ endelse
 endelse
 
 
+smax=0.004
 cgcontour, alog10(magnetic_hist+1e-3),cx,cy,  color='green',  $
-		title="Scatter plots of B!Dr,!9f!X!N and V!Dr,!9f!X!N at t="+string(i, format='(I2)')+" orbits", $
-		xtitle="B!Dr!N, V!Dr!N",$
-		ytitle="B!D!9f!X!N, V!D!9f!X!N",$
-	   xrange=[minx,maxx], $
-		yrange=[miny,maxy], $
+		;title="Scatter plots of B!Dr,!9f!X!N and V!Dr,!9f!X!N at t="+string(i, format='(I2)')+" orbits", $
+		xtitle="B!Dx!N, V!Dx!N",$
+		ytitle="B!Dy!N, V!Dy!N",$
+	   xrange=[-smax,smax], $
+		yrange=[-smax,smax], $
 		xstyle=1,$
 		ystyle=1
 

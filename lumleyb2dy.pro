@@ -3,16 +3,16 @@
 
 nfile=1
 nend=2000
-nstart=13
-nstart=1000
-nend=nstart+1
+nstart=5
+;nstart=1000
+;nend=nstart+1
 nend=152
-nend=1170
+;nend=1170
 nstep=1
-nstart=12
-nend=152
-nstart=61
-nend=68
+;nstart=12
+;nend=152
+;nstart=61
+;nend=68
 
 vshear=1.0
 for nfile=nstart,nend,nstep do begin

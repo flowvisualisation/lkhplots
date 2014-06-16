@@ -18,6 +18,7 @@ CASE dirname OF
    ELSE: PRINT, 'Not one through four'
    ELSE: PRINT, 'Not one through four'
 ENDCASE
+ titlstr=' '
 
 
 

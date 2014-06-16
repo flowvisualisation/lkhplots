@@ -9,11 +9,11 @@ nstep=10
 ;nend=1010
 ;nend=nstart+1
 ;nend=nstart
-nstart=13
+nstart=7
 nend=152
 nstep=1
-nstart=61
-nend=68
+;nstart=61
+;nend=68
 ;nstart=0
 
 vshear=1.0

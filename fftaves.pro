@@ -1,26 +1,10 @@
    cgDisplay, WID=1,xs=1600, ys=800, xpos=900, ypos=700
 ; load some sheared data
 
-nfile=2
-nstart=1070
-nstart=1130
-nend=1140
-nstep=10
-nstart=62
-nend=68
-nstep=1
-nstart=12
-nend=152
 
 if ( 1 ) then begin
-nstart=61
-nend=68
-nstep=1
-endif
-
-if ( 1 ) then begin
-nstart=13
-nend=152
+nstart=4
+nend=22
 nstep=1
 ;nstart=115
 ;nend=2000
@@ -41,8 +25,8 @@ t=findgen(nfile+1)
 mytime=time
 vec=sqrt(bx^2+by^2+bz^2)
 vtag='b'
-vec=sqrt(vx^2+vy^2+vz^2)
-vtag='v'
+;vec=sqrt(vx^2+vy^2+vz^2)
+;vtag='v'
 xx=x1
 yy=x2
 xx2d=rebin(reform(xx,nx1,1),nx1,nx2)
@@ -279,8 +263,8 @@ radave(int_disp)= radave(int_disp)+qq(i,j)/2/!DPI/kr(i,j)
     endfor
 
     colors=['red', 'blue', 'green', 'orange', 'turquoise', 'black']
-    items=['+45', '-45', '-7/3', '-5/3', '-4/3', 'ave']
-    lines=[0,0,1,1,1,0]
+    items=['k!Dp!N', 'k!Dh!N', 'k!Dz!N', '-5/3', '-4/3', 'ave']
+    lines=[0,0,0,0,0,0]
     ;power3d,unshear, /noplot, spec=spec, wns=wave
 
 ymin=min(spec1)
@@ -289,31 +273,36 @@ ymax=max(spec1)
 !p.multi=0
 k1=findgen(ny/2)+1
 kz=findgen(nz/2)+1
-cgplot, k1, qxq(0:ny/2-1,0), /ylog, /xlog, xrange=[.9,128], title=string (mytime,format='(F6.2)')+' orbits'
-
-x=k1
+x=alog10(k1)
 y=alog10( qxq(0:ny/2-1,0))
+cgplot, x, y,   xrange=[1e-3,2.2], title='t='+string (mytime,format='(F4.2)')+' orbits', yrange=[-11,0], color=colors[0]
+
 measure_errors = SQRT(ABS(Y))
 result1 = LINFIT(X, Y, MEASURE_ERRORS=measure_errors)
 
 
+cgplot, x, result1(0)+result1(1)*x, /overplot, color=colors[0]
+cgplot, x, (-7./3.)*x, /overplot, color=colors[3]
 
 gmz=reverse(sl2(*,0))
-cgplot, k1, gmz(0:ny/2), /overplot, color=colors[1], linestyle=lines[1]
-x=k1
+x=alog10(k1)
 y=alog10( gmz(0:ny/2-1,0))
+cgplot, x,y, /overplot, color=colors[1], linestyle=lines[1]
 measure_errors = SQRT(ABS(Y))
 result2 = LINFIT(X, Y, MEASURE_ERRORS=measure_errors)
 
-cgplot, kz, qxq(0,0:nz/2-1), /overplot, color=colors[2];, linestyle=lines[2]
-x=kz
+cgplot, x, result2(0)+result2(1)*x, /overplot, color=colors[1]
+
+x=alog10(kz)
 y=alog10( reform(qxq(0,0:nz/2-1)))
+cgplot, x,y, /overplot, color=colors[2];, linestyle=lines[2]
 measure_errors = SQRT(ABS(Y))
 result3 = LINFIT(X, Y, MEASURE_ERRORS=measure_errors)
+cgplot, x, result3(0)+x*result3(1), /overplot, color=colors[2]
 
 ;print, qxq(0,0), gmz(0)
 if (usingps eq 1) then begin
-print, "fits ", (mytime), result1[0],result2[0], result3[0]
+print, "fits ", (mytime), result1[1],result2[1], result3[1]
 endif
     ;cgplot,wns, smooth(spec1,2), pos=pos[*,1], /noerase,  xrange=[0.9,37], xtitle="k!DR!N", ytitle="V!DZ!N" , /xlog, Charsize=cgDefCharsize()*0.6, /ylog, yrange=[ymin,ymax], color=colors[0]
     ;cgplot,wns, smooth(spec2,2), pos=pos[*,1], /noerase, /overplot, color=colors[1]

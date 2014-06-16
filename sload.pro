@@ -85,9 +85,9 @@ free_lun, lun
 Lx=2.d0
 Ly=2.d0
 Lz=1.d0
-xx=dindgen(nx)/(nx)*Lx-Lx/2.d0+Lx/nx/2.d0
-yy=dindgen(ny)/(ny)*Ly-Ly/2.d0+Ly/ny/2.d0
-zz=dindgen(nz)/(nz)*Lz-Lz/2.d0+Lz/nz/2.d0
+xx=dindgen(nx)/(nx-1)*Lx-Lx/2.d0+Lx/nx/2.d0
+yy=dindgen(ny)/(ny-1)*Ly-Ly/2.d0+Ly/ny/2.d0
+zz=dindgen(nz)/(nz-1)*Lz-Lz/2.d0+Lz/nz/2.d0
 xx3d=rebin(reform(xx,nx,  1,  1),nx,ny,nz) 
 yy3d=rebin(reform(yy,  1,ny,  1),nx,ny,nz) 
 zz3d=rebin(reform(zz,  1,  1,nz),nx,ny,nz) 
