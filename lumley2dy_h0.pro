@@ -1,18 +1,10 @@
+cgdisplay, xs=1600, ys=800
 
 
-
-nfile=1
-nend=2000
-nstart=5
-;nstart=1000
-;nend=nstart+1
+nstart=1
 nend=152
-;nend=1170
 nstep=1
-;nstart=12
-;nend=152
-;nstart=61
-;nend=68
+
 sfile = 0
 pfile = 0
 sfile = FILE_TEST('v0000.vtk')
@@ -27,12 +19,12 @@ vshear=1.0
 for nfile=nstart,nend,nstep do begin
 
 
-;code='snoopy'
-switch code OF 
+
+case code OF 
 'pluto': begin
-pload,1
+pload,0
 plutoread, dens, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
-break;
+time=time/1000.
 end
 'snoopy':begin
 snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
@@ -47,13 +39,15 @@ rho(*,*,*)=1.0
 end
 end
 
+kstart=nz/2
+kend=nz*0.75
 invii=fltarr(nx,nz)
 inviii=fltarr(nx,nz)
 
 
 
 for i=0,nx-1 do begin
-for k=0,nz-1 do begin
+for k=kstart,kend do begin
 
 u1=0.0d
 u2=0.0d
@@ -63,9 +57,9 @@ reyave(*,*)=0.0d
 
 for j=0,ny-1 do begin
     dens=rho(i,j,k)
-    u1=u1+bx(i,j,k)
-    u2=u2+by(i,j,k)
-    u3=u3+bz(i,j,k)
+    u1=u1+vx(i,j,k)
+    u2=u2+vy(i,j,k)
+    u3=u3+vz(i,j,k)
     a=[u1,u2,u3]
     rey=a#a
  reyave=reyave+rey
@@ -93,9 +87,13 @@ print, mean(-invii, /double), mean(inviii, /double), format='(F27.24,  F27.24)'
 ;cgplot, xbin, pdf    
 
 ;cgplot, inviii, -invii, psym=2
-tag="lumley_b"
-tag2="Maxwell"
+tag="lumley2dy_h0"
+tag2="Reynolds"
 histlumley3, invii, inviii, nfile, tag, tag2, time
+
+
+idstr=['invii','inviii']
+;h5_2darr, invii, inviii, tag+string(nfile, format='(I04)'), idstr 
 
 
 endfor

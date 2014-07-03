@@ -1,27 +1,25 @@
 cgdisplay, xs=1600, ys=800
 
 
-nstart=1000
-nend=1170
-nstep=10
-;nend=182
-;nstep=1
-;nend=1010
-;nend=nstart+1
-;nend=nstart
-nstart=7
+nstart=1
 nend=152
 nstep=1
-;nstart=61
-;nend=68
-;nstart=0
+
+sfile = 0
+pfile = 0
+sfile = FILE_TEST('v0000.vtk')
+pfile = FILE_TEST('data.0000.dbl')
+print, sfile, pfile
+code='snoopy'
+if (pfile eq 1 ) then begin
+code='pluto'
+endif
 
 vshear=1.0
 for nfile=nstart,nend,nstep do begin
 
 
-code='pluto'
-code='snoopy'
+
 case code OF 
 'pluto': begin
 pload,0

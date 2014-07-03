@@ -28,11 +28,11 @@ colors=['red', 'blue', 'green', 'orange', 'turquoise', 'purple', 'black']
 
 maxall=max([ [sqrt(ux2m)] , [sqrt(uy2m)], [sqrt(uz2m)] , [sqrt(bx2m)] , [sqrt(by2m)] ,[sqrt(bz2m)]   ])
 minall=min([ [sqrt(ux2m)] , [sqrt(uy2m)], [sqrt(uz2m)] , [sqrt(bx2m)] , [sqrt(by2m)] ,[sqrt(bz2m)]   ])
-ymin=1e-6
-;ymin=minall
+;ymin=1e-6
+ymin=1e-2
 ;ymax=1e2
 ;ymin=1e-13
-ymax=maxall+0.16
+ymax=maxall
 
 
 
@@ -46,20 +46,20 @@ endelse
 
 
 
-cgplot, t, (ux2m), color=colors[0], linestyle=linestyles[0], $
+cgplot, t, sqrt(ux2m), color=colors[0], linestyle=linestyles[0], $
     /ylog, $
     yrange=[ymin, ymax], $
     ystyle=1, title="PLUTO linear stage", $
     ;xrange=[0,24],$
     xtitle="time (orbits)"
         
-cgplot, t, (uy2m), /overplot, color=colors[1], linestyle=linestyles[1]
-cgplot, t, (uz2m), /overplot, color=colors[2], linestyle=linestyles[2]
-cgplot, t, (bx2m), /overplot, color=colors[3], linestyle=linestyles[3]
-cgplot, t, (by2m), /overplot, color=colors[4], linestyle=linestyles[4]
-cgplot, t, (bz2m), /overplot, color=colors[5], linestyle=linestyles[5]
-cgplot, t, (uy2m[0])*exp(0.75*t), /overplot, color=colors[6], linestyle=linestyles[6]
-cgplot, t, (bz2m+0.16437451), /overplot, color=colors[5], linestyle=linestyles[5]
+cgplot, t, sqrt(uy2m), /overplot, color=colors[1], linestyle=linestyles[1]
+cgplot, t, sqrt(uz2m), /overplot, color=colors[2], linestyle=linestyles[2]
+cgplot, t, sqrt(bx2m), /overplot, color=colors[3], linestyle=linestyles[3]
+cgplot, t, sqrt(by2m), /overplot, color=colors[4], linestyle=linestyles[4]
+cgplot, t, sqrt(bz2m), /overplot, color=colors[5], linestyle=linestyles[5]
+cgplot, t, sqrt(uy2m[0])*exp(0.75*t), /overplot, color=colors[6], linestyle=linestyles[6]
+;cgplot, t, sqrt(bz2m+0.16437451^2), /overplot, color=colors[5], linestyle=linestyles[5]
 
 
 fit=sqrt(uy2m[0])*exp(0.75*t)
@@ -78,7 +78,7 @@ va=0.16437451
 lfast=sqrt(15.d0/16.d0) *2.d0 *!DPI  /omega/sqrt(rho) 
 print, '1 lfast', 1/lfast
 
-	al_legend, items, colors=colors, linestyle=linestyles, charsize=1.5, /left
+	al_legend, items, colors=colors, linestyle=linestyles, charsize=2.1, pos=[20,0.2]
 
 print, 'Saturation level', maxall
 

@@ -1,6 +1,6 @@
 
 nbeg=0
-nend=0
+nend=nlast
 pload,0
 vx0=vx1
 sbq=1.5d
