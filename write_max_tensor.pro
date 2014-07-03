@@ -8,7 +8,7 @@ nend=nstart
 nend=1170
 nstart=1
 nend=152
-nstart=62
+nstart=0
 nend=68
 inviiarr=fltarr(nend)
 inviiiarr=fltarr(nend)
@@ -18,7 +18,7 @@ for nfile=nstart,nend do begin
 
 
 code='pluto'
-code='snoopy'
+;code='snoopy'
 switch code OF 
 'pluto': begin
 pload,1

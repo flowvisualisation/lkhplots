@@ -5,6 +5,7 @@ for nfile=0,21 do begin
 pload,nfile, /silent
 sbq=1.5
 sbomega=1e-3
+sbomega=1
 sba=-0.5*sbq*sbomega
 vsh=2*sba
 

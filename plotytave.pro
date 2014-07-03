@@ -68,7 +68,7 @@ endelse
    FOR j=12,17 DO BEGIN
      p = pos[*,j-12]
      d= *dataptr(j)
-	r=cgscalevector(d[30:200,*], 1,254)
+	r=cgscalevector(d[*,*], 1,254)
 	imin=min(*dataptr[j])
 	imax=max(*dataptr[j])
      cgImage, r, NoErase=j NE 0, Position=p

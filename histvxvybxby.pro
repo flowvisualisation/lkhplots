@@ -5,6 +5,7 @@ for i=0,nlast do begin
 pload,i , /silent
 sbq=1.5
 sbomega=1e-3
+sbomega=1.0d
 sba=-0.5*sbq*sbomega
 vsh=2*sba
 
@@ -32,8 +33,9 @@ nsize=512
 bn1a=(mx1a-mn1a)/(nsize)
 bn2a=(mx2a-mn2a)/(nsize)
 
-vec1=vx1
-vec2=vx2-vshear
+ca=sqrt(bx1^2+bx2^2+bx3^2)/rho
+vec1=vx1 ;/ca
+vec2=(vx2-vshear) ;/ca
 c=reform(vec1, long(nx1)*long(nx2)*long(nx3)) 
 d=reform(vec2, long(nx1)*long(nx2)*long(nx3))
 
@@ -99,6 +101,7 @@ endelse
 
 
 smax=0.004
+smax=10.
 cgcontour, alog10(magnetic_hist+1e-3),cx,cy,  color='green',  $
 		;title="Scatter plots of B!Dr,!9f!X!N and V!Dr,!9f!X!N at t="+string(i, format='(I2)')+" orbits", $
 		xtitle="B!Dx!N, V!Dx!N",$

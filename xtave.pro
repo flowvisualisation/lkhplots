@@ -1,15 +1,16 @@
 
 nfile=0
-snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile
+plutoread,dens, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time;,
 
 nend=370
 nend=370
 nend=182
+nend=1199
 xt=fltarr(nend,nx,6)
 yt=fltarr(nend,ny,6)
 zt=fltarr(nend,nz,6)
 for nfile=0,nend-1 do begin
-snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile
+plutoread,dens, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time;,
 
 xt[nfile,*,0]=xave(vx,2,2)
 xt[nfile,*,1]=xave(vy,2,2)
