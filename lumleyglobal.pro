@@ -1,4 +1,4 @@
-cgdisplay, xs=1600, ys=800
+cgdisplay, xs=1200, ys=800
 
 
 nfile=1
@@ -7,8 +7,22 @@ nstart=10
 nend=nstart+1
 nend=152
 nstart=12
-;nend=69
 nstep=1
+
+
+nstart=14
+nend=46
+nstep=32
+
+
+nstart=1
+nend=280
+nstep=1
+
+
+
+
+;nend=69
 inviiarr=fltarr(nend)
 inviiiarr=fltarr(nend)
 
@@ -51,15 +65,15 @@ u1=0.0d
 u2=0.0d
 u3=0.0d
 reyave=dblarr(3,3)
-reyave(*,*)=0.0d
 
+reyave(*,*)=0.0d
 for ii=i,i+ndown-1 do begin
 for jj=j,j+ndown-1 do begin
 for kk=k,k+ndown-1 do begin
     dens=rho(ii,jj,kk)
-    u1=u1+vx(ii,jj,kk)
-    u2=u2+vy(ii,jj,kk)
-    u3=u3+vz(ii,jj,kk)
+    u1=vx(ii,jj,kk)
+    u2=vy(ii,jj,kk)
+    u3=vz(ii,jj,kk)
     a=[u1,u2,u3]
     rey=a#a
  reyave=reyave+rey
@@ -93,7 +107,7 @@ b=mean(inviii, /double)
 
 ;cgplot, inviii, -invii, psym=2
 tag="lumleyglobal_"
-tag2="Reynolds"
+tag2="local ave Reynolds"
 histlumley3, invii,inviii, nfile, tag, tag2, time
 
 

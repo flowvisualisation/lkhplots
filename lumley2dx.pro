@@ -7,8 +7,21 @@ nstart=13
 nend=nstart+1
 nend=152
 
+
+
+nstart=14
+nend=46
+nstep=32
+
+
+nstart=40
+nend=47
+nstep=1
+
+
+
 vshear=1.0
-for nfile=nstart,nend do begin
+for nfile=nstart,nend,nstep do begin
 
 
 code='pluto'
@@ -48,9 +61,9 @@ reyave(*,*)=0.0d
 
 for i=0,nx-1 do begin
     dens=rho(i,j,k)
-    u1=u1+vx(i,j,k)
-    u2=u2+vy(i,j,k)
-    u3=u3+vz(i,j,k)
+    u1=vx(i,j,k)
+    u2=vy(i,j,k)
+    u3=vz(i,j,k)
     a=[u1,u2,u3]
     rey=a#a
  reyave=reyave+rey
@@ -79,7 +92,8 @@ print, mean(-invii, /double), mean(inviii, /double), format='(F27.24,  F27.24)'
 
 ;cgplot, inviii, -invii, psym=2
 tag="lumley2dx"
-histlumley2, invii, inviii, nfile, tag
+tag2="x-ave Reynolds"
+histlumley3, invii, inviii, nfile, tag, tag2, time
 
 
 endfor

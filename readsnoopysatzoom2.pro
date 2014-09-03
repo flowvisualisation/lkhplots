@@ -19,10 +19,10 @@ linestyles=[0,0,0,3,2,2,1]
 psym=[0,1,2,3,4,5,6]
 colors=['red', 'blue', 'green', 'orange', 'turquoise', 'purple', 'black']
 
-items=['v!Dx!N',  'v!Dz!N' ]
-linestyles=[0,0]
+items=['v!Dx!N',  'v!Dz!N' , 'vz']
+linestyles=[0,0,0]
 psym=[0,2]
-colors=['red','green']
+colors=['red','green', 'blue']
 
 maxall=max([ [sqrt(ux2m)] , [sqrt(uy2m)], [sqrt(uz2m)] , [sqrt(bx2m)] , [sqrt(by2m)] ,[sqrt(bz2m)]   ])
 minall=min([ [sqrt(ux2m)] , [sqrt(uy2m)], [sqrt(uz2m)] , [sqrt(bx2m)] , [sqrt(by2m)] ,[sqrt(bz2m)]   ])
@@ -49,13 +49,14 @@ set_plot, 'x'
 endelse
 
 
+qsm=5
 
-cgplot, t, sqrt(smooth(ux2m,10)), color=colors[0], linestyle=linestyles[0],  yrange=[ymin, ymax], ystyle=1 $
+cgplot, t, sqrt(smooth(ux2m,qsm)), color=colors[0], linestyle=linestyles[0],  yrange=[ymin, ymax], ystyle=1 $
     ,pos=pos $
     , xtitle="time (orbits)" $
-    , xrange=[1,18]
-cgplot, t, sqrt(smooth(uz2m,10)), /overplot, color=colors[1], linestyle=linestyles[1]
-;cgplot, t, sqrt(smooth(uz2m,5)), /overplot, color=colors[2], linestyle=linestyles[2]
+    , xrange=[38,52]
+cgplot, t, sqrt(smooth(uz2m,qsm)), /overplot, color=colors[1], linestyle=linestyles[1]
+cgplot, t, sqrt(smooth(uy2m,qsm)), /overplot, color=colors[2], linestyle=linestyles[2]
 ;cgplot, t, sqrt(bx2m), /overplot, color=colors[3], linestyle=linestyles[3]
 ;cgplot, t, sqrt(by2m), /overplot, color=colors[4], linestyle=linestyles[4]
 ;cgplot, t, sqrt(bz2m), /overplot, color=colors[5], linestyle=linestyles[5]

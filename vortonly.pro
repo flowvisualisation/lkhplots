@@ -4,22 +4,11 @@ cg=0
 hires=0
 pload,0,/silent
 ar=nx2*1.0/nx1
-if (cg eq 1) then begin
-cgwindow, xs=1500,ys=1100
-;cgWindow
-cgSet
-endif else  begin
-if (hires eq 1) then begin
-;window,xs=1500,ys=1100
-ys=600+600*ar
-xs=2400-ar*400
-window,xs=xs,ys=ys
-endif else begin
-endelse
-endelse
-;pload,0,/silent
-help, vx1
 
+xs=800
+ys=1200
+;window,xs=xs,ys=ys
+cgdisplay,xs=xs,ys=ys
 initvort= 0.0
 initv1= 0.0
 initv2= 0.0
@@ -37,11 +26,11 @@ cs=sqrt(1.4*prs/rho)
 initcs=max(cs)
 initmach=max(vx1/cs)
 
-nstart=1
-nend=nlast
+nstart=91
+nend=500
 ;nend=2
 ;nend=40
-nstep=1
+nstep=100
 ;pload,0,/silent
 totalke0=total(sqrt(vx1^2+vx2^2))
 tvz2=fltarr(1)
@@ -58,7 +47,7 @@ zero=''
 nts=strcompress(string(nfile),/remove_all)
 lnt=strlen(nts)
 for j=1,ll-lnt do zero=zero+'0'
-           fname='vortgrowth'+zero+nts
+           fname='vortonly'+zero+nts
 
 pload,nfile, /silent
 
@@ -105,36 +94,14 @@ for usingps=0,1 do begin
 
 if ( usingps ) then begin
 set_plot,'ps'
-device,filename=fname+'.eps',/encapsulated
-device, /color
-!p.font=0
-device, /times
-xs=7
-ys=3.7
-DEVICE, XSIZE=xs, YSIZE=ys, /INCHES
-!p.charsize=1.2
+cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times', /quiet, /nomatch, xsize=4, ysize=4
 cbarchar=1.9
 xyout=1.9
 endif else begin
-if ( keyword_set (zbuf) ) then begin
-set_plot,'z'
-ys=600+600*ar
-xs=2400-ar*400
-device, set_resolution=[1100,800]
-device, set_resolution=[xs,ys]
-endif else begin
-set_plot,'x'
-!p.font=-1
-!p.charsize=1.8
-cbarchar=1.8
-xyout=1.8
-endelse
-;device, set_resolution=[1100,800]
+
+
 endelse
 
-!p.multi=[0,1,1]
-!x.style=1
-!y.style=1
 
 
 xx=x1*ar
@@ -157,18 +124,29 @@ for i=3,3 do begin
 ;r=scale_vector(var(i,*,*),4,255)
 r=reform(var(i,*,*))
 ;contour, r, xx,yy,/nodata, title=str(i), xtitle='x', ytitle='y'
-p = [0.05, 0.1, 0.98, 0.97]
+ytick=30
+ytit=''
+p = [0.01, 0.2, 0.995, 0.97]
+if ( nfile eq 91 ) then begin
+p = [0.17, 0.2, 0.995, 0.97]
+ytick=1
+ytit='Kz'
+endif
   ;cgIMAGE, r, POSITION=p, /KEEP_ASPECT_RATIO ;, MISSING_INDEX=3 , scale=4, bottom=190, top=254, background='white'
-  cgimage, r, POSITION=p, background='white', scale=1 ;, /axis, xtitle='x ', ytitle='y'
+  cgimage, r, POSITION=p, background='white';, scale=1 ;, /axis, xtitle='x ', ytitle='y'
 ;cgaxis,0.5,0.1, /xaxis, /normal, xrange=[1,20]
 ;cgaxis, /xaxis, xRANGE=[0, 100], $
 ;MINOR=0, MAJOR=3
+
+
   cgcontour, r, xx,yy,POSITION=p, /NOERASE, XSTYLE=1, $
       YSTYLE=1,  NLEVELS=10, /nodata, $
       ;title=str(i)+string(min(r), format='(G8.2)')+' '+string(max(r), format='(G8.2)'), $
-        ; xtitle='K!DX!NX', $
-        ; ytitle='K!DZ!NZ', $
-      color='white'
+         xtitle='k!Dh!Nh', $
+         yTICKFORMAT="(I2)",$
+           Ytickinterval=ytick,$
+            ytitle=ytit, $
+      color='black'
 imin=min(r)-1e-6
 imax=max(r)+1e-6
 ;cgcolorbar, Position=[p[0], p[1]-0.08, p[2], p[1]-0.06], range=[imin,imax], format='(F5.2)', charsize=cbarchar
@@ -186,91 +164,30 @@ endelse
 cx=congrid(xx,q)
 cy=congrid(yy,q)
 
-velovect, cv1,cv2, cx,cy, /noerase,/overplot, position=p , color=cgcolor('white'), len=2.5, thick=1.25
+velovect, cv1,cv2, cx,cy, /noerase,/overplot, position=p , color=cgcolor('white'), len=2.5, thick=3.25
 cgloadct,33
 endif
 
 endfor
 
-growth=0
-dogrowth=0
 
-maxtvz2=0.05
-if ( max(tvz2) ge maxtvz2 ) then begin 
-dogrowth=1
-endif
 
-; estimate growth rate
-tsndcr=1.0/10.0 ; should be kh /10?
-tnorm=t
-;tnorm=t/tsndcr
-if (  dogrowth ) then begin 
 
-nel=n_elements(tvz2)
-gam2=[0.02, maxtvz2]
-tam2=interpol( tnorm(0:nel-1),tvz2, gam2)
 
-print, tam2
-print, gam2
-growth=(gam2[1]-gam2[0])/(tam2[1]-tam2[0])
-growth=(alog10(gam2[1])-alog10(gam2[0]))/(tam2[1]-tam2[0])
-;growth=(alog10(gam2[1])-alog10(gam2[0]))/(alog10(tam2[1])-alog10(tam2[0]))
-endif
 
-grtitle='(Total |V!DX,Z!N|/|V!DX!N + i V!DZ!N|)' 
-lgrtitle='Log'+grtitle
-
-if ( 0) then begin
-cgplot, tnorm, alog10(tvz2), title=lgrtitle,   xrange=[0.1,120],yrange=[-2,0], xtitle='t / t!Dsound crossing!N', ytitle=lgrtitle, /xlog,  psym=-14, Color='black',linestyle=0
-cgplot, tnorm, alog10(tvx2), /overplot,  PSym=-15, Color='red',linestyle=2
-cgplot, tnorm, alog10(maxvx), /overplot,  PSym=-17, Color='green',linestyle=4
-cgplot, tnorm, alog10(maxvxvxinit), /overplot,  PSym=-18, Color='violet',linestyle=5
-
-if ( dogrowth ) then begin 
-cgplot, tnorm, growth*(tnorm-tam2[0])+alog10(gam2[0]) ,  /overplot, PSym=-16, Color='dodger blue', linestyle=3
-cgplot, tam2, alog10(gam2), psym=4, /overplot
-al_legend, ['V!DZ!N!U2!N','V!DX!N!U2!N', 'fit','max(vx!U2!N)', 'max(vx-vx0)'], PSym=[-14,-15,-16,-17,-18], $
-      LineStyle=[0,2,3,4,5], Color=['black','red','dodger blue','green', 'violet'], charsize=legchar, /left
-endif
-o
-
-endif
-
-if ( 0) then begin
-
-cgplot, tnorm, (tvz2), title=lgrtitle ,   xrange=[0.1,12],yrange=[0.01,1], xtitle='t / t!Dsound crossing!N', ytitle=lgrtitle,   psym=-14, Color='black',linestyle=0, /ylog
-cgplot, tnorm, (tvx2), /overplot,  PSym=-15, Color='red',linestyle=2
-cgplot, tnorm, (maxvx), /overplot,  PSym=-17, Color='green',linestyle=4
-cgplot, tnorm, (maxvxvxinit), /overplot,  PSym=-18, Color='violet',linestyle=5
-
-if ( dogrowth ) then begin 
-cgplot, tnorm, 10^(growth*(tnorm))*(1e-2 - 2e-3) ,  /overplot, PSym=-16, Color='dodger blue', linestyle=3
-cgplot, tam2, (gam2), psym=4, /overplot
-al_legend, ['V!DZ!N!U2!N','V!DX!N!U2!N', 'fit','max(vx!U2!N)', 'max(vx-vx0)'], PSym=[-14,-15,-16,-17,-18], $
-      LineStyle=[0,2,3,4,5], Color=['black','red','dodger blue','green', 'violet'], charsize=legchar, /left
-endif
-endif
-doannotation=0 
-if ( doannotation eq 1) then begin
-xyouts, 0.01,0.01,$
-   'KH, t='+string(t(nfile),format='(F5.1)')+ $
-     ', mach '+string(initmach, format='(F6.2)')+$
-      ', asp. ratio '+string(max(x2)/max(x1), format='(F5.2)')+$
-     ', growth rate'+string(growth, format='(F5.3)'),$
-   /normal, charsize=xychar, color=cgcolor('black')
-   endif
-
-!p.position=0
-!p.multi=0
+;!p.position=0
+;!p.multi=0
 
 
 if ( usingps ) then begin
-device,/close
+;device,/close
+
+cgps_close, /jpeg,  Width=1100
 ;set_plot,'x'
 endif else begin
 ;set_plot,'x'
 fname2=fname
-im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
+;im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
 endelse
 
 endfor

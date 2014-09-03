@@ -2,7 +2,7 @@ pro h5growth, growtharr, idstr
  ;; add to hdf5 file
 
 file = 'hdf5_outx.h5'
-FILE_DELETE,  file
+;FILE_DELETE,  file
 fid = H5F_CREATE(file)
 
 for i=0,5 do begin

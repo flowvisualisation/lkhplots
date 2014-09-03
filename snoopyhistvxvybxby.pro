@@ -2,8 +2,11 @@
 cgdisplay, xs=1200, ys=1200
 nbeg=1
 nend=15
-for i=nbeg,nend do begin
-sload,i ;, /silent
+
+plotlist=[2,9,12]
+plotlist=findgen(12)
+for i=0,11 do begin
+sload,plotlist[i] ;, /silent
 sbq=1.5
 sbomega=1e-3
 sba=-0.5*sbq*sbomega
@@ -101,12 +104,30 @@ endelse
 
 smax=max([maxx,maxy])
 smax=30
+
+
+ytickf="(a1)"
+ytit=''
+pos=[0.01,0.1,0.98,0.98]
+if ( i eq 0 ) then begin
+pos=[0.13,0.1,0.98,0.98]
+ytickf="(F6.1)"
+		ytit="B!Dy!N, V!Dy!N"
+endif
+
+
+
+
+
 cgcontour, alog10(magnetic_hist+1e-3),cx,cy,  color='green',  $
 		;title="Scatter plots of B!Dr,!9f!X!N and V!Dr,!9f!X!N at t="+string(time, format='(F4.1)')+" orbits", $
 		xtitle="B!Dx!N, V!Dx!N",$
-		ytitle="B!Dy!N, V!Dy!N",$
 	   xrange=[-smax,smax], $
 		yrange=[-smax,smax], $
+                     ytitle=ytit, $
+         ;Ytickinterval=ytick,$
+         yTICKFORMAT=ytickf,$
+        pos=pos,$
 		xstyle=1,$
 		ystyle=1
 
@@ -119,7 +140,7 @@ items=['V','B']
 lines=[0,0]
 color=[cgcolor('blue'),cgcolor('green')]
 
-al_legend, items,linestyle=lines, colors=color
+al_legend, items,linestyle=lines, colors=color, /right
 ;cgplot, a,b, psym=1, $
 ;		title="Scatter plots of B!DX,Y!N and V!DX,Y!N at t="+string(i)+" orbits", $
 ;		xtitle="B!DX!N, V!DX!N",$

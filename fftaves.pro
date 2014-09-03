@@ -1,11 +1,15 @@
-   cgDisplay, WID=1,xs=1600, ys=800, xpos=900, ypos=700
+;;;
+
+
+   cgDisplay, WID=1,xs=800, ys=1000, xpos=900, ypos=700
 ; load some sheared data
 
 
 if ( 1 ) then begin
-nstart=4
-nend=22
-nstep=1
+nstart=14
+nend=46
+nstep=32
+;nstep=1
 ;nstart=115
 ;nend=2000
 ;nstep=20
@@ -23,7 +27,7 @@ x3=zz
 
 t=findgen(nfile+1)
 mytime=time
-vec=sqrt(bx^2+by^2+bz^2)
+vec=(bx^2+by^2+bz^2)
 vtag='b'
 ;vec=sqrt(vx^2+vy^2+vz^2)
 ;vtag='v'
@@ -262,10 +266,31 @@ radave(int_disp)= radave(int_disp)+qq(i,j)/2/!DPI/kr(i,j)
     endfor
     endfor
 
-    colors=['red', 'blue', 'green', 'orange', 'turquoise', 'black']
-    items=['k!Dp!N', 'k!Dh!N', 'k!Dz!N', '-5/3', '-4/3', 'ave']
+    colors=['red', 'blue', 'green', 'black', 'turquoise', 'black']
+    items=['k!Dp!N', 'k!Dh!N', 'k!Dz!N', 'k!Dr!N', '-4/3', 'ave']
     lines=[0,0,0,0,0,0]
     ;power3d,unshear, /noplot, spec=spec, wns=wave
+
+
+radius=fltarr(nx)
+powave=fltarr(nx)
+
+qxdd=abs(cfft3(*,*,*))
+for i=0,nx/2-1 do begin
+for j=0,ny/2-1 do begin
+for k=0,nz/2-1 do begin
+
+
+rad=sqrt(1.*i^2 +1.*j^2 +1.*k^2)
+
+radint=round(rad)
+
+powave[radint] += qxdd[i,j,k]/rad^2/!DPI
+
+endfor
+endfor
+endfor
+powave[0]=qxdd[0,0,0]
 
 ymin=min(spec1)
 ymax=max(spec1)
@@ -274,31 +299,54 @@ ymax=max(spec1)
 k1=findgen(ny/2)+1
 kz=findgen(nz/2)+1
 x=alog10(k1)
-y=alog10( qxq(0:ny/2-1,0))
-cgplot, x, y,   xrange=[1e-3,2.2], title='t='+string (mytime,format='(F4.2)')+' orbits', yrange=[-11,0], color=colors[0]
+;xfftcut=alog10( qxdd(0:ny/2-1,0))
+xfftcut=dblarr(ny/2)
+yfftcut=dblarr(ny/2)
+x=alog10(k1(0:ny/2-1))
+for i=0,ny/2-1 do begin
+xfftcut[i]=alog10(qxdd(i,i,0))
+endfor
+qsm=10
+;; this is the z direction
+cgplot, x, smooth(xfftcut,qsm),   $
+    xrange=[1e-3,2.], $
+    pos=[0.17,0.17,0.98,0.98],$
+    charsize=3.9,$
+     ;title='t='+string (mytime,format='(F6.1)')+' orbits', $
+     yrange=[-4,1], color=colors[0], $
+    xtitle='log!D10!N|k|',$
+    ytitle='log!D10!N|B!U2!N|'
 
+cgplot, x,alog10(powave), /overplot ;, color=colors[1], linestyle=lines[1]
 measure_errors = SQRT(ABS(Y))
-result1 = LINFIT(X, Y, MEASURE_ERRORS=measure_errors)
+;result1 = LINFIT(X, Y, MEASURE_ERRORS=measure_errors)
 
 
-cgplot, x, result1(0)+result1(1)*x, /overplot, color=colors[0]
-cgplot, x, (-7./3.)*x, /overplot, color=colors[3]
+;cgplot, x, result1(0)+result1(1)*x, /overplot, color=colors[0]
+;cgplot, x, (-7./3.)*x, /overplot, color=colors[3]
 
 gmz=reverse(sl2(*,0))
 x=alog10(k1)
 y=alog10( gmz(0:ny/2-1,0))
-cgplot, x,y, /overplot, color=colors[1], linestyle=lines[1]
+for i=0,ny/2-1 do begin
+;y[i]=alog10(i,i)
+endfor
+for i=0,ny/2-1 do begin
+yfftcut[i]=alog10(qxdd(i,ny-i-1,0))
+endfor
+yfftcut[0]=alog10(qxdd(0,0,0))
+cgplot, x,smooth(yfftcut,qsm), /overplot, color=colors[1], linestyle=lines[1]
 measure_errors = SQRT(ABS(Y))
-result2 = LINFIT(X, Y, MEASURE_ERRORS=measure_errors)
+;result2 = LINFIT(X, Y, MEASURE_ERRORS=measure_errors)
 
-cgplot, x, result2(0)+result2(1)*x, /overplot, color=colors[1]
+;cgplot, x, result2(0)+result2(1)*x, /overplot, color=colors[1]
 
 x=alog10(kz)
 y=alog10( reform(qxq(0,0:nz/2-1)))
-cgplot, x,y, /overplot, color=colors[2];, linestyle=lines[2]
+cgplot, x,smooth(y,qsm), /overplot, color=colors[2];, linestyle=lines[2]
 measure_errors = SQRT(ABS(Y))
-result3 = LINFIT(X, Y, MEASURE_ERRORS=measure_errors)
-cgplot, x, result3(0)+x*result3(1), /overplot, color=colors[2]
+;result3 = LINFIT(X, Y, MEASURE_ERRORS=measure_errors)
+;cgplot, x, result3(0)+x*result3(1), /overplot, color=colors[2]
 
 ;print, qxq(0,0), gmz(0)
 if (usingps eq 1) then begin
@@ -315,7 +363,7 @@ endif
 
 
 
-    al_legend, items[0:3], colors=colors[0:3], linestyle=lines[0:3], Charsize=cgDefCharsize()*0.4, /right
+    al_legend, items[0:3], colors=colors[0:3], linestyle=lines[0:3], Charsize=cgDefCharsize()*1.6,linsize=0.25, /right
 
 if ( usingps ) then begin
 cgps_close, /jpeg,  Width=2048, /nomessage

@@ -2,7 +2,7 @@ cgdisplay, xs=1600, ys=800
 
 
 nstart=1
-nend=152
+nend=639
 nstep=1
 
 sfile = 0
@@ -22,9 +22,14 @@ for nfile=nstart,nend,nstep do begin
 
 case code OF 
 'pluto': begin
-pload,0
+pload,0,/silent
 plutoread, dens, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
-time=time/1000.
+sbq=1.5
+sbomega=1
+sba=-0.5*sbq*sbomega
+vsh=2*sba
+vshear=vsh*xx3d
+vy=vy-vshear
 end
 'snoopy':begin
 snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
@@ -57,11 +62,11 @@ reyave(*,*)=0.0d
 
 for j=0,ny-1 do begin
     dens=rho(i,j,k)
-    u1=u1+vx(i,j,k)
-    u2=u2+vy(i,j,k)
-    u3=u3+vz(i,j,k)
+    u1=vx(i,j,k)
+    u2=vy(i,j,k)
+    u3=vz(i,j,k)
     a=[u1,u2,u3]
-    rey=a#a
+    rey=dens*(a#a)
  reyave=reyave+rey
     endfor
 
@@ -80,15 +85,29 @@ inviii(i,k)=determ(reyanis)
 endfor
 endfor
 
-print, mean(-invii, /double), mean(inviii, /double), format='(F27.24,  F27.24)'
+;print, mean(-invii, /double), mean(inviii, /double), format='(F27.24,  F27.24)'
+
+
+find2nd=-invii
+
+index = where(find2nd eq min(find2nd))
+minimum_first=find2nd[index]
+
+find2nd[index]=1e6
+
+print, min(find2nd)
+
+
+
 ;print, min(-invii), min(inviii)
 
 ;pdf=histogram(invii, locations=xbin,binsize=0.001) 
 ;cgplot, xbin, pdf    
 
+;print, min(abs(invii))
 ;cgplot, inviii, -invii, psym=2
 tag="lumley2dy_h1"
-tag2="Reynolds"
+tag2="Reynolds h1"
 histlumley3, invii, inviii, nfile, tag, tag2, time
 
 

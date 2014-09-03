@@ -3,7 +3,7 @@
 
 nfile=2
 nstart=400
-nend=418
+nend=nstart+18
 snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
 timeave=dblarr(nx,ny,nz)
 tempim=dblarr(nx,ny,19)
@@ -18,7 +18,8 @@ x3=zz
 
 t=findgen(nfile+1)
 mytime=time
-vec=vz
+vec=bx^2+by^2+bz^2
+;vec=vx^2+vy^2+vz^2
 xx=x1
 yy=x2
 xx2d=rebin(reform(xx,nx1,1),nx1,nx2)
@@ -52,8 +53,8 @@ jimag=complex(0,1)
 cfft1shift=cfft1*exp ( -jimag * ky3d * xx3d *2 *!PI *qomegat_Ly ) 
 cfft2=fft(cfft1shift, dimension=1)
 cfft3=fft(cfft2, dimension=3)
-timeave=timeave+abs(cfft3)
-nim=nfile-400
+timeave=timeave+abs(cfft3)^2
+nim=nfile-nstart
 tempim(*,*,nim)=shift(alog10(abs(cfft3(*,*,0))),nx1/2,nx2/2)
 
 
@@ -71,7 +72,7 @@ dataptr=ptrarr(18)
 
 dataptr[ 0]=ptr_new(final(*,*,0) )
 dataptr[ 1]=ptr_new(shift(alog10(timeave(*,*,0)),nx1/2,nx2/2))
-dataptr[ 2]=ptr_new(shift(alog10(abs(cfft3(*,*,0))),nx1/2,nx2/2))
+dataptr[ 2]=ptr_new(shift(alog10(abs(cfft3(*,*,0)^2)),nx1/2,nx2/2))
 dataptr[ 3]=ptr_new(tempim(*,*,1))
 dataptr[ 4]=ptr_new(tempim(*,*,2))
 dataptr[ 5]=ptr_new(tempim(*,*,3))
@@ -121,16 +122,16 @@ endelse
 
 
    cgLoadCT, 33
-   pos = cglayout([3,2] , OXMargin=[4,12], OYMargin=[5,6], XGap=9, YGap=2)
-   FOR j=0,5 DO BEGIN
-     p = pos[*,j]
+   pos = cglayout([2,1] , OXMargin=[2,1], OYMargin=[2,1], XGap=2, YGap=2)
+   FOR j=1,2 DO BEGIN
+     p = pos[*,j-1]
      d= *dataptr(j)
 	r=cgscalevector(d, 1,254)
 	imin=min(*dataptr[j])
 	imax=max(*dataptr[j])
      cgImage, r, NoErase=j NE 0, Position=p
-  cgcontour,xx#yy, xx,yy , /nodata, /noerase, xtitle='x', pos=p, title=titlestr(j), Charsize=cgDefCharsize()*0.5
-     cgColorBar, position=[p[2]+0.06, p[1], p[2]+0.07, p[3]],range=[imin-1e-6,imax+1e-6], Charsize=cgDefCharsize()*0.5 , /vertical
+  cgcontour,xx#yy, xx,yy , /nodata, /noerase, xtitle='x', pos=p, title=titlestr(j), Charsize=cgDefCharsize()*0.2
+     ;cgColorBar, position=[p[2]+0.06, p[1], p[2]+0.07, p[3]],range=[imin-1e-6,imax+1e-6], Charsize=cgDefCharsize()*0.5 , /vertical
    ENDFOR
 ;   cgText, 0.5, 0.9, /Normal,  'vz and DFT(vz), t='+string(mytime), Alignment=0.5, Charsize=cgDefCharsize()*1.25
 

@@ -4,7 +4,7 @@ pro readplutokh
 usingps=0
 !p.multi=0
 ;readcol,'timevar', t,ev,vxmax,vxmin,vymax,vymin,vzmax,vzmin
-readcol,'averages.dat',t,dt,rhoe,vx2,vy2,vz2,rhovx2,rhovyE,BxBy
+readcol,'averages.dat',t,dt,rhoe,vx2,vy2,vz2,rhovx2,rhovy,E,BxBy
 
 ; it,t,dt,ux2m,uy2m,uz2m,uxuym,rhom,rhomin,rhomax,bx2m,by2m,bz2m,bxbym,ndm,ndmin,ndmax
     fname="timeseries"
