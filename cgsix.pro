@@ -117,6 +117,7 @@ maxdeltav=[maxdeltav, d]
 
 vort = getvort(vx1,vx2,x1,x2,nx1,nx2)
 debugging=0
+debugging=1
 if ( debugging eq 0 ) then begin
 !p.multi=[0,1,3]
 window, xs=1100,ys=1100
@@ -293,7 +294,7 @@ al_legend, ['V!DZ!N!U2!N','V!DX!N!U2!N', 'fit','max(vx!U2!N)', 'max(vx-vx0)'], P
       LineStyle=[0,2,3,4,5], Color=['black','red','dodger blue','green', 'violet'], charsize=legchar, /left
 endif
 
-cgplot, tnorm, (tvz2), title=lgrtitle ,   xrange=[0.1,12],yrange=[0.01,1], xtitle='t / t!Dsound crossing!N', ytitle=lgrtitle,   psym=-14, Color='black',linestyle=0, /ylog
+cgplot, tnorm, (tvz2), title=lgrtitle ,   xrange=[0.1,60],yrange=[0.01,1], xtitle='t / t!Dsound crossing!N', ytitle=lgrtitle,   psym=-14, Color='black',linestyle=0, /ylog
 cgplot, tnorm, (tvx2), /overplot,  PSym=-15, Color='red',linestyle=2
 cgplot, tnorm, (maxvx), /overplot,  PSym=-17, Color='green',linestyle=4
 cgplot, tnorm, (maxdeltav), /overplot,  PSym=-18, Color='violet',linestyle=5

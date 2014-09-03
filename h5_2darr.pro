@@ -11,7 +11,7 @@ fid = H5F_CREATE(file)
 ;; create data
 for q=0,1 do begin
 data = *datptr[q]
-help, data
+;help, data
 ;; get data type and space, needed to create the dataset
 datatype_id = H5T_IDL_CREATE(data)
 dataspace_id = H5S_CREATE_SIMPLE(size(data,/DIMENSIONS))

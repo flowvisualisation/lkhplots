@@ -24,6 +24,11 @@ linestyles=[0,0]
 psym=[0,2]
 colors=['red','green']
 
+items=['v!Dx!N',  'v!Dy!N','v!Dz!N' ]
+linestyles=[0,0,0]
+psym=[0,2]
+colors=['red','blue','green']
+
 maxall=max([ [sqrt(ux2m)] , [sqrt(uy2m)], [sqrt(uz2m)] , [sqrt(bx2m)] , [sqrt(by2m)] ,[sqrt(bz2m)]   ])
 minall=min([ [sqrt(ux2m)] , [sqrt(uy2m)], [sqrt(uz2m)] , [sqrt(bx2m)] , [sqrt(by2m)] ,[sqrt(bz2m)]   ])
 ymin=1e-2*maxall
@@ -38,7 +43,7 @@ ymin=1
 ymax=5
 
 cgdisplay, xs=1200, ys=600
-pos=[0.1,0.2,0.9,0.9]
+pos=[0.13,0.2,0.97,0.99]
 
 fname="timeseriessat"
 for usingps=0,1 do begin
@@ -52,10 +57,10 @@ endelse
 
 cgplot, t, sqrt(smooth(ux2m,10)), color=colors[0], linestyle=linestyles[0],  yrange=[ymin, ymax], ystyle=1 $
     ,pos=pos $
-    , xtitle="time (orbits)" $
+    , xtitle="time [!9W!X!U-1!N]" $
     , xrange=[100,120]
-cgplot, t, sqrt(smooth(uz2m,10)), /overplot, color=colors[1], linestyle=linestyles[1]
-;cgplot, t, sqrt(smooth(uz2m,5)), /overplot, color=colors[2], linestyle=linestyles[2]
+cgplot, t, sqrt(smooth(uy2m,10)), /overplot, color=colors[1], linestyle=linestyles[1]
+cgplot, t, sqrt(smooth(uz2m,10)), /overplot, color=colors[2], linestyle=linestyles[2]
 ;cgplot, t, sqrt(bx2m), /overplot, color=colors[3], linestyle=linestyles[3]
 ;cgplot, t, sqrt(by2m), /overplot, color=colors[4], linestyle=linestyles[4]
 ;cgplot, t, sqrt(bz2m), /overplot, color=colors[5], linestyle=linestyles[5]

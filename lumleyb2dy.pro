@@ -1,12 +1,13 @@
 
+cgdisplay, xs=1200, ys=800
 
 
 nfile=1
 nend=2000
-nstart=5
+nstart=1
 ;nstart=1000
 ;nend=nstart+1
-nend=152
+nend=280
 ;nend=1170
 nstep=1
 ;nstart=12
@@ -63,11 +64,14 @@ reyave(*,*)=0.0d
 
 for j=0,ny-1 do begin
     dens=rho(i,j,k)
-    u1=u1+bx(i,j,k)
-    u2=u2+by(i,j,k)
-    u3=u3+bz(i,j,k)
-    a=[u1,u2,u3]
-    rey=a#a
+    u1=bx(i,j,k)
+    u2=by(i,j,k)
+    u3=bz(i,j,k)
+    b1=bx(i,j,k)
+    b2=by(i,j,k)
+    b3=bz(i,j,k)
+    a=[b1,b2,b3]
+    rey=a#a 
  reyave=reyave+rey
     endfor
 

@@ -32,7 +32,7 @@ mxv2=0.34d
 
 nsize=250
 ;nsize=500
-nsize=125
+;nsize=125
 ;nsize=50
 bn1=(mxv1-mnv1)/nsize
 bn2=(mxv2-mnv2)/nsize
@@ -54,6 +54,13 @@ x2=congrid(cx,800)
 ;d=lumleyhist
 ;x1=cx
 ;x2=cy
+
+cgloadct,33
+resamp=1024
+resamp=nsize
+d=congrid(lumleyhist,resamp,resamp)
+x1=congrid(cy,resamp)
+x2=congrid(cx,resamp)
 
 pos=[0.1,0.1,0.9,0.9]
 dat=alog10(transpose(d)+1e-1)
@@ -80,8 +87,8 @@ cgcontour, dat,x1,x2,$
    ; /nodata,$
    ; /noerase,$
     pos=pos, $ 
-    xtitle='(III/2)!U1/3!N',$
-    ytitle='(II/3)!U1/2!N',$
+    xtitle='(!9c!X!D3!N/2)!U1/3!N',$
+    ytitle='(!9c!X!D2!N/3)!U1/2!N',$
 Charsize=cgDefCharsize()*0.5,  $
    ; nlev=10,$
 ;    xrange=[0.2,0.3],$

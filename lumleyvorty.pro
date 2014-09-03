@@ -52,9 +52,9 @@ reyave(*,*)=0.0d
 
 for j=0,ny-1 do begin
     dens=rho(i,j,k)
-    u1=u1+cx(i,j,k)
-    u2=u2+cy(i,j,k)
-    u3=u3+cz(i,j,k)
+    u1=cx(i,j,k)
+    u2=cy(i,j,k)
+    u3=cz(i,j,k)
     a=[u1,u2,u3]
     rey=a#a
  reyave=reyave+rey

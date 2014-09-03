@@ -1,8 +1,8 @@
-cgdisplay, xs=1600, ys=800
+cgdisplay, xs=1200, ys=800
 
 
 nstart=1
-nend=152
+nend=280
 nstep=1
 
 sfile = 0
@@ -55,9 +55,9 @@ reyave(*,*)=0.0d
 
 for j=0,ny-1 do begin
     dens=rho(i,j,k)
-    u1=u1+vx(i,j,k)
-    u2=u2+vy(i,j,k)
-    u3=u3+vz(i,j,k)
+    u1=vx(i,j,k)
+    u2=vy(i,j,k)
+    u3=vz(i,j,k)
     a=[u1,u2,u3]
     rey=a#a
  reyave=reyave+rey
@@ -86,7 +86,7 @@ print, mean(-invii, /double), mean(inviii, /double), format='(F27.24,  F27.24)'
 
 ;cgplot, inviii, -invii, psym=2
 tag="lumley2dy"
-tag2="Reynolds"
+tag2="y-ave Reynolds"
 histlumley3, invii, inviii, nfile, tag, tag2, time
 
 

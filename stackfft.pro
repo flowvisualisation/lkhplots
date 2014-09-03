@@ -1,8 +1,9 @@
 
 cgdisplay, xs=1200, ys=600
-pos=[0.1,0.2,0.9,0.9]
+pos=[0.13,0.2,0.97,0.99]
 sz=size(vxmax, /dimensions)
 varr=vxmax(sz/3:sz-1)
+tlat=t(sz/3:sz-1)
 
 sz=size(varr, /dimensions)
 
@@ -11,6 +12,8 @@ int2=varr(sz*.25:sz*.5)^2
 int3=varr(sz*.5:sz*.75)^2
 int4=varr(sz*.75:sz-1)^2
 
+periodmax=tlat(sz*.25)-tlat(0)
+print, periodmax
 
 
 f1=abs(fft(int1))
@@ -46,11 +49,15 @@ nu=dindgen(sz)
 
 power=nu*(abs(f1+f2+f3+f4))^2
 
-cgplot, nu,power, /xlog,  xrange=[1,3e3], $
+period=65.9203/nu
+cgplot, period,power, /xlog,$
+    /ylog,$
+    xrange=[70,70./1.e3], $
     pos=pos,$
-    ;, yrange=[1e-2,4],$
-     xtitle="!9n!X",$
-     ytitle="!9n!X F "
+    yrange=[1,1e2],$
+;     xtitle="!9n!X",$
+     xtitle="T",$
+     ytitle="!9n!X F!U2!N "
 
 
 if ( usingps ) then begin

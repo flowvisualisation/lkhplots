@@ -2,7 +2,7 @@ cgdisplay, xs=1600, ys=800
 
 
 nstart=1
-nend=152
+nend=639
 nstep=1
 
 sfile = 0
@@ -24,7 +24,12 @@ case code OF
 'pluto': begin
 pload,0
 plutoread, dens, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
-time=time/1000.
+sbq=1.5
+sbomega=1
+sba=-0.5*sbq*sbomega
+vsh=2*sba
+vshear=vsh*xx3d
+vy=vy-vshear
 end
 'snoopy':begin
 snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
@@ -57,11 +62,11 @@ reyave(*,*)=0.0d
 
 for j=0,ny-1 do begin
     dens=rho(i,j,k)
-    u1=u1+vx(i,j,k)
-    u2=u2+vy(i,j,k)
-    u3=u3+vz(i,j,k)
+    u1=vx(i,j,k)
+    u2=vy(i,j,k)
+    u3=vz(i,j,k)
     a=[u1,u2,u3]
-    rey=a#a
+    rey=dens*(a#a)
  reyave=reyave+rey
     endfor
 
@@ -88,7 +93,7 @@ print, mean(-invii, /double), mean(inviii, /double), format='(F27.24,  F27.24)'
 
 ;cgplot, inviii, -invii, psym=2
 tag="lumley2dy_h0"
-tag2="Reynolds"
+tag2="Reynolds h0"
 histlumley3, invii, inviii, nfile, tag, tag2, time
 
 

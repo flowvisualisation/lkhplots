@@ -2,12 +2,14 @@
 ; load some sheared data
 
 nfile=2
+
+nsamp=19
 nstart=400
-nend=418
+nend=nstart+nsamp-1
 snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
-timarr=dblarr(19)
+timarr=dblarr(nsamp)
 timeave=dblarr(nx,ny,nz)
-tempim=dblarr(nx,ny,19)
+tempim=dblarr(nx,ny,nsamp)
 for nfile=nstart,nend do begin
 snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
 timarr(nfile-nstart)=time
@@ -23,6 +25,7 @@ mytime=time
 vec=(vx^2+vy^2+vz^2)
 vec=(bx^2+by^2+bz^2)
 vec=bz
+vec=vx^2
 xx=x1
 yy=x2
 xx2d=rebin(reform(xx,nx1,1),nx1,nx2)
@@ -57,8 +60,8 @@ cfft1shift=cfft1*exp ( -jimag * ky3d * xx3d *2 *!PI *qomegat_Ly )
 cfft2=fft(cfft1shift, dimension=1)
 cfft3=fft(cfft2, dimension=3)
 timeave=(timeave+abs(cfft3))/2.0d
-nim=nfile-400
-tempim(*,*,nim)=shift(alog10(abs(cfft3(*,*,0))),nx1/2,nx2/2)
+nim=nfile-nstart
+tempim(*,*,nim)=shift(alog10(abs(cfft3(*,*,0))^2),nx1/2,nx2/2)
 
 
 ffttot=complexarr(nx1,nx2)
@@ -72,7 +75,7 @@ ifftshear=fft(ffttot,-1)
 final=real_part(ifftshear)
 endfor
 
-dataptr=ptrarr(18)
+dataptr=ptrarr(nsamp)
 
 dataptr[ 0]=ptr_new(tempim(*,*,1))
 dataptr[ 1]=ptr_new(shift(alog10(timeave(*,*,0)),nx1/2,nx2/2))
@@ -93,7 +96,7 @@ dataptr[15]=ptr_new(final)
 
 pos=[0.2,0.1,0.9,0.9]
 
-titlestr=strarr(18,30)
+titlestr=strarr(nsamp,30)
 titlestr[ 0,*]='vz'
 titlestr[ 1,*]='Averaged DFT of vz'
 titlestr[ 2,*]='DFT t+0.01 orbits'
@@ -126,7 +129,7 @@ endelse
      p = pos[*,0]
 
      d= tempim(*,*,0)
-  cgplot, d[nx/2:nx-1,ny/2], pos=p, /noerase, yrange=[-4,-1.5], xrange=[0,43], title='cuts of fft(vz) at t='+string(timarr(0))+' to '+string(timarr(18)), charsize=cgDefCharsize()*0.5, ystyle=1
+  cgplot, d[nx/2:nx-1,ny/2], pos=p, /noerase, yrange=[-4,-.01], xrange=[0,43], title='cuts of fft(vz) at t='+string(timarr(0))+' to '+string(timarr(nsamp-1)), charsize=cgDefCharsize()*0.5, ystyle=1
 
 colors=[ 'blue', 'red', 'green', 'orange', 'black', 'yellow', 'pink','violet', 'brown', $
           'gray', 'ORG6','BLU4','BLU3','PUR8','PUR8 ','PUR8'  ,'PUR8'  ,'PUR8'    ]
@@ -138,7 +141,7 @@ colors=[ 'blue', 'red', 'green', 'orange', 'black', 'yellow', 'pink','violet', '
      d= tempim(*,*,j)
 	r=cgscalevector(d, 1,254)
   ;   cgImage, r, NoErase=j NE 0, Position=p
-  cgplot, d[nx/2:nx-1,ny/2], pos=p, /noerase,yrange=[-4,-1.5], xrange=[0,43], /overplot, color=colors[j]
+  cgplot, d[nx/2:nx-1,ny/2], pos=p, /noerase,yrange=[-4,-.01], xrange=[0,43], /overplot, color=colors[j]
   ;cgcontour,xx#yy, xx,yy , /nodata, /noerase, xtitle='x', pos=p, title=titlestr(j), Charsize=cgDefCharsize()*0.5
   ;   cgColorBar, position=[p[2]+0.06, p[1], p[2]+0.07, p[3]],range=[imin-1e-6,imax+1e-6], Charsize=cgDefCharsize()*0.5 , /vertical
    ENDFOR
@@ -146,7 +149,7 @@ colors=[ 'blue', 'red', 'green', 'orange', 'black', 'yellow', 'pink','violet', '
 
 d=(shift(alog10(timeave(*,*,0)),nx1/2,nx2/2))
      p = pos[*,1]
-  cgplot, d[nx/2:nx-1,ny/2], yrange=[-4,-1.5], xrange=[0,43], pos=p, /noerase, title='average of fft(vz) at t=',charsize=cgDefCharsize()*0.5, color='black'
+  cgplot, d[nx/2:nx-1,ny/2], yrange=[-4,-0.01], xrange=[0,43], pos=p, /noerase, title='average of fft(vz) at t=',charsize=cgDefCharsize()*0.5, color='black'
 
 if ( usingps ) then begin
 ;device,/close

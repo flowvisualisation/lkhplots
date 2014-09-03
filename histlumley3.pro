@@ -50,10 +50,9 @@ arr2=fltarr(2,2)
  h5_2darr, lumleyhist, arr2, tag+string(nfile, format='(I04)'), idstr
 
 ;help,lumleyhist
-print, max(lumleyhist)
-lumleyhist[0,0]=1e3
+;print, max(lumleyhist)
+;lumleyhist[0,0]=1e3
 
-;cgcontour, alog10(transpose(lumleyhist)+1e-6),cy,cx
 cgloadct,33
 resamp=1024
 resamp=nsize
@@ -91,21 +90,22 @@ cgcontour, dat,x1,x2,$
    ; /nodata,$
    ; /noerase,$
     pos=pos, $ 
-    xtitle='Third Invariant',$
-    ytitle='Second Invariant',$
+    xtitle='!9c!X!D3!N',$
+    ytitle='|!9c!X!D2!N|',$
 Charsize=cgDefCharsize()*0.9,  $
    ; nlev=10,$
    ; xrange=[0.05,0.07],$
    ; yrange=[0.25,0.33],$
     /fill, $
+    nlev=50, $
     color='black', $
     title='Invariants of '+tag2+' stress anisotropy, t='+string(time, format='(F6.2)')
     
  cgColorBar, position=[pos[2]+0.03, pos[1], pos[2]+0.05, pos[3]],range=[imin-1e-6,imax+1e-6], Charsize=cgDefCharsize()*0.5, /vertical
-    cgText, 0.06, 0.32,   '1D turbulence', Alignment=0.9, Charsize=cgDefCharsize()*.9
-    cgText, 0.015, 0.19,   '2D turbulence', Alignment=0.5, Charsize=cgDefCharsize()*.9
-    cgText, -0.008, 0.14,   '2D isotropic', Alignment=0.0, Charsize=cgDefCharsize()*.9
-    cgText, 0.001, 0.01,   '3D isotropic turbulence', Alignment=0.0, Charsize=cgDefCharsize()*.9
+    cgText, 0.06, 0.32,   '1D', Alignment=0.9, Charsize=cgDefCharsize()*.9
+    ;cgText, 0.015, 0.19,   '2D', Alignment=0.5, Charsize=cgDefCharsize()*.9
+    cgText, -0.008, 0.14,   '2D', Alignment=0.0, Charsize=cgDefCharsize()*.9
+    cgText, 0.001, 0.01,   '3D', Alignment=0.0, Charsize=cgDefCharsize()*.9
 
 ;cgplot, x1, 3./2.*(4*x1/3.)^(2./3.), /overplot
 ;cgplot, x1,  3.d/2.d*(4.d*x1/3.d)^(2.d/3.d), /overplot
@@ -116,7 +116,7 @@ cgplot, x1, 3*(1./27.+x1), /overplot
 
 if ( usingps ) then begin
 ;device,/close
-cgps_close, /jpeg,  Width=2048
+cgps_close, /jpeg,  Width=2048, /nomessage
 
 ;cgps_open, "test.eps"
 ;cgimage,rad

@@ -1,10 +1,10 @@
+qsm=3
    cgDisplay, WID=1,xs=1600, ys=800, xpos=900, ypos=700
-; load some sheared data
 
 if ( 1 ) then begin
-nstart=4
-nend=22
-nstep=1
+nstart=14
+nend=46
+nstep=32
 ;nstart=115
 ;nend=2000
 ;nstep=20
@@ -22,10 +22,11 @@ x3=zz
 
 t=findgen(nfile+1)
 mytime=time
-vec=sqrt(bx^2+by^2+bz^2)
+vec=(bx^2+by^2+bz^2)
 vtag='b'
-vec=sqrt(vx^2+vy^2+vz^2)
-vtag='v'
+;vec=(vx^2+vy^2+vz^2)
+;vtag='v'
+vec=vec-mean(vec)
 xx=x1
 yy=x2
 xx2d=rebin(reform(xx,nx1,1),nx1,nx2)
@@ -33,8 +34,6 @@ yy2d=rebin(reform(yy,1,nx2),nx1,nx2)
 xx3d=rebin(reform(xx,nx1,1,1),nx1,nx2,nx3)
 yy3d=rebin(reform(yy,1,nx2,1),nx1,nx2,nx3)
 
-vfft=fft(vec,2)
-vfft=abs(vfft)
 
 ky=[findgen(nx2/2), -nx2/2+findgen(nx2/2)]
 ky2d=rebin(reform(ky,1,nx2),nx1,nx2)
@@ -45,7 +44,7 @@ q=1.5d
 omega=1.0
 S=q*omega
 time=mytime
-; dt is difference in time between this, and the nearest shear periodic point
+; dt is difference in time between this, and the nearest periodic point
 ;
 dt=mytime mod  2.0d
 ;dt=mytime mod  6.0d
@@ -61,26 +60,15 @@ cfft1shift=cfft1*exp ( -jimag * ky3d * xx3d *2 *!PI *qomegat_Ly )
 cfft2=fft(cfft1shift, dimension=1)
 cfft3=fft(cfft2, dimension=3)
 
-pf1=alog10(abs(fft(vec,dimension=1)))
-pf2=alog10(abs(fft(vec,dimension=2)))
-
-ffttot=complexarr(nx1,nx2)
- shearfft2d, vec, ffttot, qomegat_Ly,x2d, nx1,nx2, x1
-
-
-ifftmy=fft(cfft3, -1)
- rcfft2=real_part(ifftmy)
- final=rcfft2
-
-ifftshear=fft(cfft3,-1)
-unshear=real_part(ifftshear)
-
 dataptr=ptrarr(18)
 
+ftsq=abs(cfft3)^2
+smftsq=smooth(ftsq,qsm, /edge_wrap)
+shftft=shift(smftsq,nx/2,ny/2,nz/2)
 
-qxq=reform(abs(cfft3(nx-1,*,*)))
-sl2=reform(abs(cfft3(*,0,*)))
-sl3=reform(abs(cfft3(*,*,0)))
+qxq=reform(abs(cfft3(nx-1,*,*))^2)
+sl2=reform(abs(cfft3(*,0,*))^2)
+sl3=reform(abs(cfft3(*,*,0))^2)
 
 for i=0,nx-1 do begin
     qxq(i,*)=abs(cfft3(i,i,*))
@@ -92,9 +80,9 @@ for i=0,nx-1 do begin
 endfor
 
 ;qxq=qxq^2
-fsl=reform(smooth(shift(qxq,nx2/2,nx3/2),1, /edge_wrap))
-fsl2=reform(smooth(shift(sl2,nx1/2,nx3/2),1, /edge_wrap))
-fsl3=reform(smooth(shift(sl3,nx1/2,nx2/2),1, /edge_wrap))
+fsl =reform(smooth(shift(qxq,nx2/2,nx3/2),qsm ))
+fsl2=reform(smooth(shift(sl2,nx1/2,nx3/2),qsm ))
+fsl3=reform(smooth(shift(sl3,nx1/2,nx2/2),qsm ))
 zmn=0.4
 zmx=0.6
 zmn=0.3
@@ -122,7 +110,7 @@ k2arr[1]=ptr_new(k3)
 k2arr[2]=ptr_new(k1)
 
 
-dataptr[ 0]=ptr_new(final(*,*,nz/2) )
+dataptr[ 0]=ptr_new(fslzoom)
 dataptr[ 0]=ptr_new(fslzoom)
 dataptr[ 1]=ptr_new(fsl2zoom)
 dataptr[ 2]=ptr_new(fsl3zoom)
@@ -174,9 +162,18 @@ ytitlestr[ 2,*]='k!Dy!N'
   
 
 posarr=fltarr(4,3)
-posarr[*,0]=[0.1,0.11,0.45,0.44]
-posarr[*,1]=[0.1,0.57,0.45,0.9]
-posarr[*,2]=[0.55,0.12,0.9,0.9]
+
+ytop=0.98
+ymid=0.48
+ymid2=0.68
+ydown=0.18
+xmid1=0.49
+xbeg=0.10
+xend=0.95
+print, ytop-ymid2, ymid-ydown
+posarr[*,0]=[xbeg,ydown,xmid1,ymid]
+posarr[*,1]=[xbeg,ymid2,xmid1,ytop]
+posarr[*,2]=[0.59,ydown,xend,ytop]
 
 fname=vtag+"dft3cuts"+string(nfile, format='(I04)')
 for usingps=0,1 do begin
@@ -192,7 +189,7 @@ cgerase
 
 
    cgLoadCT, 33
-   pos = cglayout([3,1] , OXMargin=[4,7], OYMargin=[5,5], XGap=8, YGap=2)
+   pos = cglayout([3,1] , OXMargin=[4,1], OYMargin=[5,1], XGap=8, YGap=2)
    FOR j=0,2 DO BEGIN
      p = pos[*,j]
      p = posarr[*,j]
@@ -204,6 +201,7 @@ cgerase
     ttag='                         '
     if ( j eq 2 ) then begin
     ttag=', t='+string(mytime,format='(F6.2)')+' orbits'
+    ttag=''
     endif
 
   cgcontour,d, $
@@ -216,13 +214,23 @@ cgerase
     xtitle=xtitlestr(j), $
     ytitle=ytitlestr(j), $
     pos=p,$
-    title=titlestr(j)+ttag,$
-    Charsize=cgDefCharsize()*0.6
+    ;title=titlestr(j)+ttag,$
+    Charsize=cgDefCharsize()*0.9
     gft=gauss2dfit(d, aa,/tilt)
+    print, 'gauss,',aa[2]/aa[3]
     cgloadct,33
     tvlct,255,255,255,255
-    cgcontour, gft, *k1arr[j],*k2arr[j], /overplot, pos=p, color='Black'
-     cgcolorBar, position=[p[2]+0.03, p[1], p[2]+0.04, p[3]],range=[imin-1e-6,imax+1e-6], Charsize=cgDefCharsize()*0.5 , /vertical
+    cgcontour, gft, *k1arr[j],*k2arr[j], /overplot, pos=p, color='Black', Charsize=cgDefCharsize()*0.9 , label=0
+        if (  j eq 2 ) then begin
+     cgcolorBar, position=[p[2]+0.03, p[1], p[2]+0.04, p[3]],range=[imin-1e-6,imax+1e-6], Charsize=cgDefCharsize()*0.9 , /vertical
+     endif
+
+    if ( j eq 1 ) then begin
+    num=0
+    if ( nfile > 30 ) then num=1
+    ttag='t='+string(nfile-6,format='(I2)') ;+' orbits'
+    cgtext, -40,15, ttag, color='white'
+    endif
    ENDFOR
    ;cgText, 0.5, 0.9, /Normal,  'vz and DFT(vz), t='+string(mytime), Alignment=0.5, Charsize=cgDefCharsize()*1.25
 
@@ -288,9 +296,45 @@ endif else begin
 fname2=fname
 ;im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
 endelse
-
 endfor
 
+dsx=128
+cut45=fltarr(dsx)
+cut135=fltarr(dsx)
+for i=0,dsx-1 do begin
+
+cut45[i]=shftft[nx/2+i,ny/2+i,nz/2]
+cut135[i]=shftft[nx/2+i,ny/2-i,nz/2]
+endfor
+vcut=reform(shftft[nx/2,ny/2,nz/2:nz-1])
+
+
+fname=vtag+"dft1dcuts"+string(nfile, format='(I04)')
+for usingps=0,1 do begin
+if (usingps eq 1) then begin
+cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times', /quiet, /nomatch, xs=2,ys=2.5
+endif else  begin
+set_plot, 'x'
+endelse
+k1=findgen(120)+1
+
+colors=['red', 'blue', 'green', 'black', 'turquoise', 'black']
+    items=['k!Dp!N', 'k!Dh!N', 'k!Dz!N', 'k!Dr!N', '-4/3', 'ave']
+    lines=[0,0,0,0,0,0]
+cgplot,k1, cut45, /xlog, /ylog, xrange=[1,128], color=colors[0], linestyle=lines[0], xtitle='k', ytitle='log |FFT(V!U2!N)|!U2!N', pos=[0.3,0.2,0.98,0.98], charsize=mychar
+cgplot,k1, cut135, /overplot , color=colors[1], linestyle=lines[1]
+
+cgplot,k1, vcut, /overplot , color=colors[2], linestyle=lines[2]
+ al_legend, items[0:3], colors=colors[0:3], linestyle=lines[0:3], Charsize=mychar,linsize=0.25, /right
+   
+
+if ( usingps ) then begin
+cgps_close, /jpeg,  Width=2048, /nomessage
+endif else begin
+fname2=fname
+;im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
+endelse
+endfor
 
 endfor
 

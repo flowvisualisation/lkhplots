@@ -1,0 +1,323 @@
+pro growthonly, vx1,vx2, rho, prs, t , nlast, nx1,nx2,x1,x2, background,dx1,dx2, zbuf=zbuf
+growth=0
+cg=0
+hires=0
+pload,0,/silent
+ar=nx2*1.0/nx1
+
+mychar=1.5
+
+cgdisplay, xs=800,ys=800
+
+
+
+;pload,0,/silent
+help, vx1
+
+initvort= 0.0
+initv1= 0.0
+initv2= 0.0
+
+;background=1
+if ( background eq 1) then begin
+initvort=getvort(vx1,vx2,x1,x2,nx1,nx2)
+initv1b=vx1
+initv2b=vx2
+initvortb=getvort(initv1b,initv2b,x1,x2,nx1,nx2)
+endif
+
+
+;; test subtracting the cell average instead
+
+x2d=rebin (reform(x1, nx1,1 ), nx1,nx2)
+y2d=rebin (reform(x2, 1,nx2 ), nx1,nx2)
+
+dx2d=rebin (reform(dx1, nx1,1 ), nx1,nx2)
+dy2d=rebin (reform(dx2[0], 1,1 ), nx1,nx2)
+
+xarg=x2d /(x1(nx1-1) - x1(0)+ dx1[0] )
+yarg=y2d / (x2(nx2-1) - x2(0)+ dx2[0] )
+
+dxnorm=dx2d / (x1(nx1-1) - x1(0) )
+dynorm=dy2d / (x2(nx2-1) - x2(0) )
+
+initv1a= -sin (2.d0 *!PI *  yarg)
+initv2a= -0.01* sin (2.d0 *!PI * xarg)
+
+initv1= -     (-cos (2 *!PI * (yarg+dxnorm/2)) + cos (2 *!PI *(yarg -dxnorm/2)))/dxnorm/2/!PI
+initv2= -0.01*(-cos (2 *!PI * (xarg+dynorm/2)) + cos (2 *!PI *(xarg -dynorm/2)))/dynorm/2/!PI
+initvort=getvort(initv1,initv2,x1,x2,nx1,nx2)
+initvorta=getvort(initv1a,initv2a,x1,x2,nx1,nx2)
+
+debugging=1
+;debugging=0
+if ( debugging eq 0 ) then begin
+;cgplot, x2, vort(0,*)-initvort(0,*) ;, xrange=[-0.51,-0.48]
+;stop
+cgplot,x2, initv1a(0,*) , xrange=[-0.51,-0.48], yrange=[0.9999,1.0001] , linestyle=3
+cgplot,x2, initv1(0,*) , color='red', /overplot, linestyle=2
+pload,0
+initv1b=vx1
+cgplot,x2, initv1b(0,*) , color='blue', /overplot, linestyle=1
+stop
+endif
+
+; cgplot,x1, initv2a(*,0) , xrange=[0.83,0.85]
+; cgplot,x1, initv2(*,0) , color='red', /overplot
+
+
+nstart=1
+nend=601
+;nend=2
+;nend=50
+nstep=1
+;pload,0,/silent
+totalke0=total(sqrt(vx1^2+vx2^2))
+tvz2=fltarr(1)
+tvx2=fltarr(1)
+maxvx=fltarr(1)
+maxdeltav=fltarr(1)
+tvx2(*)=1
+
+for nfile=nstart,nend,nstep do begin
+print,'nfile = ' ,nfile
+
+ll=6
+zero=''
+nts=strcompress(string(nfile),/remove_all)
+lnt=strlen(nts)
+for j=1,ll-lnt do zero=zero+'0'
+           fname='sixplot'+zero+nts
+
+pload,nfile, /silent
+
+!p.position=0
+nx = nx1
+nz = nx2
+slice= 0
+
+
+a=total(abs(vx2))/totalke0 ; total vy^2
+b=total(abs(vx1))/totalke0 ; total vx^2
+c=max(vx2)
+d=max(vx2-initv2)
+tvz2=[tvz2, a]
+tvx2=[tvx2, b]
+maxvx=[maxvx, c]
+maxdeltav=[maxdeltav, d]
+;print, size(tvz2)
+
+vort = getvort(vx1,vx2,x1,x2,nx1,nx2)
+debugging=0
+debugging=1
+if ( debugging eq 0 ) then begin
+!p.multi=[0,1,3]
+window, xs=1100,ys=1100
+cgplot, x2, vort(0,*)-initvort(0,*)  , xrange=[-0.53,-0.47], linestyle=1
+cgplot, x2, vort(0,*)-initvortb(0,*) , xrange=[-0.53,-0.47], /overplot, color='blue'
+cgplot, x2, vort(0,*)-initvortb(0,*) , xrange=[-0.53,-0.47], /overplot, color='red', linestyle=2
+cgplot, x2, vort(0,*), xrange=[-0.53,-0.47], linestyle=1
+cgplot, x2, initvort(0,*)  , xrange=[-0.53,-0.47], linestyle=0, /overplot
+cgplot, x2, vx1(0,*)  , xrange=[-0.53,-0.47], linestyle=0, yrange=[0.9995, 1.0001]
+cgplot, x2, initv1(0,*)  , xrange=[-0.53,-0.47], linestyle=0, /overplot, color='red'
+!p.multi=0
+stop
+endif
+var=fltarr(6,nx1,nx2)
+rho[0,0]=rho[0,0]+1e-6
+var(0,*,*)=rho
+if ( background eq 1 ) then begin 
+var(1,*,*)=vx1-initv1
+var(2,*,*)=vx2-initv2
+;var(2,*,*)=vx1
+endif else begin
+var(1,*,*)=vx1
+var(2,*,*)=vx2
+endelse
+var(3,*,*)=smooth(vort-initvort, 10,/edge_wrap)
+var(3,*,*)=vort-initvort
+;var(4,*,*)=(1.4*prs/rho)
+var(4,*,*)=vx1-initv1b
+str=strarr(6,20)
+str(0,*)="density)"
+str(1,*)="V!DX!N"
+str(2,*)="V!DZ!N"
+str(3,*)="vort"
+str(4,*)="V!DTH!N!U2!N"
+str(5,*)="vx1"
+
+for usingps=0,1 do begin
+
+if ( usingps ) then begin
+
+
+cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times', /nomatch, xsize=4, ysize=4, /quiet
+!p.charsize=1.
+cbarchar=1.
+xyout=1.
+legchar=1.
+endif else begin
+if ( keyword_set (zbuf) ) then begin
+set_plot,'z'
+ys=1200
+xs=1800
+!p.charsize=1.
+cbarchar=1.
+xyout=1.
+device, set_resolution=[xs,ys]
+endif else begin
+set_plot,'x'
+!p.font=-1
+!p.charsize=1.8
+cbarchar=1.8
+xyout=1.8
+endelse
+;device, set_resolution=[1100,800]
+endelse
+
+!p.multi=[0,1,1]
+!x.style=1
+!y.style=1
+
+
+xx=x1*ar
+yy=x2
+
+;p1 = !P & x1 = !X & y1 = !Y
+
+
+
+
+
+
+
+
+ cgLoadCT, 33
+
+
+growth=0
+dogrowth=0
+
+maxtvz2=0.05
+maxmaxdeltav=0.05
+;if ( max(maxdeltav) ge maxmaxdeltav ) then begin 
+if ( nfile ge 100 ) then begin 
+dogrowth=1
+endif
+
+; estimate growth rate
+tsndcr=1.0/10.0 ; should be kh /10?
+tnorm=t
+;tnorm=t/tsndcr
+if (  dogrowth ) then begin 
+
+nel=n_elements(maxdeltav)
+
+time_interp=fltarr(2)
+velz_interp=fltarr(2)
+time_interp[0]=tnorm[80]
+time_interp[1]=tnorm[100]
+velz_interp[0]=tvz2[80]
+velz_interp[1]=tvz2[100]
+
+
+;print, time_interp
+;print, velz_interp
+growth=(alog(velz_interp[1])-alog(velz_interp[0]))/(time_interp[1]-time_interp[0])
+print, (velz_interp[1]),(velz_interp[0]),time_interp[1],time_interp[0]
+endif
+
+grtitle='(Total |V!DX,Z!N|/|V!DX!N + i V!DZ!N8)' 
+lgrtitle='Log'+grtitle
+;cgplot, tnorm, alog10(tvz2), title=lgrtitle,   xrange=[0.1,120],yrange=[-2,0], xtitle='t / t!Dsound crossing!N', ytitle=lgrtitle, /xlog,  psym=-14, Color='black',linestyle=0, axiscolor='black'
+;cgplot, tnorm, alog10(tvx2), /overplot,  PSym=-15, Color='red',linestyle=2
+;cgplot, tnorm, alog10(maxvx), /overplot,  PSym=-17, Color='green',linestyle=4
+;cgplot, tnorm, alog10(maxdeltav), /overplot,  PSym=-18, Color='violet',linestyle=5
+
+if ( dogrowth ) then begin 
+;cgplot, tnorm, growth*(tnorm-time_interp[0])+alog(velz_interp[0]) ,  /overplot, PSym=-16, Color='dodger blue', linestyle=3
+;cgplot, time_interp, alog10(velz_interp), psym=4, /overplot
+;al_legend, ['V!DZ!N!U2!N','V!DX!N!U2!N'], PSym=[-14,-15], $
+;      LineStyle=[0,2], Color=['black','red'], charsize=legchar, /left
+endif
+
+cgplot, tnorm, (tvz2), $
+   ; title=lgrtitle ,   $
+    xrange=[0.1,60],yrange=[0.01,1.1], $ 
+    xtitle='t / t!Dsound crossing!N', $
+    ytitle='V!Dz!N, V!Dx!N',   $
+    pos = [0.2, 0.2, 0.98, 0.97],$
+    charsize=mychar,$
+    ;psym=-14, $
+    Color='black',linestyle=0, /ylog
+cgplot, tnorm, (tvx2), /overplot,  $ ,$
+    ;PSym=-15, $
+    Color='red',linestyle=2
+
+
+qq=600
+if ( nfile eq qq) then begin
+tgood=tnorm[0:qq]
+growtharr=[[tvx2],[tvz2],[tgood],[tvz2],[tvz2],[tvx2],[tvx2]]
+
+idstr=["tvx2","tvy2","tnorm","b1arr","b2arr","b3arr","tnorm"]
+h5growth, growtharr, idstr
+
+stop
+endif
+;cgplot, tnorm, (maxvx), /overplot,  PSym=-17, Color='green',linestyle=4
+;cgplot, tnorm, (maxdeltav), /overplot,  PSym=-18, Color='violet',linestyle=5
+
+al_legend, ['V!DZ!N!U2!N','V!DX!N!U2!N'], $
+    ;PSym=[-14,-15], $
+      LineStyle=[0,2], Color=['black','red'], charsize=0.85*mychar , pos=[20,0.1]
+if ( dogrowth ) then begin 
+;cgplot, tnorm, exp(growth*(tnorm))*(1e-2 -5e-3) ,  /overplot, PSym=-16, Color='dodger blue', linestyle=3
+;cgplot, time_interp, (velz_interp), psym=4, /overplot
+endif
+
+;xyouts, 0.01,0.01,$
+;   'KHI PLUTO, t='+string(t(nfile),format='(F4.1)')+ $
+;      ', aspect ratio '+string(max(x2)/max(x1), format='(F5.2)')+$
+;     ', growth rate'+string(growth, format='(F7.2)')+$
+;      ' ',$
+;   /normal, charsize=xychar, color=cgcolor('black')
+
+!p.position=0
+!p.multi=0
+
+
+if ( usingps ) then begin
+
+cgps_close, /jpeg,  Width=1100, /nomessage
+;set_plot,'x'
+endif else begin
+;set_plot,'x'
+fname2=fname
+;im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
+endelse
+
+endfor
+if ( dogrowth ) then begin 
+PRINT,'   k_h/k', max(x2)/max(x1), ' growth ', growth, velz_interp,  time_interp
+endif
+set_plot,'x'
+
+
+endfor
+f2name='pluto_time_series.dat'
+OPENW,1,f2name
+printf, 1, '# tnorm tvz tvx'
+for i=1,nlast-1 do begin
+print, i, size(tvz2)
+PRINTF,1, tnorm[i], tvz2[i], tvx2[i],FORMAT='(F9.6 , F9.6 , F9.6)'
+endfor
+CLOSE,1
+
+f2name='growthratemhd.dat'
+OPENW,1,f2name
+PRINTF,1, max(x2)/max(x1), growth,FORMAT='(F9.6 , F9.6)'
+CLOSE,1
+;print, totalke0
+PRINT, max(x2)/max(x1), ' growth ', growth
+end
