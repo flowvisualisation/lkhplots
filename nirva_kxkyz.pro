@@ -9,9 +9,9 @@ x3=g.z
 
 fftarr=complexarr(nx1,nx2,nx3)
 
-nlast=134000
+nlast=322000
 ;neven=nlast; - (nlast mod 2)
-nbeg=132000
+nbeg=322000
 for nfile=nbeg,nlast,2000 do begin
 d=h5_read(nfile,  /B)
 grd_ctl,g,c, model=nfile
