@@ -1,19 +1,11 @@
 
-cgdisplay, xs=1200, ys=800
+cgdisplay, xs=1200, ys=1200
 
 
-nfile=1
-nend=2000
-nstart=1
-;nstart=1000
-;nend=nstart+1
-nend=280
-;nend=1170
-nstep=1
-;nstart=12
-;nend=152
-;nstart=61
-;nend=68
+nstart=91
+nend=219
+nstep=2
+
 sfile = 0
 pfile = 0
 sfile = FILE_TEST('v0000.vtk')
