@@ -3,9 +3,9 @@ qsm=3
    mychar=1.1
 
 if ( 1 ) then begin
-nstart=14
-nend=46
-nstep=32
+nstart=16
+nend=266
+nstep=250
 ;nstart=115
 ;nend=2000
 ;nstep=20
@@ -26,7 +26,7 @@ mytime=time
 vec=(bx^2+by^2+bz^2)
 vtag2='B!U2!N'
 vtag='b'
-if ( 1 ) then begin
+if ( 0 ) then begin
 vec=(bx*by)
 vtag2='B!Dx!NB!Dy!N'
 vtag='bxby'
@@ -162,14 +162,14 @@ titlestr[10,*]='bz'
 titlestr[10,*]='bz(z,t)'
 
 xtitlestr=strarr(18,30)
-xtitlestr[ 0,*]='k!Dh!N'
-xtitlestr[ 1,*]='k!Dp!N'
-xtitlestr[ 2,*]='k!Dx!N'
+xtitlestr[ 0,*]='k!Dh!NL'
+xtitlestr[ 1,*]='k!Dp!NL'
+xtitlestr[ 2,*]='k!Dx!NL'
 
 ytitlestr=strarr(18,30)
-ytitlestr[ 0,*]='k!Dz!N'
-ytitlestr[ 1,*]='k!Dz!N'
-ytitlestr[ 2,*]='k!Dy!N'
+ytitlestr[ 0,*]='k!Dz!NL'
+ytitlestr[ 1,*]='k!Dz!NL'
+ytitlestr[ 2,*]='k!Dy!NL'
   
 
 posarr=fltarr(4,3)
@@ -251,7 +251,7 @@ tp=pos[*,0]
     if ( j eq 0 ) then begin
     num=0
     if ( nfile > 30 ) then num=1
-    ttag='t='+string(nfile-6,format='(I2)') ;+' orbits'
+    ttag='t='+string(nfile-6,format='(I3)') ;+' orbits'
     cgtext, -44,37, ttag, color='white', Charsize=cgDefCharsize()*0.6
     endif
    ENDFOR
@@ -293,10 +293,6 @@ radave(int_disp)= radave(int_disp)+qq(i,j)/2/!DPI/kr(i,j)
     endfor
     endfor
 
-    colors=['red', 'blue', 'green', 'orange', 'turquoise', 'black']
-    items=['+45', '-45', '-7/3', '-5/3', '-4/3', 'ave']
-    lines=[0,0,1,1,1,0]
-    ;power3d,unshear, /noplot, spec=spec, wns=wave
 
 ymin=min(spec1)
 ymax=max(spec1)
@@ -340,21 +336,22 @@ endfor
 k1=findgen(120)+1
 
 colors=['red', 'blue', 'green', 'black', 'turquoise', 'black']
-    items=['k!Dp!N', 'k!Dh!N', 'k!Dz!N', 'k!Dr!N', '-4/3', 'ave']
+    items=['k!D1!N', 'k!D2!N', 'k!D3!N', 'k!Dr!N', '-4/3', 'ave']
     lines=[0,0,0,0,0,0]
 
 
 mp=pos[*,3]
 k1h=k1*1
-yrmax=1e2
+yrmax=3
 yrmin=1e-6
 if ( vtag eq 'bxby' ) then begin
-yrmax=1e1
+yrmax=2e-1
 yrmin=1e-5
 endif
-cgplot,k1h, k1h*cut45, /xlog, /ylog, xrange=[1,128],yrange=[yrmin,yrmax], color=colors[0], $
+cgplot,k1h, k1h*cut45, /xlog, /ylog, xrange=[1,128],yrange=[yrmin,yrmax], ystyle=1, $
+color=colors[0], $
     ytickformat='logticks_exp',$
-    linestyle=lines[0], xtitle='k', ytitle='log!D10!Nk|DFT('+vtag2+')|!U2!N', pos=[mp[0]+0.03,mp[1],mp[2],mp[3]],/noerase, charsize=mychar
+    linestyle=lines[0], xtitle='kL', ytitle='log!D10!Nk|DFT('+vtag2+')|!U2!N', pos=[mp[0]+0.03,mp[1],mp[2],mp[3]],/noerase, charsize=mychar
 cgplot,k1h, k1h*cut135, /overplot , color=colors[1], linestyle=lines[1]
 
 k1h=k1*2

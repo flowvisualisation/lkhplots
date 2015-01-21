@@ -1,9 +1,9 @@
 cgdisplay, xs=1200, ys=800
 
 
-nstart=1
-nend=280
-nstep=1
+nstart=2
+nend=219
+nstep=2
 
 sfile = 0
 pfile = 0
@@ -24,7 +24,7 @@ case code OF
 'pluto': begin
 pload,0
 plutoread, dens, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
-time=time/1000.
+time=time/2/!DPI
 end
 'snoopy':begin
 snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
