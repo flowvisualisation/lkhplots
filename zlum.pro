@@ -19,7 +19,7 @@ nrange[6]=47
 nrange[7]=47
 
 ;nrange=findgen(8)+61
-nrange=findgen(8)*2+40
+nrange=findgen(8)*2+109
 for qq=0,numpic-1 do begin
 nfile=nrange[qq]
 ;nfile=35

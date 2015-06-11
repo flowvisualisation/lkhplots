@@ -3,7 +3,7 @@
 pro write_rey, nfile,tag, rey1, rey2, rey3, rey4, rey5, rey6
 
 
-openw,2,tag+STRing(nfile, format='(I04)')+'.vtk',/SWAP_ENDIAN 
+openw,2,tag+STRing(nfile, format='(I07)')+'.vtk',/SWAP_ENDIAN 
 
 
 

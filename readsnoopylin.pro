@@ -38,7 +38,7 @@ endelse
 
 
 cgplot, t, sqrt(ux2m), color=colors[0], linestyle=linestyles[0], /ylog, yrange=[ymin, max(maxall)], ystyle=1, $
-    xrange=[0,6.5], $
+    xrange=[0,0.5], $
     pos=[0.16,0.14,0.98,0.98],$
     ytitle="v!Dx,y,z!N, B!Dx,y,z!N",$
     xtitle="time [!9W!X!U-1!N]"

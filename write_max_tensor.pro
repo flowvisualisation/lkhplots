@@ -14,12 +14,34 @@ inviiarr=fltarr(nend)
 inviiiarr=fltarr(nend)
 
 vshear=1.0
-for nfile=nstart,nend do begin
-
 
 code='pluto'
 ;code='snoopy'
-switch code OF 
+nfile = FILE_TEST('usr000000.h5')
+if (nfile eq 1 ) then begin
+code='nirvana'
+nstart=10000
+nend=90000
+nstep=2000
+endif
+
+for nfile=nstart,nend,nstep do begin
+
+
+
+
+
+
+case code OF 
+'nirvana': begin
+nirvanaread, rho, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
+sbq=1.5
+sbomega=1
+sba=-0.5*sbq*sbomega
+vsh=2*sba
+vshear=vsh*xx3d
+vy=vy-vshear
+end
 'pluto': begin
 pload,1
 plutoread, dens, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
@@ -53,9 +75,9 @@ reyaveten=fltarr(nx/ndown,ny/ndown,nz/ndown,6)
 
 
 
-for i=0,nx-1,ndown do begin
-for j=0,ny-1,ndown do begin
-for k=0,nz-1,ndown do begin
+for i=0,nx-ndown-1,ndown do begin
+for j=0,ny-2,ndown do begin
+for k=0,nz-2,ndown do begin
 
 u1=0.0d
 u2=0.0d

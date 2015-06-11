@@ -1,5 +1,30 @@
 cgdisplay, xs=800,ys=800
 
+q=1.5d
+;q=1.4d
+;q=1.2d
+
+
+spawn, 'basename $PWD', a
+dirname=a
+dirtag='znf?'
+CASE dirname OF
+   'q18' : begin
+   q=1.8d
+   dirtag='net B!Dz!N, q=1.8'
+    end
+   'q14' : begin
+   q=1.4d
+   dirtag='net B!Dz!N, q=1.4'
+    end
+   'q12n240' : begin
+   q=1.2d
+   dirtag='net B!Dz!N, q=1.4'
+    end
+	'3d_mri_pi_wn'		: dirtag='3D MRI + PI!DWN!N =0 '
+   ELSE: PRINT, 'Not one through four'
+ENDCASE
+
 
 usingps=0
 !p.multi=0
@@ -15,7 +40,7 @@ bx2m=bxmax^2
 by2m=bymax^2
 bz2m=bzmax^2
 
-items=['v!Dx!N','v!Dy!N', 'v!Dz!N', 'b!Dx!N', 'b!Dy!N', 'b!Dz!N','exp(0.75t)' ]
+items=['v!Dx!N','v!Dy!N', 'v!Dz!N', 'B!Dx!N', 'B!Dy!N', 'B!Dz!N','exp('+string(q,format='(F3.1)')+'t/2)' ]
 linestyles=[0,0,0,3,2,2,1]
 psym=[0,1,2,3,4,5,6]
 colors=['red', 'blue', 'green', 'orange', 'turquoise', 'purple', 'black']
@@ -28,32 +53,37 @@ ymax=3e2
 ymax=maxall
 ;ymax=2e3
 
-
-fname="timeseries_"
+spawn, 'basename $PWD', dirtag
+fname="timehistory"+dirtag
 for usingps=0,1 do begin
 if (usingps eq 1) then begin
 cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times', /quiet
+omega_str='!9W!X'
 endif else  begin
 set_plot, 'x'
+omega_str='!7X!X'
 endelse
 
 
+charsize=cgdefcharsize()
 
 cgplot, t, sqrt(ux2m), color=colors[0], linestyle=linestyles[0], $
     /ylog, $
+    ;xrange=[6.0, 6.7], $
     yrange=[ymin, ymax], $
     ystyle=1,$
+    charsize=charsize,$
     ;title="MRI + PI", $
-    xtitle="time, !9W!X t", $
+    xtitle="time,"+omega_str+" t", $
      ytitle='v!Dx,y,z!N, B!Dx,y,z!N' ,$
       ;xrange=[0,18] ,$
-     pos=[0.2,0.2,0.98,0.98]
+     pos=[0.15,0.12,0.98,0.98]
 cgplot, t, sqrt(uy2m), /overplot, color=colors[1], linestyle=linestyles[1]
 cgplot, t, sqrt(uz2m), /overplot, color=colors[2], linestyle=linestyles[2]
 cgplot, t, sqrt(bx2m), /overplot, color=colors[3], linestyle=linestyles[3]
 cgplot, t, sqrt(by2m), /overplot, color=colors[4], linestyle=linestyles[4]
 cgplot, t, sqrt(bz2m), /overplot, color=colors[5], linestyle=linestyles[5]
-cgplot, t, sqrt(ux2m[0])*exp(0.75*t), /overplot, color=colors[6], linestyle=linestyles[6]
+cgplot, t, sqrt(ux2m[0])*exp(q*t/2), /overplot, color=colors[6], linestyle=linestyles[6]
 cgplot, t, abs(bzmax-0.1643751), /overplot, color=colors[5], linestyle=linestyles[5]
 
 
@@ -73,7 +103,11 @@ va=0.16437451
 lfast=sqrt(15.d0/16.d0) *2.d0 *!DPI  /omega/sqrt(rho) 
 print, '1 lfast', 1/lfast
 
-	al_legend, items, colors=colors, linestyle=linestyles, charsize=1.4,pos=[0.06,1e-3] , linsize=0.5
+	al_legend, items, colors=colors, linestyle=linestyles, $
+    charsize=cgdefcharsize(),$
+    ;pos=[0.06,1e-3] , $
+    /right, $
+    linsize=0.5
 
 print, 'Saturation level', maxall
 

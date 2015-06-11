@@ -36,15 +36,15 @@ datptr(14)=ptr_new(reform(f.bz[*,0,*]))
 
 titstr=strarr(15)
 titstr[0]="V!DE,X!N"
-titstr[1]="V!DE,y!N"
-titstr[2]="V!DE,z!N"
+titstr[1]="V!DE,Y!N"
+titstr[2]="V!DE,Z!N"
 titstr[3]="rho!DE!N"
-titstr[4]="V!DTH,E!N"
+titstr[4]="V!DE,TH!N"
 titstr[5]="V!DI,X!N"
 titstr[6]="V!DI,Y!N"
 titstr[7]="V!DI,Z!N"
 titstr[8]="rho!DI!N"
-titstr[9]="V!DTH,I!N"
+titstr[9]="V!DI,TH!N"
 titstr[10]="E!DX!N"
 titstr[11]="E!DY!N"
 titstr[12]="E!DZ!N"
@@ -54,6 +54,18 @@ titstr[14]="B!DZ!N"
 
 
 cgerase
+
+
+
+fname='disk'+tag2
+for usingps=0,1 do begin
+if (usingps eq 1) then begin
+cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times', /quiet ;, /nomatch, xs=20, ys=5, /bold
+   !P.CharThick = 8
+endif else  begin
+set_plot, 'x'
+endelse
+
 for i=0,14 do begin
 
 d=*datptr(i)
@@ -81,16 +93,16 @@ p2=pos[1]-0.02
 p4=pos[1]-0.01
 if ( i gt 9  ) then begin
 xtickf="(I5)"
-p2=pos[1]-0.04
-p4=pos[1]-0.03
+p2=pos[1]-0.06
+p4=pos[1]-0.05
 endif
 
-cgcontour,dist(nx,ny),x1,x2, pos=pos, /noerase, /nodata , xtickf=xtickf,ytickf=ytickf
-cgcolorbar, Position=[pos[0],p2 , pos[2], p4], range=[imin,imax], format='(G8.1)', charsize=cbarchar
+cgcontour,dist(nx,ny),x1,x2, pos=pos, /noerase, /nodata , xtickf=xtickf,ytickf=ytickf, charsize=1.1
+cgcolorbar, Position=[pos[0],p2 , pos[2], p4], range=[imin,imax], format='(G8.1)', charsize=0.5
 
 
 
-cgtext, 0.75*x1(nx-1),0.75*x2(ny-1), titstr[i], charsize=1.9
+cgtext, 0.5*x1(nx-1),0.75*x2(ny-1), titstr[i], charsize=1.2
 
 if ( i eq 2) then begin
 qq=17
@@ -115,8 +127,20 @@ endfor
 
 cgtext, 0.2,0.01, "PIC simulation of rotating disk, t="+String(f.s.time, format='(F6.2)'), /normal,charsize=1.8
 
-fname='disk'+tag2
-im=cgsnapshot(filename=fname,/jpeg,/nodialog)
+
+if ( usingps ) then begin
+cgps_close, /jpeg,  Width=2048, /nomessage
+endif else begin
+fname2=fname
+;im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
+endelse
+
+endfor
+
+
+
+
+
 wait,1
 endfor
 !p.multi=0

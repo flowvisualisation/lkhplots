@@ -1,5 +1,6 @@
 
 
+cgdisplay, xs=1200,ys=1200
 
 nfile=1
 nend=2000
@@ -11,9 +12,9 @@ nstart=14
 nend=46
 nstep=32
 
-nstart=40
-nend=48
-nstep=1
+nstart=91
+nend=219
+nstep=2
 
 
 
@@ -21,12 +22,21 @@ vshear=1.0
 for nfile=nstart,nend,nstep do begin
 
 
-code='pluto'
+sfile = 0
+pfile = 0
+sfile = FILE_TEST('v0000.vtk')
+pfile = FILE_TEST('data.0000.dbl')
+print, sfile, pfile
 code='snoopy'
+if (pfile eq 1 ) then begin
+code='pluto'
+endif
+
 switch code OF 
 'pluto': begin
 pload,1
 plutoread, dens, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
+time=time/2.d/!DPI
 break;
 end
 'snoopy':begin

@@ -1,5 +1,5 @@
 
-   cgDisplay, WID=1,xs=1100, ys=1100,xpos=1200, ypos=800
+   cgDisplay, WID=1,xs=1200, ys=1200,xpos=1200, ypos=800
 nbeg=0
 nend=nlast
 nfile=0
@@ -98,13 +98,7 @@ cy=congrid(yy, q)
 ;velovect, cv1,cv2, cx,cy, /noerase,/overplot, position=pos , color=cgcolor('white'), c_thick=4
 
 xf=2.0
-for i=0.26, xf,0.1 do begin
 
-field_line, b1, b2, xx,yy,  i,0.05, rr,zz
-oplot, rr,zz,color=255
-;field_line, b1(0), b2(0), x1,x2,  10,i, rr,zz
-;oplot, rr,zz,color=255
-endfor
 
 endfor
 

@@ -7,8 +7,10 @@ for usingps=0,1 do begin
 if (usingps eq 1) then begin
 cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times', /quiet, /nomatch, xs=20, ys=5, /bold
    !P.CharThick = 8
+   omega='!9W!X'
 endif else  begin
 set_plot, 'x'
+   omega='!7x!X'
 endelse
 
 
@@ -18,7 +20,7 @@ endelse
 cgloadct,0
 cgloadct,33
 
-pos=cglayout([5,1] , OXMargin=[6,1], OYMargin=[6,1], XGap=1, YGap=0)
+pos=cglayout([5,1] , OXMargin=[6,7], OYMargin=[6,1], XGap=1, YGap=0)
 
 for  pno=0,3 do begin
 
@@ -35,14 +37,18 @@ ytickf="(a1)"
 ytit=''
 if ( pno eq 0 ) then begin
 ytick=1
-ytickf="(F4.1)"
+ytickf="(I3)"
 ytit='Kz'
 endif
-xx=(findgen(nx/2)/nx-1)*sqrt(2)
+xx=(findgen(nx/2)/nx-1)*2*!DPI+!DPI*1.5
+zz=(findgen(nz)/nz-1)*2*!DPI+!DPI*1.
 cgcontour, cgscalevector(vortprojsl,1,255),xx,zz, /nodata,/noerase,$
     xtit='k!Dh!Nh',$
              ytitle=ytit, $
          ;Ytickinterval=ytick,$
+         xTICKs=3,$
+         xTICKFORMAT="(I3)",$
+          xTICKv = [-1,0,1],$
          yTICKFORMAT=ytickf,$
         ; Yticklayout=1,$
         axiscolor='black',$
@@ -88,8 +94,8 @@ pos1=reform(pos[*,4])
 addt=6
 tnorm=t+addt
 cgplot, tnorm, sqrt(ux2m), color=colors[0], linestyle=linestyles[0], /ylog, yrange=[ymin, ymax], ystyle=1, title="MRI + PI" ,$
-pos=[pos1[0]+0.02,pos1[1],pos1[2],pos1[3]],$
-xtitle='time, t  [!9W!X!U-1!N]',$
+pos=[pos1[0]+0.02,pos1[1],pos1[2]+.02,pos1[3]],$
+xtitle='time, t  ['+omega+'!U-1!N]',$
 /noerase,$
 xrange=[addt,addt+.4]
 cgplot, tnorm, sqrt(uy2m), /overplot, color=colors[1], linestyle=linestyles[1]

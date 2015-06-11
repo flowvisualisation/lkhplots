@@ -35,7 +35,7 @@ titlstr[8]=tag+"z(y,z)"
 cgloadct,33
 for i=0,8 do begin
 rd= *var(i)
-rr= scale_vector (*var(i),1,255)
+rr= cgscalevector (*var(i),1,255)
 sz=size(rr, /dimensions)
 dummyarr=findgen( sz)
 pos=[0.1,0.2,0.9,.9]

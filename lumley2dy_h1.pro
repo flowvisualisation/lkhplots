@@ -14,6 +14,15 @@ code='snoopy'
 if (pfile eq 1 ) then begin
 code='pluto'
 endif
+nfile = FILE_TEST('usr000000.h5')
+if (nfile eq 1 ) then begin
+code='nirvana'
+nstart=10000
+nend=20000
+nstep=2000
+endif
+
+
 
 vshear=1.0
 for nfile=nstart,nend,nstep do begin
@@ -21,6 +30,15 @@ for nfile=nstart,nend,nstep do begin
 
 
 case code OF 
+'nirvana': begin
+nirvanaread, rho, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
+sbq=1.5
+sbomega=1
+sba=-0.5*sbq*sbomega
+vsh=2*sba
+vshear=vsh*xx3d
+vy=vy-vshear
+end
 'pluto': begin
 pload,0,/silent
 plutoread, dens, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time

@@ -13,7 +13,7 @@ nstart=14
 nend=46
 nstep=32
 
-nstart=40
+nstart=4
 nend=48
 nstep=1
 
