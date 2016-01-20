@@ -1,5 +1,5 @@
-nend=165
-nstart=11
+nend=44
+nstart=nend
    cgDisplay, WID=1,xs=1800, ys=700, xpos=100, ypos=700
 ; load some sheared data
 

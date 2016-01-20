@@ -1,6 +1,6 @@
 pload,0, /nodata
 cgdisplay, xs=800,ys=1200
-pos = cglayout([3,4] , OXMargin=[5,5], OYMargin=[5,12], XGap=3, YGap=7)
+pos = cglayout([3,4] , oxmargin=[5,5], oymargin=[5,5], XGap=3, YGap=3)
 
 ;extract_slice (vz, 543,250, nx/2,ny/2,nz/2, [1,0,0], [1,1,0] )
 for nfile=0,nlast do begin
@@ -22,12 +22,12 @@ datptr(3)=ptr_new(reform(bx(*,0,*)))
 datptr(4)=ptr_new(reform(by(*,0,*)))
 datptr(5)=ptr_new(reform(bz(*,0,*)))
 
-datptr(6) =ptr_new(reform(vx(*,*,0)))
-datptr(7) =ptr_new(reform(vy(*,*,0)))
-datptr(8) =ptr_new(reform(vz(*,*,0)))
-datptr(9) =ptr_new(reform(bx(*,*,0)))
-datptr(10)=ptr_new(reform(by(*,*,0)))
-datptr(11)=ptr_new(reform(bz(*,*,0)))
+datptr(6) =ptr_new(reform(vx(0,*,*)))
+datptr(7) =ptr_new(reform(vy(0,*,*)))
+datptr(8) =ptr_new(reform(vz(0,*,*)))
+datptr(9) =ptr_new(reform(bx(0,*,*)))
+datptr(10)=ptr_new(reform(by(0,*,*)))
+datptr(11)=ptr_new(reform(bz(0,*,*)))
 
 titlestr=strarr(12)
 titlestr(0)='vx'
@@ -50,12 +50,12 @@ xptr(2)=ptr_new(xx)
 xptr(3)=ptr_new(xx)
 xptr(4)=ptr_new(xx)
 xptr(5)=ptr_new(xx)
-xptr(6)=ptr_new(xx)
-xptr(7)=ptr_new(xx)
-xptr(8)=ptr_new(xx)
-xptr(9)=ptr_new(xx)
-xptr(10)=ptr_new(xx)
-xptr(11)=ptr_new(xx)
+xptr(6)=ptr_new(yy)
+xptr(7)=xptr(6)
+xptr(8)=xptr(6)
+xptr(9)=xptr(6)
+xptr(10)=xptr(6)
+xptr(11)=xptr(6)
 
 
 yptr=ptrarr(12)
@@ -65,45 +65,55 @@ yptr(2)=ptr_new(zz)
 yptr(3)=ptr_new(zz)
 yptr(4)=ptr_new(zz)
 yptr(5)=ptr_new(zz)
-yptr(6)=ptr_new(yy)
-yptr(7)=ptr_new(yy)
-yptr(8)=ptr_new(yy)
-yptr(9)=ptr_new(yy)
-yptr(10)=ptr_new(yy)
-yptr(11)=ptr_new(yy)
+yptr(6)=yptr(0)
+yptr(7)=yptr(0)
+yptr(8)=yptr(0)
+yptr(9)=yptr(0)
+yptr(10)=yptr(0)
+yptr(11)=yptr(0)
 
 
 xstr=strarr(12)
-xstr(0)='x'
-xstr(1)='x'
-xstr(2)='x'
+xstr(0)=''
+xstr(1)=''
+xstr(2)=''
 xstr(3)='x'
 xstr(4)='x'
 xstr(5)='x'
-xstr(6)='x'
-xstr(7)='x'
-xstr(8)='x'
-xstr(9)='x'
-xstr(10)='x'
-xstr(11)='x'
+xstr(6)=''
+xstr(7)=''
+xstr(8)=''
+xstr(9)='y'
+xstr(10)='y'
+xstr(11)='y'
 
 ystr=strarr(12)
 ystr(0)='z'
-ystr(1)='z'
-ystr(2)='z'
+ystr(1)=''
+ystr(2)=''
 ystr(3)='z'
-ystr(4)='z'
-ystr(5)='z'
-ystr(6)='y'
-ystr(7)='y'
-ystr(8)='y'
-ystr(9)='y'
-ystr(10)='y'
-ystr(11)='y'
+ystr(4)=''
+ystr(5)=''
+ystr(6)='z'
+ystr(7)=''
+ystr(8)=''
+ystr(9)='z'
+ystr(10)=''
+ystr(11)=''
 
 cgloadct,33
 cgerase
 for i=0,11 do begin
+
+xtickf='(a1)'
+ytickf='(a1)'
+if ( i gt 8 ) then begin
+xtickf='(I3)'
+endif
+
+if ( ( i mod 3 ) eq 0 ) then begin
+ytickf='(I3)'
+endif
 d=*datptr(i)
 sz=size(d,/dimensions)
 r=cgscalevector(d,1,254)
@@ -113,11 +123,13 @@ x=*xptr(i)
 y=*yptr(i)
 cgimage, r, pos=pos[*,i], /noerase
 cgcontour, dist(sz(0),sz(1)) ,x,y, pos=pos[*,i] ,/noerase, /nodata,  title=titlestr[i], $
+    xtickformat=xtickf,$
+    ytickformat=ytickf,$
     xtitle=xstr(i),$
     ytitle=ystr(i)
 endfor
 
-cgtext, 0.5,0.92,/normal, 'time= '+string(nfile/10., format='(F5.2)')+' !7X!X!U-1!N' , color='black'
+cgtext, 0.5,0.97,/normal, 'time= '+string(nfile/10., format='(F5.2)')+' !7X!X!U-1!N' , color='black'
 
 im=cgsnapshot(filename=fname, /nodialog, /jpeg)
 endfor

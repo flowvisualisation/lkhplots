@@ -1,6 +1,6 @@
 pro snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
 
-fname= 'v'+string(nfile,format='(I04)')+'.vtk'
+fname= 'data/v'+string(nfile,format='(I04)')+'.vtk'
 ;print,fname
 openr, lun,fname, /get_lun
 header1=strarr(1)

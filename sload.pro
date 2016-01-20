@@ -4,7 +4,7 @@ COMMON  SNOOPYGRID, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz, time
 pro snoopyread2, nfile
 COMMON  SNOOPYGRID
 
-fname= 'v'+string(nfile,format='(I04)')+'.vtk'
+fname= 'data/v'+string(nfile,format='(I04)')+'.vtk'
 ;print,fname
 openr, lun,fname, /get_lun
 header1=strarr(1)
@@ -15,7 +15,7 @@ junk=""
 junk2=""
 time=1.0d
 readf, lun, junk, time, junk2,format='(A2,x,E21.15,x,A10)'
-;print, time
+print,'time=', time
 ;help, time
 header3=strarr(1)
 readf, lun, header3

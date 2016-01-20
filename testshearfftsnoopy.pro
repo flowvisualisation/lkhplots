@@ -1,6 +1,6 @@
 ; load some sheared data
 
-nfile=13
+nfile=43
 snoopyread, vx,vy, vz,bx,by,bz, xx3d,yy3d,zz3d,xx,yy,zz,nx,ny,nz,nfile, time
 nx1=nx
 nx2=ny

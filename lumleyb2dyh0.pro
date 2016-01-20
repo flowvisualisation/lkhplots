@@ -25,8 +25,8 @@ endif
 nfile = FILE_TEST('usr000000.h5')
 if (nfile eq 1 ) then begin
 code='nirvana'
-nstart=10000
-nend=90000
+nstart=790000
+nend=nstart
 nstep=2000
 endif
 

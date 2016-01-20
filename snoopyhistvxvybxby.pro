@@ -3,12 +3,15 @@ cgdisplay, xs=1200, ys=1200
 nbeg=1
 nend=15
 
-plotlist=[2,9,12]
-plotlist=findgen(12)
+plotlist=[1,2,3,$
+        4, 100,200, $
+    300,400,500, $
+    600,800,900]
+;plotlist=(findgen(12)+1)*100
 for i=0,11 do begin
 sload,plotlist[i] ;, /silent
-sbq=1.5
-sbomega=1e-3
+sbq=1.0
+sbomega=0
 sba=-0.5*sbq*sbomega
 vsh=2*sba
 
@@ -72,8 +75,8 @@ miny=min([min(by),min(vy)])
 
 
 sz=size(magnetic_hist, /dimensions)
-cx=findgen(sz(0))*bn1a+mn1a
-cy=findgen(sz(1))*bn2a+mn2a
+cxm=findgen(sz(0))*bn1a+mn1a
+cym=findgen(sz(1))*bn2a+mn2a
 
 fname="snoopyhistvxvybxby"+string(i, format='(I04)')
 
@@ -81,7 +84,7 @@ for usingps=0,1 do begin
 
 if ( usingps ) then begin
 set_plot,'ps'
-cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times', /nomatch, xsize=4, ysize=4;, /quiet
+cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times', /nomatch, xsize=4, ysize=4, font=1;, /quiet 
 !p.charsize=0.9
 endif else begin
 !p.font=-1
@@ -103,23 +106,27 @@ endelse
 
 
 smax=max([maxx,maxy])
-smax=30
+smax=0.6
 
 
 ytickf="(a1)"
 ytit=''
-pos=[0.01,0.1,0.98,0.98]
-if ( i eq 0 ) then begin
+pos=[0.1,0.1,0.98,0.98]
+;if ( i eq 0 ) then begin
 pos=[0.13,0.1,0.98,0.98]
 ytickf="(F6.1)"
 		ytit="B!Dy!N, V!Dy!N"
-endif
+;endif
 
 
 
 
+sz=size(velocity_hist, /dimensions)
+c1x=findgen(sz(0))*bn1+mn1
+c1y=findgen(sz(1))*bn2+mn2
 
-cgcontour, alog10(magnetic_hist+1e-3),cx,cy,  color='green',  $
+qsm=10
+cgcontour, alog10(smooth(velocity_hist,qsm)+1e-3),cx,cy,  color='green',  $
 		;title="Scatter plots of B!Dr,!9f!X!N and V!Dr,!9f!X!N at t="+string(time, format='(F4.1)')+" orbits", $
 		xtitle="B!Dx!N, V!Dx!N",$
 	   xrange=[-smax,smax], $
@@ -131,12 +138,13 @@ cgcontour, alog10(magnetic_hist+1e-3),cx,cy,  color='green',  $
 		xstyle=1,$
 		ystyle=1
 
-sz=size(velocity_hist, /dimensions)
-c1x=findgen(sz(0))*bn1+mn1
-c1y=findgen(sz(1))*bn2+mn2
-cgcontour, alog10(velocity_hist+1e-3), c1x,c1y, axiscolor='black' , /overplot, color='blue'
+cgtext, -smax*0.9, smax*.9, "t="+string(plotlist[i], format='(I3)')
+sz=size(magnetic_hist, /dimensions)
+c1x=findgen(sz(0))*bn1a+mn1a
+c1y=findgen(sz(1))*bn2a+mn2a
+cgcontour, alog10(smooth(magnetic_hist,qsm)+1e-3), c1x,c1y, axiscolor='black' , /overplot, color='blue'
 
-items=['V','B']
+items=['B','V']
 lines=[0,0]
 color=[cgcolor('blue'),cgcolor('green')]
 
@@ -153,12 +161,15 @@ al_legend, items,linestyle=lines, colors=color, /right
 
 
 if ( usingps ) then begin
-cgps_close, /jpeg,  Width=2048
+cgps_close, /jpeg,  Width=2048, delete_ps=0
+READ_JPEG, fname+'.jpg', a, TRUE=1 
+cgimage, a
 print, 'in ps'
 set_plot, 'x'
 endif else begin
 print, 'in x'
 endelse
+
 
 endfor
 
