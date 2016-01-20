@@ -1,6 +1,6 @@
 
 cgdisplay, xs=450,ys=750
-cgdisplay, xs=550,ys=550
+cgdisplay, xs=550,ys=1200
 pload,0, /nodata
 ;nfile=nlast
 pload,nfile
