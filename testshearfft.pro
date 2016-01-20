@@ -1,6 +1,5 @@
-; load some sheared data
 
-nfile=7
+nfile=nlast
 pload,nfile
 
 vec=vx3(*,*,0)
@@ -17,11 +16,11 @@ ky2d=rebin(reform(ky,1,nx2),nx1,nx2)
 
 
 q=1.5d
-omega=1.0d-3
+omega=1.0
 S=q*omega
 time=t[nfile] 
-time=t[nfile] mod  2000.0d
-Ly=2.0
+time=t[nfile] mod  0.666666666d
+Ly=2.0d
 qomegat_Ly=q*omega*time/Ly
 
 cfft1=fft(vec,dimension=2)

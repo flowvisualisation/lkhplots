@@ -26,9 +26,8 @@ CASE dirname OF
 ENDCASE
 
 
-usingps=0
 !p.multi=0
-readcol,'timevar', t,ev,em,vxmax,vxmin,vymax,vymin,vzmax,vzmin,vxvy,bxmax,bxmin,bymax,bymin,bzmax,bzmin,bxby,thmax,thmin,w2,j2,hm
+readcol,'timevar', t,ev,em,vxmax,vxmin,vymax,vymin,vzmax,vzmin,vxvy,bxmax,bxmin,bymax,bymin,bzmax,bzmin,bxby,w2,j2,hm
 
 ; it,t,dt,ux2m,uy2m,uz2m,uxuym,rhom,rhomin,rhomax,bx2m,by2m,bz2m,bxbym,ndm,ndmin,ndmax
     fname="timeseries"
@@ -53,15 +52,18 @@ ymax=3e2
 ymax=maxall
 ;ymax=2e3
 
+usingps=0
 spawn, 'basename $PWD', dirtag
 fname="timehistory"+dirtag
 for usingps=0,1 do begin
 if (usingps eq 1) then begin
-cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times', /quiet
+cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times', /quiet, font=1
+charsize=cgdefcharsize()*.6
 omega_str='!9W!X'
 endif else  begin
 set_plot, 'x'
 omega_str='!7X!X'
+charsize=cgdefcharsize()*.6
 endelse
 
 
@@ -115,16 +117,11 @@ print, 'Saturation level', maxall
 
 
 if ( usingps ) then begin
-;device,/close
-cgps_close, /jpeg,  Width=1100, /nomessage
-;set_plot,'x'
-endif else begin
-;set_plot,'x'
-fname2=fname
-;im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
-endelse
-
+cgps_close, /jpeg,  Width=1100, /nomessage, delete_ps=0
+READ_JPEG, fname+'.jpg', a, TRUE=1 & cgimage, a
+endif 
 endfor
+
 
 
 
