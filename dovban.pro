@@ -1,0 +1,27 @@
+
+cd, "../q03"
+.r banerjeev2dyh0
+cd, "../q05"
+.r banerjeev2dyh0
+cd, "../q07"
+.r banerjeev2dyh0
+cd, "../q09"
+.r banerjeev2dyh0
+cd, "../q11"
+.r banerjeev2dyh0
+cd, "../q12"
+.r banerjeev2dyh0
+cd, "../q13"
+.r banerjeev2dyh0
+cd, "../q14"
+.r banerjeev2dyh0
+cd, "../q15"
+.r banerjeev2dyh0
+cd, "../q16"
+.r banerjeev2dyh0
+cd, "../q17"
+.r banerjeev2dyh0
+cd, "../q18"
+.r banerjeev2dyh0
+cd, "../q19"
+.r banerjeev2dyh0
