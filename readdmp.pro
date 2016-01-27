@@ -6,7 +6,7 @@ ny=lonint
 nz=lonint
 incf=lonint
 nul=lonint
-num=39
+num=12
 openr,lun, 'dump'+string(num, format='(I04)')+'.dmp' , /get_lun;, /swap_Endian
 readu, lun, dumpver
 ;readu, lun, nul
