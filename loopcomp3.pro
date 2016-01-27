@@ -1,4 +1,5 @@
 
+cgdisplay, xs=1200,ys=1200
 
 
 dir1='dhires2/'
@@ -10,6 +11,7 @@ list=grep('usr',list2)
 sz=size(list, /dimensions)
 fnum=sz(0)-1
 numarr=lonarr(fnum+1)
+
 for i=0,fnum do begin
 file=list[i]
 numstr=strmid(file,3,6)
@@ -46,7 +48,8 @@ pos=cglayout([1,3])
 
 ims=ptrarr(12)
 timarr=fltarr(12)
-for i=fnum-5,fnum do begin
+
+for i=fnum,0,-1 do begin
 
 grd_ctl, dir=dir1,model=numarr[i], g1,c1
 grd_ctl, dir=dir2,model=numarr2[i], g2,c2
