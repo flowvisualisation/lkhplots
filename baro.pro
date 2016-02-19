@@ -1,14 +1,19 @@
 xs=600
 ys=2*xs
-cgdisplay, xs=xs, ys=ys
+;cgdisplay, xs=xs, ys=ys
 pload,0
 minrho=99
 maxrho=0
+minv=99
+maxv=-5
 for i=0,nlast do begin
 pload,i, /silent
 minrho=min ([minrho, min(rho)])
 maxrho=max ([maxrho, max(rho)])
+minv=min ([minv, min(vx2)])
+maxv=max ([maxv, max(vx2)])
 endfor
+print, minv
 
 
 
@@ -34,7 +39,7 @@ pos=cglayout([1,2], xgap=7, ygap=12, oxmargin=[11,5], oymargin=[12,5])
 px=pos[*,0]
 ymin=minrho*.3
 ymax=maxrho*1.2
-cgplot,x2,  rho(0,*), /ylog , xrange=[0,1.2], yrange=[ymin,ymax], ytitle='log '+rhostr, xtitle='y',pos=px
+cgplot,x2,  rho(0,*), /ylog , xrange=[0,1.2], yrange=[ymin,ymax], ytitle='log '+rhostr, xtitle='y',pos=px, title='t='+string(t(nlast))+', nz='+string(nx2)
 
 for i=0,nlast do begin 
 pload,i,/silent 
@@ -44,6 +49,8 @@ endfor
 
 
 px=pos[*,1]
+ymin=minv
+ymax=maxv
 cgplot,x2,  vx2(0,*),  xrange=[0,1.2], yrange=[ymin,ymax], ytitle='V!DY!N', xtitle='y',pos=px, /noerase
 for i=0,nlast do begin 
 pload,i,/silent 

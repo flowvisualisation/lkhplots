@@ -1,6 +1,9 @@
 
 
-pro nirvvtk, nfile,tag, rey1
+;pro nirvvtk, nfile,tag, rey1
+nfile=790000
+tag="recon2"
+rey1=0
 
 
 openw,2,tag+STRing(nfile, format='(I07)')+'.vtk',/SWAP_ENDIAN 
