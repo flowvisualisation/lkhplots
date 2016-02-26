@@ -1,22 +1,29 @@
-
+pro displayztb2v, fname, dset
 ys=600
 xs=ys
 cgdisplay, xs=xs,ys=ys
-r=h5_parse("poyntingave0778000hdf5_out.h5",/read_data )
+;r=h5_parse(fname,/read_data )
 
+file_id = H5F_OPEN(fname)
+dataset_id1 = H5D_OPEN(file_id, dset)
+image = H5D_READ(dataset_id1)
+H5D_CLOSE, dataset_id1
+H5F_CLOSE, file_id
 
-dat= r.SAMPLE_DATA._DATA
+imax=max(0.0004)
+index=1.0*fix(alog10(imax)-1.0)
+dat= image/10^(index)
 
 print, max(dat), min(dat)
 grd_ctl, model=100000, g,c
 t1=c.time/2./!DPI
-grd_ctl, model=790000, g,c
+grd_ctl, model=788000, g,c
 t2=c.time/2./!DPI
 
 
 usingps=0
 spawn, 'basename $PWD', dirtag
-fname="spacetimeb2v"+dirtag
+fname=fname+dirtag
 for usingps=0,1 do begin
 if (usingps eq 1) then begin
 cgps_open, fname+'.eps', /encapsulated, /color, tt_font='Times', /quiet, font=1
@@ -32,7 +39,7 @@ endelse
 rainbow_Colors
 pos=cglayout([1,2], oxmargin=[12,12], oymargin=[12,12] ,ygap=12)
 r=cgscalevector(dat, 1,254)
-cgimage, r, pos=pos[*,0], Stretch='Clip', Clip=1
+cgimage, r, pos=pos[*,0], Stretch='Clip', Clip=9
 sz=size(dat, /dimensions)
 tarr=dindgen(sz(0))/sz(0)*(t2-t1)+t1
 ave=total(dat,1)/sz(0)
@@ -45,12 +52,12 @@ cgcontour, dat, tarr,g.z , /noerase, /nodata, pos=px, title='Mag. Energy Flux, t
     ytitle="z/H"
 cgcolorbar, range=[imin,imax], /vertical, pos=[px[2]+0.0, px[1],px[2]+0.03, px[3]], /right
 px=pos[*,1]
-cgplot, g.z, ave, title="Magnetic Energy Flux , B!U2!Nv!Dz!N", pos=px, /noerase,$
-    ytitle="B!U2!Nv!Dz!N",$
-    xtitle="z/H", yrange=[min(bot),max(top)]
     sig=stddev(dat, dimension=1)
     top= ave+sig
     bot= ave-sig
+cgplot, g.z, ave, title="Magnetic Energy Flux , B!U2!Nv!Dz!N", pos=px, /noerase,$
+    ytitle="B!U2!Nv!Dz!N",$
+    xtitle="z/H", yrange=[min(bot),max(top)]
     zh=g.z
 cgcolorfill,[zh,reverse(zh)],[bot,reverse(top)],/data, color='grey'
 cgplot, g.z, ave, pos=px, /overplot

@@ -3,14 +3,16 @@ ys=1200
 xs=600
 cgdisplay, xs=xs, ys=ys
 
+spawn "mkdir -p oldpoy"
+spawn "mv poy*h5 oldpoy"
 count=0
 nbeg=790000
 nend=nbeg
 nstep=2000
 spawn, "uname", listing
 if ( listing ne 'Darwin') then begin
-nbeg=100000
-nend=790000
+nbeg=320000
+nend=788000
 nstep=2000
 endif
 
@@ -23,7 +25,7 @@ poy=ave
 poyl=ave
 poyh=ave
 tarr=dblarr(1)
-tarr(*)=c.time
+tarr(*)=c.time/2/!DPI
 ave(*)=0.0
 
 for nfile=nbeg, nend, nstep do begin
@@ -47,8 +49,8 @@ filterhp = 1-BUTTERWORTH(nx,ny, cutoff=10, order=11)
 filterlp = BUTTERWORTH(nx,ny, cutoff=10, order=11)
 filterhp3d=rebin(reform(filterhp,nx,ny,1 ), nx,ny,nz)
 filterlp3d=rebin(reform(filterlp,nx,ny,1 ), nx,ny,nz)
-ifftx=FFT(b2v,dimension=1, -1)
-iffty=FFT(ifftx,dimension=2, -1)
+ifftx=FFT(b2v,dimension=1, -1)* nx
+iffty=FFT(ifftx,dimension=2, -1)*ny
 hfil=iffty*filterhp3d
 lfil=iffty*filterlp3d
 
@@ -74,19 +76,44 @@ tarr=[tarr, c.time/2.0/!DPI]
 rainbow_colors
 count=count+1
     print, count
- ;if ( (count  mod 10)  eq 0) then begin
- if ( (count  mod 1)  eq 0) then begin
-pos=cglayout([1,2])
+ if ( (count  mod 10)  eq 0) then begin
+ ;if ( (count  mod 1)  eq 0) then begin
+pos=cglayout([1,2], oxmargin=[12,12])
 trapoy=transpose(poy)
 trapoyl=transpose(poyl)
 trapoyh=transpose(poyh)
 r=cgscalevector(trapoyl, 1,254)
-cgimage, r, pos=pos[*,0]
-sz=size(trapoy, /dimensions)
-cgcontour, trapoy, tarr,g.z , /noerase, /nodata, pos=pos[*,0], title='t='+string(c.time/2.0/!DPI)
-cgplot, g.z, ave, title="Poynting Flux , B!U2!Nv!Dz!N", pos=pos[*,1], /noerase
+
+cgimage, r, pos=pos[*,0] , Stretch='Clip', Clip=1
+
+
+
+
+ave=mean(dat,dimension=1)
+px=pos[*,0]
+imin=min(dat)
+imax=max(dat)
+cgcontour, r, tarr,g.z , /noerase, /nodata, pos=px, title='Mag. Energy Flux, t='+string(c.time/2.0/!DPI, format='(I5)')+' orbits', $
+    xtitle="t [orbits]",$
+    ytitle="z/H"
+cgcolorbar, range=[imin,imax], /vertical, pos=[px[2]+0.0, px[1],px[2]+0.03, px[3]], /right
+px=pos[*,1]
+    sig=stddev(dat, dimension=1)
+    top= ave+sig
+    bot= ave-sig
+cgplot, g.z, ave, title="Magnetic Energy Flux , B!U2!Nv!Dz!N", pos=px, /noerase,$
+    ytitle="B!U2!Nv!Dz!N",$
+    xtitle="z/H", yrange=[min(bot),max(top)]
+    zh=g.z
+cgcolorfill,[zh,reverse(zh)],[bot,reverse(top)],/data, color='grey'
+cgplot, g.z, ave, pos=px, /overplot
+
+
+
+
 fname="poyntingave"+string(nfile, format='(I07)')
 fname2=fname
+
 ;im=cgsnapshot(filename=fname2,/nodialog,/jpeg)
 endif
 endfor
